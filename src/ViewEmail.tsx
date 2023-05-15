@@ -56,13 +56,13 @@ export function ViewEmail() {
                   <i>
                     <FontAwesomeIcon icon={faUser} />
                   </i>
-                  <p  >kkk</p>
+                  <p >From: kkk</p>
                 </div>
                 <div id="input-feild">
                   <i>
                     <FontAwesomeIcon icon={faShare} />
                   </i>
-                  <p>hhhh</p>
+                  <p>Subject: hhhh</p>
                 </div>
                 <div id="input-feild">
                   <i>
@@ -82,7 +82,7 @@ export function ViewEmail() {
                     like Aldus PageMaker including versions of Lorem Ipsum.
                   </p>
                 </div>
-                <input id="btn-sp" type="submit" value="Reply" className="send-btn" />
+                <button type="submit" value="Reply" className="send-btn" >Reply</button>
               </form>
             </div>
           </div>

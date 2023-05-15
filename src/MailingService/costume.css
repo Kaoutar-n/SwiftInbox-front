@@ -2,22 +2,25 @@ from{
     background: #fff;
     width: 500px;
     padding: 30px;
+    
     font-size: 15px;
 
 }
 form input, textarea{
     /* margin-top: 10px; */
-    width: 80%;
+    width: 70%;
     border-top: none;
     border-left: none;
     border-right: none;
    background: none;
     border-bottom: 1px solid #000;
     outline: none;
+    
 }
+
 .costumefrom form input, textarea{
     /* margin-top: 10px; */
-    width: 80%;
+    width: 70%;
     border-top: none;
     border-left: none;
     border-right: none;

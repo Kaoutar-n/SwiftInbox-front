@@ -14,16 +14,7 @@ export const PageNotFound = () => {
   
   return (
     <div className="bod">
-      
-   <header> 
-    <h2 className="logo">Logo</h2>
-    <nav className="navigation">
-          <NavLink to="/">Login</NavLink>
-          <NavLink to="/About">About</NavLink>
-          <NavLink to="/services">Services</NavLink>
-          <NavLink to="/ContactUs">Contact</NavLink>
-        </nav>
-   </header>
+
     <h2>Page Not Found</h2>
   </div>
   

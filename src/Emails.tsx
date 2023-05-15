@@ -6,12 +6,11 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
-
 import "./home.css";
+
 import "./Charts";
 import { EmailsUsers } from "./EmailsUsers";
 import { useState } from "react";
-
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
 // import './script'
