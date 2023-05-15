@@ -1,0 +1,59 @@
+
+.form-input{
+	display: flex;
+	align-items: center;
+	height: 36px;
+}.form-input input{
+	flex-grow: 1;
+	padding: 0 16px;
+	height: 100%;
+	border: none;
+	background: var(--grey);
+	border-radius: 36px 0 0 36px;
+	outline: none;
+	width: 100%;
+	color: var(--dark);
+}
+.form-input button{
+	width: 36px;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: var(--blue);
+	color: var(--light);
+	font-size: 18px;
+	border: none;
+	outline: none;
+	border-radius: 0 36px 36px 0;
+	cursor: pointer;
+
+}
+.form-div{
+	padding-bottom: 10px;
+	
+}
+.form-div form input{
+	padding: 5px;
+	margin: 5px;
+	margin-bottom: 10px;
+	width: 300px;
+	border: 1px solid;
+	border-radius: 5px;
+}
+.form-div form button{
+	width: 10%;
+	padding: 10px;
+	padding-inline: 5px;
+	cursor: pointer;
+	background-color: #3c91e6;
+	color: white;
+	border: none;
+	font-weight: 600;
+}
+.import-export{
+display: flex;
+}
+.import-export .btn-download{
+	margin: 10px;
+}

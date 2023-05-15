@@ -1,0 +1,49 @@
+from{
+    background: #fff;
+    width: 500px;
+    padding: 30px;
+    font-size: 15px;
+
+}
+form input, textarea{
+    /* margin-top: 10px; */
+    width: 80%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+   background: none;
+    border-bottom: 1px solid #000;
+    outline: none;
+}
+.costumefrom form input, textarea{
+    /* margin-top: 10px; */
+    width: 80%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+   
+    border-bottom: 1px solid #000;
+    outline: none;
+}
+#input-feild{
+    padding-bottom: 20px ;
+    display: flex;
+    align-items: center;
+
+}
+#input-feild i{
+    font-size: 22px;
+    margin-right: 15px;
+    
+}
+.send-btn{
+    width: 10%;
+    border: none;
+    background: #3c91e6;
+    color: #fff;
+    font-size: 16px;
+    padding: 6px 0;
+    border-radius: 50px;
+
+
+}

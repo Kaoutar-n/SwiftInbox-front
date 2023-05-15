@@ -1,0 +1,41 @@
+input[type='radio']{
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    height: 20px;
+    width: 20px;
+    /* background-color: #d5d5d5; */
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 15px;
+    margin-left: 15=0px;
+    margin-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 10px;
+
+}
+label:hover{
+    color: #0198da;
+}
+.icon{
+   color: #3c91e6;
+}
+
+
+.message-type{
+    margin-bottom: 20px;
+}
+
+h2{
+    color:#4c4c4c
+}
+label{
+    color: #4c4c4c;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+
+}
+.send-btn{
+    cursor: pointer;
+}
