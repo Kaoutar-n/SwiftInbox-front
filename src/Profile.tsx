@@ -19,8 +19,8 @@ interface Field {
   value: string;
 }
 export function Profile() {
-  const [fields, setFields] = useState<Field[]>([]);
-  const [data, setdata] = useState<any>({});
+  const [fields, setFields] = useState<any>([]);
+  const [data, setdata] = useState<any>([]);
 
   const [username, setUsername] = React.useState("");
 
@@ -28,7 +28,7 @@ export function Profile() {
   const [showProfile, setShowProfile] = useState(true);
 
   
-  useEffect(() => {
+useEffect(() => {
     const storedData = localStorage.getItem("userDetails");
     if (storedData) {
       try {
@@ -44,7 +44,7 @@ export function Profile() {
       })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
+            //console.log(data);
             setdata(data);
           })
           .catch((error) => {
@@ -62,8 +62,8 @@ export function Profile() {
 
   useEffect(() => {
     if (data) {
-      console.log('data');
-      console.log(data);
+      // console.log('data');
+      // console.log(data);
       const mappedFields = [
         { name: "First Name", value: data.firstName },
         { name: "Last Name", value: data.lastName },
@@ -77,7 +77,9 @@ export function Profile() {
 
   }, [data]);
   
-  console.log(fields);
+  //console.log(fields);
+
+  
   function handleSave(
     newValues: { name: string; value: string }[],
     image: string
@@ -158,12 +160,12 @@ export function Profile() {
               </div>
             </div>
             <div className="table-data profile-inputs">
-              {show && (
-                <div className="Emails-mang ">
-                  <div className="head">
-                    <h3>Personal Account</h3>
-                  </div>
-                  <EditableField fields={fields} onSave={handleSave} />
+                {show && fields.length > 0 && ( // Conditionally render when fields have data
+                  <div className="Emails-mang">
+                    <div className="head">
+                      <h3>Personal Account</h3>
+                    </div>
+                    <EditableField fields={fields} onSave={handleSave} />
                 </div>
               )}
               {show2 && (
@@ -205,4 +207,4 @@ export function Profile() {
       </section>
     </div>
   );
-}
+              }

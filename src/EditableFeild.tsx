@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./profileSettings.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 interface Props {
   fields: { name: string; value: string }[];
@@ -94,3 +93,5 @@ function EditableField({ fields, onSave }: Props) {
 }
 
 export default EditableField;
+
+
