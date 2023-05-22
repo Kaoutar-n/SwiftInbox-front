@@ -17,11 +17,7 @@ interface NavbarProps {
 export function SideBar(props: NavbarProps) {
   const [activeMenu, setActiveMenu] = useState(props.status);
 
-  // const handleClick = () => {
-  //   setActiveMenu(status);
-  // };
-
-  return (
+ return (
     <>
       <section id="sidebar">
         <Link to="#" className="brand">
@@ -42,10 +38,7 @@ export function SideBar(props: NavbarProps) {
             </NavLink>
           </li>
           <li className={activeMenu === "contacts" ? "actived" : ""}>
-            <NavLink
-              to="/EmailsContent"
-            
-            >
+            <NavLink to="/EmailsContent">
               <FontAwesomeIcon icon={faUsers} className="ico" />
               <span className="text"> Contacts</span>
             </NavLink>

@@ -54,19 +54,19 @@ export function ViewEmail() {
               <form action="">
                 <div id="input-feild">
                   <i>
-                    <FontAwesomeIcon icon={faUser} />
+                    <FontAwesomeIcon icon={faUser} className="icon" />
                   </i>
                   <p >From: kkk</p>
                 </div>
                 <div id="input-feild">
                   <i>
-                    <FontAwesomeIcon icon={faShare} />
+                    <FontAwesomeIcon icon={faShare} className="icon"/>
                   </i>
                   <p>Subject: hhhh</p>
                 </div>
                 <div id="input-feild">
                   <i>
-                    <FontAwesomeIcon icon={faMessage} />
+                    <FontAwesomeIcon icon={faMessage} className="icon" />
                   </i>
     
                   <p>

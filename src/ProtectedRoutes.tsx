@@ -1,13 +1,14 @@
-import { Outlet } from "react-router-dom";
+import {  Outlet } from "react-router-dom";
+
 import { MainHome } from "./MainHome";
 
-const useAuth= () =>{
-    const user= {loggedIn: true};
-    return user && user.loggedIn;
-}
-const ProtectedRoutes = () =>{
-    const isAuth = useAuth();
 
-return isAuth? <Outlet/>: <MainHome/>
+interface ProtectedRoutesProps {
+  isLogged: boolean;
 }
+
+const ProtectedRoutes: React.FC<ProtectedRoutesProps> = ({ isLogged }) => {
+  return isLogged ? <Outlet /> : <MainHome />;
+};
+
 export default ProtectedRoutes;

@@ -1,4 +1,5 @@
 import { Chart } from "chart.js/auto";
+
 window.onload = function () {
   const canvas = document.getElementById("myChart") as HTMLCanvasElement;
   const canvas2 = document.getElementById("mySecondChart") as HTMLCanvasElement;

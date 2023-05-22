@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './profileSettings.css';
+import "./profileSettings.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -11,7 +11,8 @@ interface Props {
 
 function EditableField({ fields, onSave }: Props) {
   const [editing, setEditing] = useState(false);
-  const [values, setValues] = useState<{ name: string; value: string }[]>(fields);
+  const [values, setValues] =
+    useState<{ name: string; value: string }[]>(fields);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   function handleSave() {
@@ -40,12 +41,17 @@ function EditableField({ fields, onSave }: Props) {
           <div className="profile-key" key={index}>
             <div className="profile-feilds" onClick={() => setEditing(true)}>
               <div className="Labels">
-                <label>{field.name}</label> <br /> <div className="input">{field.value}</div> 
+                <label>{field.name}</label> <br />{" "}
+                <div className="input">
+                  <input type="text" value={field.value} disabled />
+                </div>
               </div>
             </div>
           </div>
         ))}
-        <button className="profile-btn" onClick={() => setEditing(true)}>Edit</button>
+        <button className="profile-btn" onClick={() => setEditing(true)}>
+          Edit
+        </button>
       </div>
     );
   }
@@ -69,11 +75,20 @@ function EditableField({ fields, onSave }: Props) {
         </div>
       ))}
       <div className="image-input">
-        
-        <input type="file" id="file" onChange={handleFileSelect} accept="image/*" />
-        <label htmlFor="file"> <FontAwesomeIcon icon={faImage} className="faimage" /> Choose Image </label>
+        <input
+          type="file"
+          id="file"
+          onChange={handleFileSelect}
+          accept="image/*"
+        />
+        <label htmlFor="file">
+          {" "}
+          <FontAwesomeIcon icon={faImage} className="faimage" /> Choose Image{" "}
+        </label>
       </div>
-      <button className="profile-btn" onClick={handleSave}>Save</button>
+      <button className="profile-btn" onClick={handleSave}>
+        Save
+      </button>
     </div>
   );
 }

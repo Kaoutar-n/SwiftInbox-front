@@ -18,35 +18,44 @@ import Costume from "./MailingService/Costume";
 import ViewEmail from "./ViewEmail";
 import { Profile } from "./Profile";
 import TableTemp from "./TableTemp";
-import ProtectedRoutes from "./ProtectedRoutes";
 
-function App() {
+import PrivateRoute from "./PrivateRoute";
+
+function App(): JSX.Element {
   return (
     <div>
       <BrowserRouter>
         <Routes>
-        <Route path="/MainHome" element={<MainHome />} />
+          <Route path="/MainHome" element={<MainHome />} />
           <Route path="/" element={<Login />} />
-         
           <Route path="/Register" element={<Register />} />
           <Route path="/About" element={<About />} />
           <Route path="/ReadMore" element={<ReadMore />} />
           <Route path="/ContactUs" element={<ContactUs />} />
           <Route path="/services" element={<Services />} />
           <Route path="*" element={<PageNotFound />} />
-          <Route element={<ProtectedRoutes/>}>
-          <Route path="/Home" element={<Home />} />
-          <Route path="/EmailsContent" element={<EmailsContent />} />
-          <Route path="/Analytics" element={<Analytics />} />
+
+          <Route path="/home/*" element={<PrivateRoute path="/home" element={<Home />} />} />
+          <Route path="/EmailsContent" element={<PrivateRoute path="/EmailsContent" element={<EmailsContent />} />}/>
+          <Route path="/Analytics" element={<PrivateRoute path="/Analytics" element={<Analytics />} />}/>
+          <Route path="/Emails" element={<PrivateRoute path="/Emails" element={<Emails />} />}/>
+          <Route path="/Send" element={<PrivateRoute path="/Send" element={<Send />} />}/>
+          <Route path="/Costume" element={<PrivateRoute path="/Costume" element={<Costume />} />}/>
+          <Route path="/ViewEmail" element={<PrivateRoute path="/ViewEmail" element={<ViewEmail />} />}/>
+          <Route path="/profile" element={<PrivateRoute path="/profile" element={<Profile />} />}/>
+          <Route path="/MailingService" element={<PrivateRoute path="/MailingService" element={<MailingService />} />}/>
+          <Route path="/TableTemp" element={<PrivateRoute path="/TableTemp" element={<TableTemp />} />}/>
           
-          <Route path="/Emails" element={<Emails />} />
-          <Route path="/Send" element={<Send />} />
-          <Route path="/Costume" element={<Costume />} />
-          <Route path="/ViewEmail" element={<ViewEmail />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/MailingService" element={<MailingService />} />
-          <Route path="/TableTemp" element={<TableTemp />} />
-          </Route>
+          {/* <PrivateRoute path="/EmailsContent" element={<EmailsContent />} />
+          <PrivateRoute path="/Analytics" element={<Analytics />} />
+          <PrivateRoute path="/Emails" element={<Emails />} />
+          <PrivateRoute path="/Send" element={<Send />} />
+          <PrivateRoute path="/Costume" element={<Costume />} />
+          <PrivateRoute path="/ViewEmail" element={<ViewEmail />} />
+          <PrivateRoute path="/profile" element={<Profile />} />
+          <PrivateRoute path="/MailingService" element={<MailingService />} />
+          <PrivateRoute path="/TableTemp" element={<TableTemp />} /> */}
+
           <Route
             path="/forgotpassword"
             element={

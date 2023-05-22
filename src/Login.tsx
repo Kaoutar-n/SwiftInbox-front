@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import "./Login.css";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,42 +7,48 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import dalogo from './img/dalogo.png'
 import NavBar from "./NavBar";
+import { MainHome } from "./MainHome";
+import ProtectedRoutes from "./ProtectedRoutes";
 
-type LoginFormProps = {
-  onLogin: (username: string, password: string) => void;
-};
+
 
 
 export function Login() {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const login = 'true';
+  const notLogin = 'false';
+  
   const navigate = useNavigate();
-  const ProceedLoginusingAPI = (e: { preventDefault: () => void }) => {
+  const ProceedLoginusingAPI = (e : any) => {
     e.preventDefault();
     if (validate()) {
       let inputobj = { username: username, password: password };
-      fetch("https://localhost:7248/api/JWTToken", {
+      fetch("http://localhost:53264/api/User", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(inputobj),
       })
         .then((res) => {
-          return res.json();
+          if (res.status === 200) {
+            return res.json();
+          } else {
+            throw new Error("Login failed, invalid credentials");
+          }
         })
         .then((resp) => {
           console.log(resp);
-          if (Object.keys(resp).length === 0) {
-            toast.error("Login failed, invalid credentials");
-          } else {
-            toast.success("Success");
-            sessionStorage.setItem("username", username);
-            sessionStorage.setItem("jwttoken", resp.jwtToken);
-            navigate("/Home");
-          }
-  
+          toast.success("Success");
+          sessionStorage.setItem("username", username);
+          localStorage.setItem("logged", "true");
+          sessionStorage.setItem("jwttoken", resp.jwtToken);
+          localStorage.setItem("userDetails", JSON.stringify(resp)); 
+          navigate('/home');
+          
         })
         .catch((err) => {
-          toast.error("Login Failed due to :" + err.message);
+          toast.error("Login Failed due to: " + err.message);
+          
         });
     }
   };

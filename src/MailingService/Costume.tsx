@@ -1,69 +1,26 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMailBulk, faTableColumns } from "@fortawesome/free-solid-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { faChartLine } from "@fortawesome/free-solid-svg-icons";
-import { faShare } from "@fortawesome/free-solid-svg-icons";
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { faMessage } from "@fortawesome/free-solid-svg-icons";
-import {Link} from "react-router-dom";
 
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { faShare } from "@fortawesome/free-solid-svg-icons";
+import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { faLock } from "@fortawesome/free-solid-svg-icons";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
-import Chart from "chart.js";
 import "../dropdown.css";
 import "../home.css";
 import "../Charts";
 import './costume.css';
-import people from "../img/people.png";
-
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useRef, useMemo } from 'react';
+import JoditEditor from 'jodit-react';
 import { SideBar } from "../SideBar";
 import { TopBar } from "../TopBar";
 // import './script'
 export function Costume() {
-  const [profile, setProfile] = useState(false);
-  const toggleProfile = () => {
-    setProfile(!profile);
-  };
-  const [isActive, setIsActive] = useState(false);
-  const handleClick = () => {
-    const allSideMenu = document.querySelectorAll<HTMLAnchorElement>(
-      "#sidebar .side-menu.top li a"
-    );
+  
+  
 
-    allSideMenu.forEach((item) => {
-      const li = item.parentElement as HTMLLIElement;
+  const editor = useRef(null);
+  const [content, setContent] = useState('');
 
-      item.addEventListener("click", () => {
-        allSideMenu.forEach((i) => {
-          i.parentElement?.classList.remove("active");
-        });
-        li.classList.add("active");
-      });
-    });
-  };
-  const handleNavBarClick = () => {
-    const sidebar = document.getElementById("sidebar") as HTMLDivElement;
-    sidebar.classList.toggle("hide");
-  };
-  let menuRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    let handler = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setIsActive(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-  });
   const status = 'costume';
   return (
     <div className="home">
@@ -111,7 +68,14 @@ export function Costume() {
                   <i>
                   <FontAwesomeIcon icon={faMessage} className="icon" />
                   </i>
-                  <textarea placeholder="Message" name="message" rows={15} ></textarea>
+                  <JoditEditor
+                  
+                  ref={editor}
+                  value={content}
+              
+                  onChange={newContent => setContent(newContent)}
+                  />
+                  {/* <textarea placeholder="Message" name="message" rows={15} ></textarea> */}
                 </div>
                 <input type="submit" value="Save" className="send-btn" />
               </form>

@@ -2,36 +2,82 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 import "./home.css";
 import people from "./img/people.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditableField from "./EditableFeild";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
-import { NavLink } from "react-router-dom";
-import React from 'react';
+
+import React from "react";
 // import './script'
 interface Field {
   name: string;
   value: string;
 }
 export function Profile() {
-  const [username, setUsername] = React.useState("");
+  const [fields, setFields] = useState<Field[]>([]);
+  const [data, setdata] = useState<any>({});
 
+  const [username, setUsername] = React.useState("");
 
   const [selectedImage, setSelectedImage] = useState(people);
   const [showProfile, setShowProfile] = useState(true);
-  const [fields, setFields] = useState<Field[]>([
-    { name: "First Name", value: "kaoutar" },
-    { name: "Last Name", value: "kaoutar" },
-    { name: "User Name", value: "kaoutar^_^" },
-    { name: "Email", value: "kaoutar@gmail.com" },
-    { name: "Phone", value: "0011223344" },
-  ]);
+
+  
+  useEffect(() => {
+    const storedData = localStorage.getItem("userDetails");
+    if (storedData) {
+      try {
+        const parsedData = JSON.parse(storedData);
+        const id = parsedData.id;
+
+  fetch(`http://localhost:53264/api/User/GetProfile`, {
+  method: "POST",
+  headers: {
+    'Content-Type' : 'application/json'
+  },
+  body: JSON.stringify(id)
+      })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            setdata(data);
+          })
+          .catch((error) => {
+            console.error("Error: ", error);
+          });
+
+      } catch (error) {
+        console.error("Error parsing storedData JSON: ", error);
+      }
+    } else {
+      console.error("No ID found in local storage");
+    }
+  }, []);
+ 
+
+  useEffect(() => {
+    if (data) {
+      console.log('data');
+      console.log(data);
+      const mappedFields = [
+        { name: "First Name", value: data.firstName },
+        { name: "Last Name", value: data.lastName },
+        { name: "Company Name", value: data.companyName },
+        { name: "Email", value: data.email },
+        { name: "Phone", value: data.phone },
+      ];
+      setFields(mappedFields);
+    }
+
+
+  }, [data]);
+  
+  console.log(fields);
   function handleSave(
     newValues: { name: string; value: string }[],
     image: string
@@ -40,45 +86,32 @@ export function Profile() {
     setSelectedImage(image);
     setShowProfile(true);
   }
-  function toggleProfile1() {
-    setShowProfile(!showProfile);
-  }
 
-  //   const fields = [
- 
   const [show, setShow] = useState(true);
   const [show2, setShow2] = useState(false);
-  const link1= document.getElementById('link1');
-  const link2= document.getElementById('link2');
-  
-
+  const link1 = document.getElementById("link1");
+  const link2 = document.getElementById("link2");
   const handleShow = () => {
     setShow(true);
     setShow2(false);
-    link1?.classList.add('active');
-    link2?.classList.remove('active');
-
-
+    link1?.classList.add("active");
+    link2?.classList.remove("active");
   };
 
   const handleShow2 = () => {
     setShow(false);
     setShow2(true);
-    link2?.classList.add('active');
-    link1?.classList.remove('active');
-
+    link2?.classList.add("active");
+    link1?.classList.remove("active");
   };
 
- 
-
-  const status = '';
+  const status = "";
   return (
     <div className="home">
-      <SideBar status={status}/>
+      <SideBar status={status} />
       <section id="content">
-        <TopBar/>
+        <TopBar />
         <main>
-
           <div className="head-title">
             <div className="left">
               <h1>Profile</h1>
@@ -99,75 +132,74 @@ export function Profile() {
           </div>
 
           <div className="profile-side-main">
-
-          <div  className="table-data profile-sidbar">
-            <div className="Emails-mang ">
-              <div className="head">
-                <h3>Kaoutar Kaoutar</h3>
-              </div>
-              <div className="profile-sidebar-container">
-                <div className="profile-sidebar-item">
-                <a href="#" id="link1"  onClick={handleShow}  >
-                  <span><FontAwesomeIcon icon={faUser} className="ico" /></span>
-                  <span>Personal Account</span>
-                </a>
-                </div>
-                <div className="profile-sidebar-item">
-                <a href="#" id="link2" onClick={handleShow2} >
-                  <span><FontAwesomeIcon icon={faLock} className="ico" /></span>
-                  <span>Change Password</span>
-                </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="table-data profile-inputs">
-            {show && (<div className="Emails-mang ">
-              <div className="head">
-                <h3>Personal Account</h3>
-              </div>
-              <EditableField fields={fields} onSave={handleSave} />
-            </div>)}
-            {
-              show2 && (
-                <div className="Emails-mang ">
+            <div className="table-data profile-sidbar">
+              <div className="Emails-mang ">
                 <div className="head">
-                  <h3>Change Password</h3>
+                  <h3>Kaoutar Kaoutar</h3>
                 </div>
-                
-                  <form className="profile-key" action="">
-                  <div className="Labels">
-                  <label> Current Password </label>
-                 <input
-                type="text"
-                required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                />
-                  <label> New Password </label>
-                 <input
-                type="text"
-                required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                />
-                  <label> Confirm Password </label>
-                 <input
-                type="text"
-                required
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                />
-          <button className="profile-btn">Save</button>
-            </div>
-                  </form>
-  
+                <div className="profile-sidebar-container">
+                  <div className="profile-sidebar-item">
+                    <a href="#" id="link1" onClick={handleShow}>
+                      <span>
+                        <FontAwesomeIcon icon={faUser} className="ico" />
+                      </span>
+                      <span>Personal Account</span>
+                    </a>
+                  </div>
+                  <div className="profile-sidebar-item">
+                    <a href="#" id="link2" onClick={handleShow2}>
+                      <span>
+                        <FontAwesomeIcon icon={faLock} className="ico" />
+                      </span>
+                      <span>Change Password</span>
+                    </a>
+                  </div>
+                </div>
               </div>
-              )
-            }
-          
-            
-          </div>
+            </div>
+            <div className="table-data profile-inputs">
+              {show && (
+                <div className="Emails-mang ">
+                  <div className="head">
+                    <h3>Personal Account</h3>
+                  </div>
+                  <EditableField fields={fields} onSave={handleSave} />
+                </div>
+              )}
+              {show2 && (
+                <div className="Emails-mang ">
+                  <div className="head">
+                    <h3>Change Password</h3>
+                  </div>
+                  <form className="profile-key" action="">
+                    <div className="Labels">
+                      <label> Current Password </label>
+                      <input
+                        type="text"
+                        required
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                      <label> New Password </label>
+                      <input
+                        type="text"
+                        required
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                      <label> Confirm Password </label>
+                      <input
+                        type="text"
+                        required
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
+                      <button className="profile-btn">Save</button>
+                    </div>
+                  </form>
+                </div>
+              )}
+            </div>
           </div>
         </main>
       </section>
