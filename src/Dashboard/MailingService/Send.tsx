@@ -1,28 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMailBulk, faTableColumns } from "@fortawesome/free-solid-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { faChartLine } from "@fortawesome/free-solid-svg-icons";
-import { faShare } from "@fortawesome/free-solid-svg-icons";
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { faMessage } from "@fortawesome/free-solid-svg-icons";
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { faLock } from "@fortawesome/free-solid-svg-icons";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import Chart from "chart.js";
-import { Link } from "react-router-dom";
+
 
 import "../dropdown.css";
 import "../home.css";
 import "../Charts";
-import people from "../img/people.png";
+
 
 import { useState, useEffect, useRef } from "react";
 import SendCostume from "./SendCostume";
@@ -64,13 +48,13 @@ export function Send() {
     };
     document.addEventListener("mousedown", handler);
   });
-  const status = "send";
+  const status = 'send';
   return (
     <div className="home">
-      <SideBar status={status} />
+      <SideBar status={status}/>
 
       <section id="content">
-        <TopBar />
+        <TopBar/>
         <main>
           <div className="head-title">
             <div className="left">
@@ -94,8 +78,9 @@ export function Send() {
               <span className="text">Download PDF</span>
             </a>
           </div>
-
-          <SendCostume />
+           
+         
+           <SendCostume/>
         </main>
       </section>
     </div>
