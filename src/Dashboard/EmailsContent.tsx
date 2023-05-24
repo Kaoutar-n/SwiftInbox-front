@@ -12,7 +12,7 @@ import "./home.css";
 import { useState } from "react";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
-import { Users } from "./users.js";
+import { Users } from "../users.js";
 import { FormEvent } from "react";
 // import './script'
 export function EmailsContent() {
@@ -59,8 +59,8 @@ export function EmailsContent() {
   };
   const handleDelete = (id: number) => {
     const userIndex = Users.findIndex((user) => user.id === id);
-    
-      Users.splice(userIndex, 1);
+
+    Users.splice(userIndex, 1);
   };
   return (
     <div className="home">
@@ -88,14 +88,14 @@ export function EmailsContent() {
               </ul>
             </div>
             <div className="import-export">
-            <a href="" className="btn-download">
-              <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
-              <span className="text">Import Contacts</span>
-            </a>
-            <a href="" className="btn-download">
-            <FontAwesomeIcon icon={faCloudArrowUp}  className="ico"/>
-              <span className="text">Export Contacts</span>
-            </a>
+              <a href="" className="btn-download">
+                <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
+                <span className="text">Import Contacts</span>
+              </a>
+              <a href="" className="btn-download">
+                <FontAwesomeIcon icon={faCloudArrowUp} className="ico" />
+                <span className="text">Export Contacts</span>
+              </a>
             </div>
           </div>
           <div className="table-data">

@@ -2,34 +2,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMailBulk, faTableColumns } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faChartLine } from "@fortawesome/free-solid-svg-icons";
-import { faShare } from "@fortawesome/free-solid-svg-icons";
+import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { faMessage } from "@fortawesome/free-solid-svg-icons";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { faLock } from "@fortawesome/free-solid-svg-icons";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import Chart from "chart.js";
-import {Link} from "react-router-dom";
-
-import "../dropdown.css";
-import "../home.css";
-import "../Charts";
-import people from "../img/people.png";
-
+import "./dropdown.css";
+import "./home.css";
+import "./Charts";
+import people from "./img/people.png";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useRef } from "react";
-import SendCostume from "./SendCostume";
-import { SideBar } from "../SideBar";
-import { TopBar } from "../TopBar";
+import { Link } from "react-router-dom";
+import { SideBar } from "./SideBar";
+import { TopBar } from "./TopBar";
 // import './script'
-export function Send() {
+export function MailingService() {
   const [profile, setProfile] = useState(false);
   const toggleProfile = () => {
     setProfile(!profile);
@@ -64,13 +60,14 @@ export function Send() {
     };
     document.addEventListener("mousedown", handler);
   });
-  const status = 'send';
+  const status = "mailing";
   return (
     <div className="home">
-      <SideBar status={status}/>
+      <SideBar status={status} />
 
       <section id="content">
-        <TopBar/>
+        <TopBar />
+
         <main>
           <div className="head-title">
             <div className="left">
@@ -84,22 +81,26 @@ export function Send() {
                 </li>
                 <li>
                   <a className="active" href="#">
-                    Send Email
+                    Mailing Service
                   </a>
                 </li>
               </ul>
             </div>
-            <a href="" className="btn-download">
+            {/* <a href="" className="btn-download">
               <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
               <span className="text">Download PDF</span>
-            </a>
+            </a> */}
           </div>
-           
-         
-           <SendCostume/>
+          <div className="table-data">
+            <div className="Emails-mang">
+              <div className="head">
+                <h3>Recent Analytics</h3>
+              </div>
+            </div>
+          </div>
         </main>
       </section>
     </div>
   );
 }
-export default Send;
+export default MailingService;

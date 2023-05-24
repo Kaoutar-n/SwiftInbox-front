@@ -12,12 +12,12 @@ interface PrivateRouteProps {
 function PrivateRoute({ path, element }: PrivateRouteProps): JSX.Element {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  // useEffect(() => {
-  //   setLoading(true);
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 2000);
-  // }, []);
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -34,22 +34,22 @@ function PrivateRoute({ path, element }: PrivateRouteProps): JSX.Element {
   }, [authenticated, navigate]);
 
   if (authenticated === null) {
-    return <div>loading</div>;
-    // return (
-    //   <div className="snipper">
-    //     {loading ? (
-    //       <BeatLoader
-    //         color={"#36d7b7"}
-    //         loading={loading}
-    //         size={20}
-    //         aria-label="Loading Spinner"
-    //         data-testid="loader"
-    //       />
-    //     ) : (
-    //       <></>
-    //     )}
-    //   </div>
-    // );
+    
+    return (
+      <div className="snipper">
+        {loading ? (
+          <BeatLoader
+            color={"#36d7b7"}
+            loading={loading}
+            size={20}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        ) : (
+          <></>
+        )}
+      </div>
+    );
   }
   if (!authenticated) {
     return <Navigate to="/" replace />;

@@ -1,7 +1,9 @@
 import "./Login.css";
-import blueAbout from "./img/blueAbout.png";
+
 import { NavLink } from "react-router-dom";
-import dalogo from './img/dalogo.png';
+
+import dalogo from "./Dashboard/img/dalogo.png";
+import blueAbout from "./Dashboard/img/blueAbout.png";
 
 export const ReadMore = () => {
   return (

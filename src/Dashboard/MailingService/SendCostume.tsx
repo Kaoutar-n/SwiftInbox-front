@@ -10,7 +10,6 @@ import "./sendcostume.css";
 
 // import './script'
 export function SendCostume() {
- 
   const [show, setShow] = useState(true);
   const [show2, setShow2] = useState(false);
 
@@ -32,7 +31,6 @@ export function SendCostume() {
         </div>
         <form className="costumefrom" action="">
           <div className="message-type">
-      
             <input type="radio" id="type1" name="type" onClick={handleShow} />
             <label htmlFor="type1">Costume Message</label>
 
@@ -41,16 +39,15 @@ export function SendCostume() {
           </div>
           {show && (
             <div>
-             
               <div id="input-feild">
                 <i>
-                  <FontAwesomeIcon icon={faUser} className="icon"/>
+                  <FontAwesomeIcon icon={faUser} className="icon" />
                 </i>
                 <input type="text" placeholder="To" name="to" />
               </div>
               <div id="input-feild">
                 <i>
-                  <FontAwesomeIcon icon={faShare} className="icon"/>
+                  <FontAwesomeIcon icon={faShare} className="icon" />
                 </i>
                 <input type="text" placeholder="Subject" name="subject" />
               </div>
@@ -71,7 +68,7 @@ export function SendCostume() {
             <div>
               <div id="input-feild">
                 <i>
-                  <FontAwesomeIcon icon={faUser} className="icon"/>
+                  <FontAwesomeIcon icon={faUser} className="icon" />
                 </i>
                 <input type="text" placeholder="To" name="to" />
               </div>

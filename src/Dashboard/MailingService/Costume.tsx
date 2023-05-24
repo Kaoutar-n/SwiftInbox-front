@@ -8,26 +8,23 @@ import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 import "../dropdown.css";
 import "../home.css";
 import "../Charts";
-import './costume.css';
-import React, { useState, useRef, useMemo } from 'react';
-import JoditEditor from 'jodit-react';
+import "./costume.css";
+import React, { useState, useRef, useMemo } from "react";
+import JoditEditor from "jodit-react";
 import { SideBar } from "../SideBar";
 import { TopBar } from "../TopBar";
 // import './script'
 export function Costume() {
-  
-  
-
   const editor = useRef(null);
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
 
-  const status = 'costume';
+  const status = "costume";
   return (
     <div className="home">
-      <SideBar status={status}/>
+      <SideBar status={status} />
 
       <section id="content">
-        <TopBar/>
+        <TopBar />
 
         <main>
           <div className="head-title">
@@ -60,20 +57,18 @@ export function Costume() {
               <form action="">
                 <div id="input-feild">
                   <i>
-                  <FontAwesomeIcon icon={faShare} className="icon" />
+                    <FontAwesomeIcon icon={faShare} className="icon" />
                   </i>
                   <input type="text" placeholder="Subject" name="subject" />
                 </div>
                 <div id="input-feild">
                   <i>
-                  <FontAwesomeIcon icon={faMessage} className="icon" />
+                    <FontAwesomeIcon icon={faMessage} className="icon" />
                   </i>
                   <JoditEditor
-                  
-                  ref={editor}
-                  value={content}
-              
-                  onChange={newContent => setContent(newContent)}
+                    ref={editor}
+                    value={content}
+                    onChange={(newContent) => setContent(newContent)}
                   />
                   {/* <textarea placeholder="Message" name="message" rows={15} ></textarea> */}
                 </div>

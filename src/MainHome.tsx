@@ -1,5 +1,5 @@
 import "./Login.css";
-import people1 from "./img/people1.png";
+import people1 from "./Dashboard/img/people1.png";
 import ai from "./img/ai.png";
 import About from "./About";
 import Services from "./Services";
@@ -56,3 +56,7 @@ export function MainHome() {
     </div>
   );
 }
+
+
+
+

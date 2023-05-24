@@ -9,24 +9,58 @@ interface Props {
 }
 
 function EditableField({ fields, onSave }: Props) {
+
   const [editing, setEditing] = useState(false);
   const [values, setValues] =
     useState<{ name: string; value: string }[]>(fields);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
+  const storedData = localStorage.getItem("userDetails")!;
+  
+  const parsedData = JSON.parse(storedData);
+  const id = parsedData.id;
+  const postData = async () => {
+    const data = {
+      firstName: values.find((field) => field.name === "First Name")?.value || "",
+      lastName: values.find((field) => field.name === "Last Name")?.value || "",
+      email: values.find((field) => field.name === "Email")?.value || "",
+      phone: values.find((field) => field.name === "Phone")?.value || "",
+    };
+  
+    try {
+      const response = await fetch(`http://localhost:53264/api/User/UpdateProfile?id=${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+  
+      if (response.ok) {
+        console.log("Data posted successfully");
+      } else {
+        console.error("Failed to post data");
+      }
+    } catch (error) {
+      console.error("An error occurred while posting data:", error);
+    }
+  };
   function handleSave() {
     if (selectedFile) {
       const reader = new FileReader();
       reader.onloadend = () => {
         onSave(values, reader.result as string);
+
         setEditing(false);
+        postData();
       };
       reader.readAsDataURL(selectedFile);
     } else {
       onSave(values, "");
       setEditing(false);
+      postData();
     }
   }
+
 
   function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files && event.target.files[0];

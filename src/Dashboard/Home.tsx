@@ -1,15 +1,24 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faAngleRight, faEnvelopeCircleCheck, faCalendarCheck, faPaperPlane, faFilter, faPlus, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSearch,
+  faAngleRight,
+  faEnvelopeCircleCheck,
+  faCalendarCheck,
+  faPaperPlane,
+  faFilter,
+  faPlus,
+  faEllipsisVertical,
+} from "@fortawesome/free-solid-svg-icons";
 import "./home.css";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
 
 // import './script'
 export function Home() {
-  const status = 'dashboard';
+  const status = "dashboard";
   return (
     <div className="home">
-      <SideBar status={status}/>
+      <SideBar status={status} />
 
       <section id="content">
         <TopBar />
