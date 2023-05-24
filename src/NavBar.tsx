@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import "./Navbar.css";
+import Dalogo from './Dashboard/img/logo.png'
 
 
 const Menu = () => (
@@ -21,8 +22,14 @@ const NavBar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   return (
     <div className="gpt3__navbar">
+      <div className="logo-image">
+      <img src={Dalogo} />
+      </div>
+     
       <div className="gpt3__navbar-links">
+      
         <div className="gpt3__navbar-links_container">
+          
           <Menu />
         </div>
       </div>

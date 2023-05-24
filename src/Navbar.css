@@ -3,6 +3,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 2rem 6rem;
+    
   }
   .gpt3__navbar-links {
     flex: 1;
@@ -90,7 +91,16 @@
   .gpt3__navbar-menu_container-links-sign {
     display: none;
   }
-  
+  .logo-image{
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .logo-image img{
+  width: 50vh;
+  height: 50vh;
+  }
   @media screen and (max-width: 1050px) {
     .gpt3__navbar-links_container {
       display: none;
