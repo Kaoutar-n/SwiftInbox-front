@@ -155,7 +155,7 @@ function parseBody(body : string) {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((mail: { id: Key ; sendername: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; senderemail: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; subject: string; category: number; }) => (
+                  {data.map((mail: { id: Key ; sendername: string ; senderemail: string ; subject: string; category: number; }) => (
                     <tr key={mail.id} onClick={() => mailInfo(mail.id)}>
                       <td>
                         <p>{mail.sendername}</p>
