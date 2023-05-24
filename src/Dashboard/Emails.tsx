@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,180 +11,207 @@ import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 import "./home.css";
 
 import "./Charts";
-import { EmailsUsers } from "./EmailsUsers";
-import { useState } from "react";
+import { JSXElementConstructor, Key, ReactElement, ReactFragment, useEffect, useState } from "react";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
-// import './script'
 
 export function Emails() {
-  const [profile, setProfile] = useState(false);
-  const toggleProfile = () => {
-    setProfile(!profile);
-  };
   const status = "emails";
   const [query, setQuery] = useState("");
+  const storedData = localStorage.getItem("userDetails");
+  const [data, setData] = useState<any>([]);
+  const [sender, setSender] = useState('');
+  const [bidy, setBody] = useState('');
+  const [subject, setSubject] = useState('');
+  const [viewEmail, setviewEmail] = useState(false);
+
+  const toggleviewEmail = () => {
+    setviewEmail(!viewEmail);
+  };
+  
+  function extractSentence(sentence : string) {
+    const regex = /Re:(.*?)\(Trial Version\)/;
+    const match = sentence.match(regex);
+  
+    let extractedSentence = "";
+    if (match && match.length > 1) {
+      extractedSentence = match[1].trim();
+    }
+  
+    return extractedSentence;
+  }
+
+  function Classifier(cat : number) {
+    if (cat == -1) {return "Negative";}
+    else{ return "Positive";}
+  }
+
+
+useEffect(()=>{
+  if (storedData) {
+    const parseddata = JSON.parse(storedData);
+    const id = parseddata.id;
+    fetch("http://localhost:53264/api/email/receive", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain",
+        "Content-Type": "application/json;charset=UTF-8"
+      },
+      body: JSON.stringify(id),
+    })
+      .then((response) => response.json())
+  
+      .then((data) => {
+        console.log(typeof data);
+        setData(data);           
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
+  } else {
+    console.error("No ID found in local storage");
+  }
+},[])
+function mailInfo(id : number){
+  const mailData ={}
+  data.forEach((item: any) => {
+    if(item.id === id){
+      console.log(item);
+    }
+   
+  });
+    
+}
+mailInfo(1);
+
   return (
     <div className="home">
-      <SideBar status={status} />
+    <SideBar status={status} />
 
-      <section id="content">
-        <TopBar />
-        <main>
-          <div className="head-title">
-            <div className="left">
-              <h1>Emails</h1>
-              <ul className="breadcrumb">
-                <li>
-                  <a href="/">Dashboard</a>
-                </li>
-                <li>
-                  <FontAwesomeIcon icon={faAngleRight} className="ico" />
-                </li>
-                <li>
-                  <a className="active" href="/">
-                    Emails
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <a href="/" className="btn-download">
-              <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
-              <span className="text">Import PDF</span>
-            </a>
+    <section id="content">
+      <TopBar />
+      <main>
+        <div className="head-title">
+          <div className="left">
+            <h1>Emails</h1>
+            <ul className="breadcrumb">
+              <li>
+                <a href="/">Dashboard</a>
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faAngleRight} className="ico" />
+              </li>
+              <li>
+                <a className="active" href="/">
+                  Emails
+                </a>
+              </li>
+            </ul>
           </div>
-          <div className="table-data">
-            <div className="Emails-mang">
-              <div className="head">
-                <h3>Recent Emails</h3>
+          <a href="/" className="btn-download">
+            <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
+            <span className="text">Import PDF</span>
+          </a>
+        </div>
+        <div className="table-data">
+          <div className="Emails-mang">
+            <div className="head">
+              <h3>Recent Emails</h3>
 
-                <div className="form-input">
-                  <input
-                    type="search"
-                    placeholder="Search.."
-                    onChange={(e) => setQuery(e.target.value)}
-                  />
-                  <button type="submit" className="search-btn">
-                    <FontAwesomeIcon icon={faSearch} className="ico" />
-                  </button>
-                </div>
-                <i className="ico">
-                  <FontAwesomeIcon icon={faFilter} />
-                </i>
+              <div className="form-input">
+                <input
+                  type="search"
+                  placeholder="Search.."
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+                <button type="submit" className="search-btn">
+                  <FontAwesomeIcon icon={faSearch} className="ico" />
+                </button>
               </div>
+              <i className="ico">
+                <FontAwesomeIcon icon={faFilter} />
+              </i>
+            </div>
 
-              <table>
-                <thead>
-                  <tr>
-                    <th>Client Name</th>
-                    <th>Email</th>
-                    <th>Subject</th>
-                    <th>Classification</th>
-                    <th>View</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {EmailsUsers.filter((user) =>
-                    user.first_name.toLowerCase().includes(query)
-                  ).map((user) => (
-                    <tr key={user.id}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Client Name</th>
+                  <th>Email</th>
+                  <th>Subject</th>
+                  <th>Classification</th>
+                  <th>View</th>
+                </tr>
+              </thead>
+              <tbody>
+                  {data && data.map((data: {
+                    body: string;
+                    senderemail: string;
+                    category: number;
+                    subject: string;
+                    id: Key | null | undefined;
+                    sendername: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | null | undefined;
+                  }) => (
+                    <><tr key={data.id}>
                       <td>
-                        <p> {user.first_name} </p>
+                        <p>{data.sendername}</p>
                       </td>
-                      <td>{user.email}</td>
-                      <td>{user.subject}</td>
-                      <td>{user.classification}</td>
+                      <td>{data.sendername}</td>
+                      <td>{extractSentence(data.subject)}</td>
+                      <td>{Classifier(data.category)}</td>
                       <td>
-                        <a onClick={toggleProfile}>
+                        <a onClick={toggleviewEmail}>
                           <span className="status completed">View</span>
                         </a>
                       </td>
                     </tr>
-                  ))}
-                  {profile && (
-                    <div className=" emailV-container">
-                      <div className="overlay" onClick={toggleProfile}>
-                        {" "}
-                      </div>
-                      <div className="head">
-                        <h3>Email Received</h3>
-                      </div>
-                      <form action="">
-                        <div id="input-feild">
-                          <i>
-                            <FontAwesomeIcon icon={faUser} className="icon" />
-                          </i>
-                          <p>From: kkk</p>
+                    {viewEmail && (<div className=" emailV-container">
+                        <div className="overlay" onClick={toggleviewEmail}>
+                          {" "}
                         </div>
-                        <div id="input-feild">
-                          <i>
-                            <FontAwesomeIcon icon={faShare} className="icon" />
-                          </i>
-                          <p>Subject: hhhh</p>
+                        <div className="head">
+                          <h3>Email Received</h3>
                         </div>
-                        <div id="input-feild">
-                          <i>
-                            <FontAwesomeIcon
-                              icon={faMessage}
-                              className="icon"
-                            />
-                          </i>
+                        <form action="">
+                          <div id="input-feild">
+                            <i>
+                              <FontAwesomeIcon icon={faUser} className="icon" />
+                            </i>
+                            <p>From: {data.senderemail}</p>
+                          </div>
+                          <div id="input-feild">
+                            <i>
+                              <FontAwesomeIcon icon={faShare} className="icon" />
+                            </i>
+                            <p>Subject: {extractSentence(data.subject)}</p>
+                          </div>
+                          <div id="input-feild">
+                            <i>
+                              <FontAwesomeIcon
+                                icon={faMessage}
+                                className="icon" />
+                            </i>
 
-                          <p>
-                            Lorem Ipsum is simply dummy text of the printing and
-                            typesetting industry. Lorem Ipsum has been the
-                            industry's standard dummy text ever since the 1500s,
-                            when an unknown printer took a galley of type and
-                            scrambled it to make a type specimen book. It has
-                            survived not only five centuries, but also the leap
-                            into electronic typesetting, remaining essentially
-                            unchanged. It was popularised in the 1960s with the
-                            release of Letraset sheets containing Lorem Ipsum
-                            passages, and more recently with desktop publishing
-                            software like Aldus PageMaker including versions of
-                            Lorem Ipsum.
-                          </p>
-                        </div>
-                        <button
-                          type="submit"
-                          value="Reply"
-                          className="send-btn"
-                        >
-                          Reply
-                        </button>
-                      </form>
-                    </div>
-                  )}
-                  {/* <tr>
-                    <td> <p>Jhon Doe</p></td>
-                    <td>user@gmail.com</td>
-                    <td>Blah blah blah</td>
-                    <td> <a href="/ViewEmail"><span className="status completed">View</span></a></td>
-                  </tr>
-                  <tr>
-                    <td> <p>Jhon Doe</p></td>
-                    <td>user@gmail.com</td>
-                    <td>Blah blah blah</td>
-                    <td> <a href="/ViewEmail"><span className="status completed">View</span></a></td>
-                  </tr>
-                  <tr>
-                    <td> <p>Jhon Doe</p></td>
-                    <td>user@gmail.com</td>
-                    <td>Blah blah blah</td>
-                    <td> <a href="/ViewEmail"><span className="status completed">View</span></a></td>
-                  </tr>
-                  <tr>
-                    <td> <p>Jhon Doe</p></td>
-                    <td>user@gmail.com</td>
-                    <td>Blah blah blah</td>
-                    <td> <a href="/ViewEmail"><span className="status completed">View</span></a></td>
-                  </tr>
-                  <tr>
-                    <td> <p>Jhon Doe</p></td>
-                    <td>user@gmail.com</td>
-                    <td>Blah blah blah</td>
-                    <td> <a href="/ViewEmail"><span className="status completed">View</span></a></td>
-                  </tr> */}
+                            <p>
+                              {
+                                data.body
+                              }
+                            </p>
+                          </div>
+                          <button
+                            type="submit"
+                            value="Reply"
+                            className="send-btn"
+                          >
+                            Reply
+                          </button>
+                        </form>
+                      </div> )}</>
+                  ))
+                  }
+                  
+                   
+                 
                 </tbody>
               </table>
             </div>
