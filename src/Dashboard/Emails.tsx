@@ -21,7 +21,7 @@ export function Emails() {
   const storedData = localStorage.getItem("userDetails");
   const [data, setData] = useState<any>([]);
   const [sender, setSender] = useState('');
-  const [bidy, setBody] = useState('');
+  const [body, setBody] = useState('');
   const [subject, setSubject] = useState('');
   const [viewEmail, setviewEmail] = useState(false);
 
@@ -75,7 +75,7 @@ useEffect(()=>{
 function mailInfo(id : number){
   const mailData ={}
   data.forEach((item: any) => {
-    if(item.id === id){
+    if(item.id == id){
       console.log(item);
     }
    
