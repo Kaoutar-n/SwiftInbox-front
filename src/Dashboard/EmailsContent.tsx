@@ -1,67 +1,223 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
-
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 import "./search.css";
 import "./home.css";
-import { useState } from "react";
+import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect, useState } from "react";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
-import { Users } from "../users.js";
+import { Users } from "./users.js";
 import { FormEvent } from "react";
+import { Console } from "console";
+import axios from "axios";
+import { Button } from "@mui/material";
 // import './script'
+
 export function EmailsContent() {
   const status = "contacts";
   const [query, setQuery] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [date, setDate] = useState("");
+  const [industry, setIndustry] = useState("");
+  const [phone, setPhone] = useState("");
+  const [uphone, usetPhone] = useState("");
   const [uname, usetName] = useState("");
   const [uemail, usetEmail] = useState("");
-  const [udate, usetDate] = useState("");
-  const [edit, setEdit] = useState(-1);
+  const [uindustry, usetIndustry] = useState("");
+  const [edit, setEdit] = useState<Key>(-1);
+  const [data, setdata] = useState<any>([]);
+  const [file, setFile] = useState();
 
+  const storedData = localStorage.getItem("userDetails");
+  
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const id = Users.length + 1;
-    Users.push({
-      id: id,
-      first_name: name,
-      last_name: "",
-      email: email,
-      gender: date,
-    });
-    setName("");
-    setEmail("");
-    setDate("");
-  };
-  const handleEdit = (id: number) => {
-    setEdit(id);
-    usetName(Users[id - 1].first_name);
-    usetEmail(Users[id - 1].email);
-    usetDate(Users[id - 1].gender);
-  };
-  const handleUpdate = (id: number) => {
-    const index = Users.findIndex((user: { id: number; }) => user.id === id);
-    Users[index] = {
-      id: id,
-      first_name: uname,
-      last_name: "",
-      email: uemail,
-      gender: udate,
-    };
-    setEdit(-1);
-  };
-  const handleDelete = (id: number) => {
-    const userIndex = Users.findIndex((user) => user.id === id);
+    if (storedData) {
+      const parseddata = JSON.parse(storedData);
+      const data = { 
+        userId : parseddata.id,
+        fullName: name,
+        email: email, 
+        phone: phone,
+        industry : industry
+       };
+       event.preventDefault();
+   
+      const url = "http://localhost:53264/api/Contacts/insertcontact";
+      axios
+         .post(url, data)
+         .then((result) => {
+            setName(result.data.name);
+            setEmail(result.data.email);
+            setPhone(result.data.phone);
+            setIndustry(result.data.industry);
+            window.location.reload();
 
-    Users.splice(userIndex, 1);
+         })
+         .catch((err) => {
+          alert(err.message);
+         });
+      
+    }
   };
+
+ 
+  useEffect(()=>{
+    if (storedData) {
+      const parseddata = JSON.parse(storedData);
+      const id = parseddata.id;
+      const requestBody = { id: id };
+      fetch("http://localhost:53264/api/Contacts/getcontact", {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain",
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        body: JSON.stringify(requestBody),
+      })
+        .then((response) => response.json())
+    
+        .then((data) => {
+          // Process the returned data
+          console.log(data);
+          setdata(data)
+
+         
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+        });
+    } else {
+      console.error("No ID found in local storage");
+    }
+  },[])
+
+  const handleImport =()=>{
+    if (storedData) {
+      const parseddata = JSON.parse(storedData);
+      const id = parseddata.id;
+      if (file && id) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("id", id);
+  
+        axios
+          .post("http://localhost:53264/api/Import_Export/Import", formData)
+          .then((response) => {
+            console.log("File uploaded successfully");
+            setFile(response.data.file);
+            window.location.reload();
+           
+          })
+          .catch((error) => {
+            console.error("Error uploading file:", error);
+            
+          });
+      } else {
+        console.log("Please select a file");
+      }
+    }
+  
+  }
+
+  const handleExport = () => {
+    const csvString = convertArrayOfObjectsToCSV(data);
+    const csvDataBlob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const csvURL = URL.createObjectURL(csvDataBlob);
+    const tempLink = document.createElement('a');
+    tempLink.href = csvURL;
+    tempLink.setAttribute('download', 'contacts.csv');
+    tempLink.click();
+  };
+
+  const convertArrayOfObjectsToCSV = (data: { [key: string]: string }[]) => {
+    const csvArray = [];
+    const header = Object.keys(data[0]);
+    csvArray.push(header.join(','));
+
+    for (let item of data) {
+      const values = header.map((key) => item[key]);
+      csvArray.push(values.join(','));
+    }
+
+    return csvArray.join('\n');
+  };
+  const handleFileChange = (e : any) => {
+    setFile(e.target.files[0]);
+  };
+ 
+
+  const handleEdit = (id: any) => {
+    const element = data.find((item: { id: any; }) => item.id === id);
+  
+    if (element) {
+    
+      const { fullName, email, industry } = element;
+  
+      setEdit(id);
+      usetName(fullName);
+      usetEmail(email);
+      usetIndustry(industry);
+    }
+  };
+ 
+  
+  const handleUpdate = async (id : any) => {
+    try {
+      const updatedData = {
+        "fullName": uname,
+        "email": uemail,
+        "phone" : uphone,
+        "industry": uindustry,
+      }
+      const response = await fetch(`http://localhost:53264/api/Contacts/updatecontact/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData),
+      });
+  
+      if (response.ok) {
+        // Data updated successfully
+        console.log('Data updated successfully');
+        window.location.reload();
+      } else {
+        // Handle the error if the update was unsuccessful
+        throw new Error('Data update failed');
+      }
+    } catch (error) {
+      throw new Error('Data update failed');
+    }
+  };
+  const handleDelete = (id: Key) => {
+    fetch('http://localhost:53264/api/Contacts/deletecontact', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id: id })
+    })
+      .then(response => {
+        if (response.ok) {
+          // User deleted successfully
+          console.log('User deleted.');
+          window.location.reload();
+        } else {
+          // Handle error case
+          console.error('Failed to delete user.');
+        }
+      })
+      .catch(error => {
+        // Handle error case
+        console.error('Error:', error);
+      });
+  };
+
+   
+
   return (
     <div className="home">
       <SideBar status={status} />
@@ -88,14 +244,15 @@ export function EmailsContent() {
               </ul>
             </div>
             <div className="import-export">
-              <a href="" className="btn-download">
-                <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
-                <span className="text">Import Contacts</span>
-              </a>
-              <a href="" className="btn-download">
-                <FontAwesomeIcon icon={faCloudArrowUp} className="ico" />
-                <span className="text">Export Contacts</span>
-              </a>
+            <Button onClick={handleImport}  className="btn-download">
+            <input type="file" onChange={handleFileChange} />
+              <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
+              Import Contacts
+            </Button>
+            <Button  onClick={handleExport} className="btn-download">
+              <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
+              Export Contacts
+            </Button>
             </div>
           </div>
           <div className="table-data">
@@ -112,6 +269,8 @@ export function EmailsContent() {
                   <button type="submit" className="search-btn">
                     <FontAwesomeIcon icon={faSearch} className="ico" />
                   </button>
+                  
+
                 </div>
                 <i className="ico">
                   <FontAwesomeIcon icon={faFilter} />
@@ -133,9 +292,15 @@ export function EmailsContent() {
                   />
                   <input
                     type="text"
-                    placeholder="Enter Date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
+                    placeholder="Enter Industry"
+                    value={industry}
+                    onChange={(e) => setIndustry(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Enter phone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                   />{" "}
                   <br />
                   <button type="submit">Add</button>
@@ -146,15 +311,19 @@ export function EmailsContent() {
                   <tr>
                     <th>Client Name</th>
                     <th>Email</th>
-                    <th>date</th>
+                    <th>Phone</th>
+                    <th>Industry</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {Users.filter((user) =>
-                    user.first_name.toLowerCase().includes(query)
-                  ).map((user) =>
-                    user.id === edit ? (
+                  {
+                 data.map((data: {
+                   phone: string;
+                   email: string;
+                   industry: string; id: Key ; fullName: string
+                    }) =>
+                    data.id === edit ? (
                       <tr>
                         <td>
                           {" "}
@@ -176,39 +345,48 @@ export function EmailsContent() {
                           {" "}
                           <input
                             type="text"
-                            value={udate}
-                            onChange={(e) => usetDate(e.target.value)}
+                            value={uphone}
+                            onChange={(e) => usetPhone(e.target.value)}
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <input
+                            type="text"
+                            value={uindustry}
+                            onChange={(e) => usetIndustry(e.target.value)}
                           />
                         </td>
                         <td>
                           {" "}
                           <button
-                            onClick={() => handleUpdate(user.id)}
                             className="status completed"
+                            onClick={() => handleUpdate(data.id)}
                           >
                             Update
                           </button>
                         </td>
                       </tr>
                     ) : (
-                      <tr key={user.id}>
+                      <tr  key ={ data.id }>
                         <td>
-                          <p> {user.first_name} </p>
+                          <p> {data.fullName} </p>
                         </td>
-                        <td>{user.email}</td>
-                        <td>{user.gender}</td>
+                        <td>{data.email}</td>
+                        <td>{data.phone}</td>
+                        <td>{data.industry}</td>
                         <td>
-                          <button>
+                          <button >
                             <span
                               className="status completed"
-                              onClick={() => handleEdit(user.id)}
+                              onClick={() => handleEdit(data.id)}
                             >
                               Edit
                             </span>
                           </button>
                           <button>
                             <span
-                              onClick={() => handleDelete(user.id)}
+                              onClick={() => handleDelete(data.id)}
                               className="status pending"
                             >
                               Delete
@@ -228,4 +406,3 @@ export function EmailsContent() {
   );
 }
 export default EmailsContent;
-
