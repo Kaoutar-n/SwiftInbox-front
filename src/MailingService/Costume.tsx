@@ -9,19 +9,78 @@ import "../dropdown.css";
 import "../home.css";
 import "../Charts";
 import './costume.css';
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
 import JoditEditor from 'jodit-react';
 import { SideBar } from "../SideBar";
 import { TopBar } from "../TopBar";
-// import './script'
+import { Button } from "@mui/material";
+
 export function Costume() {
-  
-  
-
   const editor = useRef(null);
-  const [content, setContent] = useState('');
-
+  const [subject, setSubject] = useState("");
+  const [body, setBody] = useState("");
   const status = 'costume';
+  const storedData = localStorage.getItem("userDetails");
+  const [data, setData] = useState<any>([]);
+
+  useEffect(()=>{
+    if (storedData) {
+      const parseddata = JSON.parse(storedData);
+      const id = parseddata.id;
+      fetch("http://localhost:53264/GetTemplate", {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain",
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        body: JSON.stringify(id),
+      })
+        .then((response) => response.json())
+    
+        .then((data) => {
+          console.log(data.subject);
+          setData(data);
+
+                   
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+        });
+    } else {
+      console.error("No ID found in local storage");
+    }
+  },[])
+
+
+  const saveCostumEmail = (e: { preventDefault: () => void }) => {
+    const data_mail = {
+      "subject": subject,
+      "body": body
+      }
+    if (storedData) {
+
+        const parsedData = JSON.parse(storedData);
+        const id = parsedData.id;
+        const url = `http://localhost:53264/UpdateTemplate/${id}`;
+        fetch(url, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json, text/plain",
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        body: JSON.stringify(data_mail),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          //console.log(body);
+          console.log(data);
+                   
+        })
+        
+}
+}
+
+
   return (
     <div className="home">
       <SideBar status={status}/>
@@ -62,7 +121,7 @@ export function Costume() {
                   <i>
                   <FontAwesomeIcon icon={faShare} className="icon" />
                   </i>
-                  <input type="text" placeholder="Subject" name="subject" />
+                  <input type="text"  defaultValue={data.subject} placeholder="Subject" onChange={(e) => setSubject(e.target.value)} name="subject" />
                 </div>
                 <div id="input-feild">
                   <i>
@@ -71,13 +130,13 @@ export function Costume() {
                   <JoditEditor
                   
                   ref={editor}
-                  value={content}
-              
-                  onChange={newContent => setContent(newContent)}
+                  value={data.body}
+                  onChange={(content: any) =>setBody(content)}
+                
                   />
                   {/* <textarea placeholder="Message" name="message" rows={15} ></textarea> */}
                 </div>
-                <input type="submit" value="Save" className="send-btn" />
+                <Button   onClick={saveCostumEmail} className="send-btn">Save</Button>
               </form>
             </div>
           </div>

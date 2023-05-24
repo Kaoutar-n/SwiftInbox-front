@@ -40,9 +40,9 @@ function EditableField({ fields, onSave }: Props) {
           <div className="profile-key" key={index}>
             <div className="profile-feilds" onClick={() => setEditing(true)}>
               <div className="Labels">
-                <label>{field.name}</label> <br />{" "}
+                <label>{field.name}</label> <br />
                 <div className="input">
-                  <input type="text" value={field.value} disabled />
+                  <input type="text" defaultValue={field.value} disabled />
                 </div>
               </div>
             </div>
@@ -63,12 +63,8 @@ function EditableField({ fields, onSave }: Props) {
             <label>{field.name}: </label>
             <input
               type="text"
-              value={field.value}
-              onChange={(event) => {
-                const newValues = [...values];
-                newValues[index].value = event.target.value;
-                setValues(newValues);
-              }}
+              defaultValue={field.value}
+              
             />
           </div>
         </div>

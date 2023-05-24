@@ -1,14 +1,12 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import {  useNavigate } from "react-router-dom";
 import "./Login.css";
-import { toast } from "react-toastify";
-// import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
-import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 interface Props {
   onFormSwitch: (formName: string) => void;
@@ -35,15 +33,15 @@ export const Register = () => {
       Phone: phone,
       Email: email,
     };
-    // const url = "http://localhost:53264/api/User/create";
-    // axios
-    //   .post(url, data)
-    //   .then((result) => {
-    //     alert(result.data);
-    //   })
-    //   .catch((err) => {
-    //     alert(err);
-    //   });
+    const url = "http://localhost:53264/api/User/create";
+    axios
+       .post(url, data)
+       .then((result) => {
+        navigate("/Home");
+       })
+       .catch((err) => {
+        alert(err.message);
+       });
   };
 
   return (

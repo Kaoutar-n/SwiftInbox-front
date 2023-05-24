@@ -26,8 +26,12 @@ export function Profile() {
 
   const [selectedImage, setSelectedImage] = useState(people);
   const [showProfile, setShowProfile] = useState(true);
-
+  const [show, setShow] = useState(true);
+  const [show2, setShow2] = useState(false);
+  const link1 = document.getElementById("link1");
+  const link2 = document.getElementById("link2");
   
+
 useEffect(() => {
     const storedData = localStorage.getItem("userDetails");
     if (storedData) {
@@ -46,6 +50,14 @@ useEffect(() => {
           .then((data) => {
             //console.log(data);
             setdata(data);
+            const mappedFields = [
+              { name: "First Name", value: data.firstName },
+              { name: "Last Name", value: data.lastName },
+              { name: "Company Name", value: data.companyName },
+              { name: "Email", value: data.email },
+              { name: "Phone", value: data.phone },
+            ];
+            setFields(mappedFields);
           })
           .catch((error) => {
             console.error("Error: ", error);
@@ -58,26 +70,6 @@ useEffect(() => {
       console.error("No ID found in local storage");
     }
   }, []);
- 
-
-  useEffect(() => {
-    if (data) {
-      // console.log('data');
-      // console.log(data);
-      const mappedFields = [
-        { name: "First Name", value: data.firstName },
-        { name: "Last Name", value: data.lastName },
-        { name: "Company Name", value: data.companyName },
-        { name: "Email", value: data.email },
-        { name: "Phone", value: data.phone },
-      ];
-      setFields(mappedFields);
-    }
-
-
-  }, [data]);
-  
-  //console.log(fields);
 
   
   function handleSave(
@@ -89,15 +81,13 @@ useEffect(() => {
     setShowProfile(true);
   }
 
-  const [show, setShow] = useState(true);
-  const [show2, setShow2] = useState(false);
-  const link1 = document.getElementById("link1");
-  const link2 = document.getElementById("link2");
+
   const handleShow = () => {
     setShow(true);
     setShow2(false);
     link1?.classList.add("active");
     link2?.classList.remove("active");
+    //console.log(data)
   };
 
   const handleShow2 = () => {
@@ -137,11 +127,11 @@ useEffect(() => {
             <div className="table-data profile-sidbar">
               <div className="Emails-mang ">
                 <div className="head">
-                  <h3>Kaoutar Kaoutar</h3>
+                  <h3>{data.firstName}</h3>
                 </div>
                 <div className="profile-sidebar-container">
                   <div className="profile-sidebar-item">
-                    <a href="#" id="link1" onClick={handleShow}>
+                    <a href="#" id="link1" onClick={handleShow} className="active">
                       <span>
                         <FontAwesomeIcon icon={faUser} className="ico" />
                       </span>
