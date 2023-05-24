@@ -47,7 +47,7 @@ export function EmailsContent() {
     usetDate(Users[id - 1].gender);
   };
   const handleUpdate = (id: number) => {
-    const index = Users.findIndex((user) => user.id === id);
+    const index = Users.findIndex((user: { id: number; }) => user.id === id);
     Users[index] = {
       id: id,
       first_name: uname,
@@ -228,3 +228,4 @@ export function EmailsContent() {
   );
 }
 export default EmailsContent;
+
