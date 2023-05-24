@@ -11,7 +11,7 @@ import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 import "./home.css";
 
 import "./Charts";
-import { JSXElementConstructor, Key, ReactElement, ReactFragment, useEffect, useState } from "react";
+import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect, useState } from "react";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
 
@@ -20,10 +20,8 @@ export function Emails() {
   const [query, setQuery] = useState("");
   const storedData = localStorage.getItem("userDetails");
   const [data, setData] = useState<any>([]);
-  const [sender, setSender] = useState('');
-  const [bidy, setBody] = useState('');
-  const [subject, setSubject] = useState('');
   const [viewEmail, setviewEmail] = useState(false);
+  const [mailData,setMailData] = useState<any>([]);
 
   const toggleviewEmail = () => {
     setviewEmail(!viewEmail);
@@ -42,8 +40,11 @@ export function Emails() {
   }
 
   function Classifier(cat : number) {
-    if (cat == -1) {return "Negative";}
-    else{ return "Positive";}
+    if (cat === 0) {return "Negative";}
+
+    else if(cat === 1)  { return "Positive";}
+
+    else  {return "Neutral";}
   }
 
 
@@ -72,148 +73,143 @@ useEffect(()=>{
     console.error("No ID found in local storage");
   }
 },[])
-function mailInfo(id : number){
-  const mailData ={}
+
+function mailInfo(id : Key){
+  
   data.forEach((item: any) => {
     if(item.id === id){
-      console.log(item);
+      toggleviewEmail();
+      setMailData(item);
     }
    
   });
     
 }
-mailInfo(1);
+function parseBody(body : string) {
+  const regex = /^(.*)(?= On || Le )/i;
+  const match = body.match(regex);
+
+  let parsedData = "";
+  if (match && match.length > 0) {
+    parsedData = match[0].trim();
+    parsedData = parsedData.replace(/(\r\n|\n|\r)/gm, ' ');
+  }
+
+  return parsedData;
+}
 
   return (
     <div className="home">
-    <SideBar status={status} />
-
-    <section id="content">
-      <TopBar />
-      <main>
-        <div className="head-title">
-          <div className="left">
-            <h1>Emails</h1>
-            <ul className="breadcrumb">
-              <li>
-                <a href="/">Dashboard</a>
-              </li>
-              <li>
-                <FontAwesomeIcon icon={faAngleRight} className="ico" />
-              </li>
-              <li>
-                <a className="active" href="/">
-                  Emails
-                </a>
-              </li>
-            </ul>
-          </div>
-          <a href="/" className="btn-download">
-            <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
-            <span className="text">Import PDF</span>
-          </a>
-        </div>
-        <div className="table-data">
-          <div className="Emails-mang">
-            <div className="head">
-              <h3>Recent Emails</h3>
-
-              <div className="form-input">
-                <input
-                  type="search"
-                  placeholder="Search.."
-                  onChange={(e) => setQuery(e.target.value)}
-                />
-                <button type="submit" className="search-btn">
-                  <FontAwesomeIcon icon={faSearch} className="ico" />
-                </button>
-              </div>
-              <i className="ico">
-                <FontAwesomeIcon icon={faFilter} />
-              </i>
+      <SideBar status={status} />
+      <section id="content">
+        <TopBar />
+        <main>
+          <div className="head-title">
+            <div className="left">
+              <h1>Emails</h1>
+              <ul className="breadcrumb">
+                <li>
+                  <a href="/">Dashboard</a>
+                </li>
+                <li>
+                  <FontAwesomeIcon icon={faAngleRight} className="ico" />
+                </li>
+                <li>
+                  <a className="active" href="/">
+                    Emails
+                  </a>
+                </li>
+              </ul>
             </div>
-
-            <table>
-              <thead>
-                <tr>
-                  <th>Client Name</th>
-                  <th>Email</th>
-                  <th>Subject</th>
-                  <th>Classification</th>
-                  <th>View</th>
-                </tr>
-              </thead>
-              <tbody>
-                  {data && data.map((data: {
-                    body: string;
-                    senderemail: string;
-                    category: number;
-                    subject: string;
-                    id: Key | null | undefined;
-                    sendername: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | null | undefined;
-                  }) => (
-                    <><tr key={data.id}>
+            <a href="/" className="btn-download">
+              <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
+              <span className="text">Import PDF</span>
+            </a>
+          </div>
+          <div className="table-data">
+            <div className="Emails-mang">
+              <div className="head">
+                <h3>Recent Emails</h3>
+                <div className="form-input">
+                  <input
+                    type="search"
+                    placeholder="Search.."
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
+                  <button type="submit" className="search-btn">
+                    <FontAwesomeIcon icon={faSearch} className="ico" />
+                  </button>
+                </div>
+                <i className="ico">
+                  <FontAwesomeIcon icon={faFilter} />
+                </i>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Client Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Classification</th>
+                    <th>View</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map((mail: { id: Key ; sendername: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; senderemail: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; subject: string; category: number; }) => (
+                    <tr key={mail.id} onClick={() => mailInfo(mail.id)}>
                       <td>
-                        <p>{data.sendername}</p>
+                        <p>{mail.sendername}</p>
                       </td>
-                      <td>{data.sendername}</td>
-                      <td>{extractSentence(data.subject)}</td>
-                      <td>{Classifier(data.category)}</td>
+                      <td>{mail.senderemail}</td>
+                      <td>{extractSentence(mail.subject)}</td>
+                      <td>{Classifier(mail.category)}</td>
                       <td>
                         <a onClick={toggleviewEmail}>
                           <span className="status completed">View</span>
                         </a>
                       </td>
                     </tr>
-                    {viewEmail && (<div className=" emailV-container">
-                        <div className="overlay" onClick={toggleviewEmail}>
-                          {" "}
-                        </div>
-                        <div className="head">
-                          <h3>Email Received</h3>
-                        </div>
-                        <form action="">
-                          <div id="input-feild">
-                            <i>
-                              <FontAwesomeIcon icon={faUser} className="icon" />
-                            </i>
-                            <p>From: {data.senderemail}</p>
-                          </div>
-                          <div id="input-feild">
-                            <i>
-                              <FontAwesomeIcon icon={faShare} className="icon" />
-                            </i>
-                            <p>Subject: {extractSentence(data.subject)}</p>
-                          </div>
-                          <div id="input-feild">
-                            <i>
-                              <FontAwesomeIcon
-                                icon={faMessage}
-                                className="icon" />
-                            </i>
-
-                            <p>
-                              {
-                                data.body
-                              }
-                            </p>
-                          </div>
-                          <button
-                            type="submit"
-                            value="Reply"
-                            className="send-btn"
-                          >
-                            Reply
-                          </button>
-                        </form>
-                      </div> )}</>
-                  ))
-                  }
-                  
-                   
-                 
+                  ))}
                 </tbody>
               </table>
+              {viewEmail && (
+                <div className="emailV-container">
+                  <div className="overlay" onClick={toggleviewEmail}></div>
+                  <div className="head">
+                    <h3>Email Received</h3>
+                  </div>
+                  <form action="">
+                    <div id="input-feild">
+                      <i>
+                        <FontAwesomeIcon icon={faUser} className="icon" />
+                      </i>
+                      <p>From: {mailData.senderemail}</p>
+                    </div>
+                    <div id="input-feild">
+                      <i>
+                        <FontAwesomeIcon icon={faShare} className="icon" />
+                      </i>
+                      <p>Subject: {extractSentence(mailData.subject)}</p>
+                    </div>
+                    <div id="input-feild">
+                      <i>
+                        <FontAwesomeIcon
+                          icon={faMessage}
+                          className="icon"
+                        />
+                      </i>
+                      <p>{parseBody(mailData.body)}</p>
+                    </div>
+                    <button
+                      type="submit"
+                      value="Reply"
+                      className="send-btn"
+                    >
+                      Reply
+                    </button>
+                  </form>
+                </div>
+              )}
             </div>
           </div>
         </main>
@@ -221,4 +217,5 @@ mailInfo(1);
     </div>
   );
 }
+
 export default Emails;
