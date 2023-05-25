@@ -7,16 +7,12 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
+
 import "./home.css";
 
 import "./Charts";
 import {
-  JSXElementConstructor,
   Key,
-  ReactElement,
-  ReactFragment,
-  ReactPortal,
   useEffect,
   useState,
 } from "react";
@@ -34,6 +30,7 @@ export function Emails() {
   const toggleviewEmail = () => {
     setviewEmail(!viewEmail);
   };
+
   const toggleviewEmailRemove = () => {
     if (viewEmail === true){
       setviewEmail(false);
