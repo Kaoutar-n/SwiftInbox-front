@@ -12,11 +12,7 @@ import "./home.css";
 
 import "./Charts";
 import {
-  JSXElementConstructor,
   Key,
-  ReactElement,
-  ReactFragment,
-  ReactPortal,
   useEffect,
   useState,
 } from "react";
@@ -34,7 +30,7 @@ export function Emails() {
   const toggleviewEmail = () => {
     setviewEmail(!viewEmail);
   };
-  
+
   function Classifier(cat: number) {
     if (cat === 0) {
       return "Negative";
