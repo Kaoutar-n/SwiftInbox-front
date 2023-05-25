@@ -121,10 +121,7 @@ function parseBody(body : string) {
                 </li>
               </ul>
             </div>
-            <a href="/" className="btn-download">
-              <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
-              <span className="text">Import PDF</span>
-            </a>
+
           </div>
           <div className="table-data">
             <div className="Emails-mang">
