@@ -47,31 +47,33 @@ export function Emails() {
       return "Neutral";
     }
   }
+ const GetData = () => {
+  if (storedData) {
+    const parseddata = JSON.parse(storedData);
+    const id = parseddata.id;
+    fetch("http://localhost:53264/api/email/receive", {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+      body: JSON.stringify(id),
+    })
+      .then((response) => response.json())
 
-  useEffect(() => {
-    if (storedData) {
-      const parseddata = JSON.parse(storedData);
-      const id = parseddata.id;
-      fetch("http://localhost:53264/api/email/receive", {
-        method: "POST",
-        headers: {
-          Accept: "application/json, text/plain",
-          "Content-Type": "application/json;charset=UTF-8",
-        },
-        body: JSON.stringify(id),
+      .then((data) => {
+        console.log(typeof data);
+        setData(data);
       })
-        .then((response) => response.json())
-
-        .then((data) => {
-          console.log(typeof data);
-          setData(data);
-        })
-        .catch((error) => {
-          console.error("Error: ", error);
-        });
-    } else {
-      console.error("No ID found in local storage");
-    }
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
+  } else {
+    console.error("No ID found in local storage");
+  }
+ }
+  useEffect(() => {
+    GetData();
   }, []);
 
   function mailInfo(id: Key) {
