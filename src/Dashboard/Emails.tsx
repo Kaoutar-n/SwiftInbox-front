@@ -34,19 +34,7 @@ export function Emails() {
   const toggleviewEmail = () => {
     setviewEmail(!viewEmail);
   };
-
-  function extractSentence(sentence: string) {
-    const regex = /Re:(.*?)\(Trial Version\)/;
-    const match = sentence.match(regex);
-
-    let extractedSentence = "";
-    if (match && match.length > 1) {
-      extractedSentence = match[1].trim();
-    }
-
-    return extractedSentence;
-  }
-
+  
   function Classifier(cat: number) {
     if (cat === 0) {
       return "Negative";
@@ -91,18 +79,7 @@ export function Emails() {
       }
     });
   }
-  function parseBody(body: string) {
-    const regex = /^(.*)(?= On || Le )/i;
-    const match = body.match(regex);
-
-    let parsedData = "";
-    if (match && match.length > 0) {
-      parsedData = match[0].trim();
-      parsedData = parsedData.replace(/(\r\n|\n|\r)/gm, " ");
-    }
-
-    return parsedData;
-  }
+  
 
   return (
     <div className="home">
@@ -170,7 +147,7 @@ export function Emails() {
                           <p>{mail.sendername}</p>
                         </td>
                         <td>{mail.senderemail}</td>
-                        <td>{extractSentence(mail.subject)}</td>
+                        <td>{mail.subject}</td>
                         <td>{Classifier(mail.category)}</td>
                         <td>
                           <a onClick={toggleviewEmail}>
@@ -199,13 +176,13 @@ export function Emails() {
                       <i>
                         <FontAwesomeIcon icon={faShare} className="icon" />
                       </i>
-                      <p>Subject: {extractSentence(mailData.subject)}</p>
+                      <p>Subject: {mailData.subject}</p>
                     </div>
                     <div id="input-feild">
                       <i>
                         <FontAwesomeIcon icon={faMessage} className="icon" />
                       </i>
-                      <p>{parseBody(mailData.body)}</p>
+                      <p>{mailData.body}</p>
                     </div>
                     <button type="submit" value="Reply" className="send-btn">
                       Reply
