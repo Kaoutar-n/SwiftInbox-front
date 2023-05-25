@@ -8,6 +8,7 @@ import "../Charts";
 import "./sendcostume.css";
 import JoditEditor from "jodit-react";
 import Button from "@mui/material/Button";
+import { toast } from "react-toastify";
 
 
 // import './script'
@@ -53,6 +54,7 @@ export function SendCostume() {
           .then((response) => response.json())
           .then((data) => {
             console.log(data);      
+            toast.success("Email Sent Successfully")
           })
             
       }else{
@@ -74,6 +76,7 @@ export function SendCostume() {
           .then((response) => response.json())
           .then((data) => {
             console.log(data);      
+            toast.success("Email Sent Successfully")
           })
        }
        
@@ -120,7 +123,7 @@ export function SendCostume() {
                 
                   />
               </div>
-              <Button  onClick={()=>sendEmail(1)}  >Send</Button>
+              <Button  onClick={()=>sendEmail(1)} className="send-btn"  >Send</Button>
             </div>
           )}
           {show2 && (
@@ -128,7 +131,7 @@ export function SendCostume() {
               <div id="input-feild">
                 
               </div>
-              <Button type="submit" onClick={()=>sendEmail(0)}  >Send</Button>
+              <Button  className="send-btn" onClick={()=>sendEmail(0)}  >Send</Button>
             </div>
           )}
         </form>

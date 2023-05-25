@@ -14,6 +14,7 @@ import JoditEditor from 'jodit-react';
 import { SideBar } from "../SideBar";
 import { TopBar } from "../TopBar";
 import { Button } from "@mui/material";
+import { toast } from "react-toastify";
 
 export function Costume() {
   const editor = useRef(null);
@@ -23,7 +24,7 @@ export function Costume() {
   const storedData = localStorage.getItem("userDetails");
   const [data, setData] = useState<any>([]);
 
-  useEffect(()=>{
+  const GetData = () =>{
     if (storedData) {
       const parseddata = JSON.parse(storedData);
       const id = parseddata.id;
@@ -49,6 +50,10 @@ export function Costume() {
     } else {
       console.error("No ID found in local storage");
     }
+  } 
+
+  useEffect(()=>{
+    GetData();
   },[])
 
 
@@ -74,6 +79,7 @@ export function Costume() {
         .then((data) => {
           //console.log(body);
           console.log(data);
+          toast.success("Template Saved Successfuly!")
                    
         })
         
@@ -129,7 +135,7 @@ export function Costume() {
                   />
                   {/* <textarea placeholder="Message" name="message" rows={15} ></textarea> */}
                 </div>
-                <button  onClick={saveCostumEmail} className="send-btn">Save</button>
+                <Button  onClick={saveCostumEmail} className="send-btn">Save</Button>
               </form>
             </div>
           </div>

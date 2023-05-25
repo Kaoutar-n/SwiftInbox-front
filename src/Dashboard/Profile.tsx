@@ -30,7 +30,8 @@ export function Profile() {
   const [userConfirmPassword, setuserConfirmPassword] = useState('');
   const [showProfile, setShowProfile] = useState(true);
 
-  useEffect(() => {
+
+  const GetData = () => {
     const storedData = localStorage.getItem("userDetails");
     if (storedData) {
       try {
@@ -66,6 +67,9 @@ export function Profile() {
     } else {
       console.error("No ID found in local storage");
     }
+  }
+  useEffect(() => {
+   GetData();
   }, []);
 
  
@@ -89,6 +93,8 @@ export function Profile() {
   const handleShow = () => {
     setShow(true);
     setShow2(false);
+    
+
     link2?.classList.remove("active");
     link1?.classList.add("active");
   };
@@ -130,7 +136,7 @@ export function Profile() {
             <div  className="table-data profile-sidbar">
               <div className="profile-mang ">
                 <div className="head">
-                  <h3>{data.firstName}{data.lastName}</h3>
+                  <h3>{data.firstName} {data.lastName}</h3>
                 </div>
                 <div className="profile-sidebar-container">
                   <div className="profile-sidebar-item" >
