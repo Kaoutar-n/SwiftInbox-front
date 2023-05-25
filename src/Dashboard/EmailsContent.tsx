@@ -13,7 +13,12 @@ import { FormEvent } from "react";
 
 import axios from "axios";
 import { Button } from "@mui/material";
+import { toast } from "react-toastify";
 // import './script'
+
+const storedData = localStorage.getItem("userDetails");
+const parseddata = JSON.parse(storedData!);
+const id = parseddata.id;
 
 export function EmailsContent() {
   const status = "contacts";
@@ -30,7 +35,34 @@ export function EmailsContent() {
   const [data, setdata] = useState<any>([]);
   const [file, setFile] = useState();
 
-  const storedData = localStorage.getItem("userDetails");
+  const GetData  = () => {
+    if (id) {
+    
+      const requestBody = { id: id };
+      fetch("http://localhost:53264/api/Contacts/getcontact", {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain",
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+        body: JSON.stringify(requestBody),
+      })
+        .then((response) => response.json())
+
+        .then((data) => {
+          // Process the returned data
+
+          console.log(data);
+          setdata(data);
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+          toast.error("No Data Found!")
+        });
+    } else {
+      console.error("No ID found in local storage");
+    }
+  }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (storedData) {
@@ -48,50 +80,26 @@ export function EmailsContent() {
       axios
         .post(url, data)
         .then((result) => {
-          setName(result.data.name);
-          setEmail(result.data.email);
-          setPhone(result.data.phone);
-          setIndustry(result.data.industry);
-          window.location.reload();
+          setName('');
+          setEmail('');
+          setPhone('');
+          setIndustry('');
+          GetData();
+          toast.success("User Added Successfuly!")
         })
         .catch((err) => {
           alert(err.message);
+          toast.error("Failed To Add The User!")
         });
     }
   };
 
+  
   useEffect(() => {
-    if (storedData) {
-      const parseddata = JSON.parse(storedData);
-      const id = parseddata.id;
-      const requestBody = { id: id };
-      fetch("http://localhost:53264/api/Contacts/getcontact", {
-        method: "POST",
-        headers: {
-          Accept: "application/json, text/plain",
-          "Content-Type": "application/json;charset=UTF-8",
-        },
-        body: JSON.stringify(requestBody),
-      })
-        .then((response) => response.json())
-
-        .then((data) => {
-          // Process the returned data
-          console.log(data);
-          setdata(data);
-        })
-        .catch((error) => {
-          console.error("Error: ", error);
-        });
-    } else {
-      console.error("No ID found in local storage");
-    }
-  }, [storedData]);
+    id && GetData() ;
+  }, []);
 
   const handleImport = () => {
-    if (storedData) {
-      const parseddata = JSON.parse(storedData);
-      const id = parseddata.id;
       if (file && id) {
         const formData = new FormData();
         formData.append("file", file);
@@ -102,15 +110,17 @@ export function EmailsContent() {
           .then((response) => {
             console.log("File uploaded successfully");
             setFile(response.data.file);
-            window.location.reload();
+            GetData();
+            toast.success("Users Added Successfuly!")
+
           })
           .catch((error) => {
             console.error("Error uploading file:", error);
+            toast.error("Failed To Add The User!")
           });
       } else {
         console.log("Please select a file");
       }
-    }
   };
 
   const handleExport = () => {
@@ -123,6 +133,7 @@ export function EmailsContent() {
     tempLink.href = csvURL;
     tempLink.setAttribute("download", "contacts.csv");
     tempLink.click();
+    toast.success("Users Exported Successfuly!")
   };
 
   const convertArrayOfObjectsToCSV = (data: { [key: string]: string }[]) => {
@@ -176,15 +187,17 @@ export function EmailsContent() {
       if (response.ok) {
         // Data updated successfully
         console.log("Data updated successfully");
-        window.location.reload();
+        GetData();
+        toast.success("User Updated Succesfuly!")
       } else {
-        // Handle the error if the update was unsuccessful
         throw new Error("Data update failed");
+        toast.error("Data update failed!")
       }
     } catch (error) {
       throw new Error("Data update failed");
     }
   };
+  //Delete
   const handleDelete = (id: Key) => {
     fetch("http://localhost:53264/api/Contacts/deletecontact", {
       method: "DELETE",
@@ -195,11 +208,12 @@ export function EmailsContent() {
     })
       .then((response) => {
         if (response.ok) {
-          // User deleted successfully
           console.log("User deleted.");
-          window.location.reload();
+          GetData();
+          toast.success("User Deleted Succesfuly!")
         } else {
-          // Handle error case
+          // Handle error 
+          toast.error("Failed to delete user !")
           console.error("Failed to delete user.");
         }
       })
