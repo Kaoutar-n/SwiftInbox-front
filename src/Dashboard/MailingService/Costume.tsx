@@ -106,10 +106,7 @@ export function Costume() {
                 </li>
               </ul>
             </div>
-            <a href="" className="btn-download">
-              <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
-              <span className="text">Download PDF</span>
-            </a>
+           
           </div>
           <div className="table-data">
             <div className="Emails-mang">
