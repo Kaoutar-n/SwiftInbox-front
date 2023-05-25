@@ -210,6 +210,8 @@ export function EmailsContent() {
       });
   };
 
+
+  
   return (
     <div className="home">
       <SideBar status={status} />
