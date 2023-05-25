@@ -94,7 +94,7 @@ export function Emails() {
         <main>
           <div className="head-title">
             <div className="left">
-              <h1>Emails</h1>
+              <h1>Inbox</h1>
               <ul className="breadcrumb">
                 <li>
                   <a href="/">Dashboard</a>
@@ -104,14 +104,14 @@ export function Emails() {
                 </li>
                 <li>
                   <a className="active" href="/">
-                    Emails
+                    Inbox
                   </a>
                 </li>
               </ul>
             </div>
           </div>
-          <div className="table-data">
-            <div className="Emails-mang">
+          <div className="table-data tableHome" >
+            <div className="Emails-mang " id="tableHome">
               <div className="head">
                 <h3>Recent Emails</h3>
                 <div className="form-input">

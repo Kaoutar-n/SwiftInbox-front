@@ -115,15 +115,11 @@ export function Costume() {
               </div>
               <form action="">
                 <div id="input-feild">
-                  <i>
-                  <FontAwesomeIcon icon={faShare} className="icon" />
-                  </i>
+                 
                   <input type="text"  defaultValue={data.subject} placeholder="Subject" onChange={(e) => setSubject(e.target.value)} name="subject" />
                 </div>
                 <div id="input-feild">
-                  <i>
-                  <FontAwesomeIcon icon={faMessage} className="icon" />
-                  </i>
+                  
                   <JoditEditor
                   
                   ref={editor}
@@ -133,7 +129,7 @@ export function Costume() {
                   />
                   {/* <textarea placeholder="Message" name="message" rows={15} ></textarea> */}
                 </div>
-                <Button   onClick={saveCostumEmail} className="send-btn">Save</Button>
+                <button  onClick={saveCostumEmail} className="send-btn">Save</button>
               </form>
             </div>
           </div>

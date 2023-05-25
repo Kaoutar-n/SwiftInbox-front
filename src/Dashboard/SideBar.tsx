@@ -46,7 +46,7 @@ export function SideBar(props: NavbarProps) {
           <li className={activeMenu === "emails" ? "actived" : ""}>
             <NavLink to="/Emails">
               <FontAwesomeIcon icon={faMailBulk} className="ico" />
-              <span className="text"> Emails</span>
+              <span className="text">Inbox</span>
             </NavLink>
           </li>
           <li className={activeMenu === "costume" ? "actived" : ""}>
@@ -54,7 +54,7 @@ export function SideBar(props: NavbarProps) {
               to="/costume"
             >
               <FontAwesomeIcon icon={faEnvelope} className="ico" />
-              <span className="text">Configure Email</span>
+              <span className="text">Template</span>
             </NavLink>
           </li>
           <li className={activeMenu === "send" ? "actived" : ""}>

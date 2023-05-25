@@ -127,7 +127,7 @@ export function Profile() {
             </div>
           </div>
           <div className="profile-side-main">
-            <div className="table-data profile-sidbar">
+            <div  className="table-data profile-sidbar">
               <div className="profile-mang ">
                 <div className="head">
                   <h3>{data.firstName}{data.lastName}</h3>
