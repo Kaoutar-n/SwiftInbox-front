@@ -22,6 +22,8 @@ import {
 } from "react";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
+import { Navigate, useNavigate } from "react-router-dom";
+import ViewEmail from "./ViewEmail";
 
 export function Emails() {
   const status = "emails";
@@ -30,10 +32,18 @@ export function Emails() {
   const [data, setData] = useState<any>([]);
   const [viewEmail, setviewEmail] = useState(false);
   const [mailData, setMailData] = useState<any>([]);
+  const navigate = useNavigate();
 
   const toggleviewEmail = () => {
     setviewEmail(!viewEmail);
   };
+  const toggleviewEmailRemove = () => {
+    if(viewEmail === true){
+      setviewEmail(false);
+    }
+       
+  };
+ 
 
   function extractSentence(sentence: string) {
     const regex = /Re:(.*?)\(Trial Version\)/;
@@ -107,7 +117,7 @@ export function Emails() {
   return (
     <div className="home">
       <SideBar status={status} />
-      <section id="content">
+      <section id="content" onClick={() => toggleviewEmailRemove()} >
         <TopBar />
         <main>
           <div className="head-title">
@@ -128,7 +138,7 @@ export function Emails() {
               </ul>
             </div>
           </div>
-          <div className="table-data">
+          <div className="table-data" >
             <div className="Emails-mang">
               <div className="head">
                 <h3>Recent Emails</h3>
@@ -182,9 +192,10 @@ export function Emails() {
                   )}
                 </tbody>
               </table>
-              {viewEmail && (
+              {viewEmail &&  (
+                
                 <div className="emailV-container">
-                  <div className="overlay" onClick={toggleviewEmail}></div>
+                  {/* <div id="overlay" onClick={() => toggleviewEmail()}></div> */}
                   <div className="head">
                     <h3>Email Received</h3>
                   </div>

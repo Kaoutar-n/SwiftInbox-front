@@ -35,10 +35,7 @@ export function TopBar() {
       />
       <form action="">
         <div className="form-input">
-          <input type="search" placeholder="Search.." />
-          <button type="submit" className="search-btn">
-            <FontAwesomeIcon icon={faSearch} className="ico" />
-          </button>
+         
         </div>
       </form>
       <a href="#" className="notification">

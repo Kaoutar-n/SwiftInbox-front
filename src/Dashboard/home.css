@@ -158,6 +158,7 @@ transition: width .3s ease;
 /*content*/
 #content {
 	position: relative;
+	
 	width: calc(100% - 200px);
 	left: 200px;
 	transition: .3s ease;
@@ -334,7 +335,16 @@ border-radius: 50%;
 	}
 }
 
-
+@media screen and (min-width:1300) {
+	#content {
+		position: relative;
+		
+		width: calc(100% - 100px);
+		height: 100%;
+		left: 200px;
+		transition: .3s ease;
+	}
+}
 
 /*NavBar*/
 
@@ -429,19 +439,31 @@ color: var(--orange);
 	flex-wrap: wrap;
 	grid-gap: 24px;
 	margin-top: 24px;
+	
 	width: 100%;
+	height: 100%;
 	color: var(--dark);
+
 }
 #content main .table-data > div{
 	border-radius: 20px;
 	background: var(--light);
 	padding: 24px;
+	margin-bottom: 30px;
+	width: 80%;
+	
 	overflow-x: auto;
+	position: fixed;
+	overflow: hidden;
+	overflow-y: scroll;
+	
 
 }
 #content main .table-data .Emails-mang{
 	flex-grow: 1;
 	flex-basis: 500px;
+	height: 65%;
+	
 }
 #content main .table-data .head{
 	display: flex;
@@ -450,11 +472,14 @@ color: var(--orange);
 	margin-bottom: 24px;
 font-size: 24px;
 
+
 }
+
 #content main .table-data .head h3{
 	margin-right: auto;
 	
 }
+
 #content main .table-data .head .ico{
 cursor: pointer;
 }
@@ -534,7 +559,6 @@ border-left: 10px solid var(--orange);
 
 
 }
-
 
 /*charts*/
 .graphBox{
@@ -623,30 +647,46 @@ border-left: 10px solid var(--orange);
 /* viewEmail */
 .emailV-container .overlay{
 	width: 200vw;
-    height: 200vh;
+    height: fit-content;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     position: fixed;
+	
+}
+#overlay{
+	width: 100%;
+	height: 100%;
+	background-color: #3c91e6;
 }
 .emailV-container{
 	position: absolute;
-    top: 55%;
-    left: 45%;
+    top: 50%;
+    left: 50%;
+	bottom: 2%;
     transform: translate(-50%, -50%);
     line-height: 1.4;
 	border-radius: 15px;
     padding: 14px 28px;
     border-radius: 3px;
     max-width: 800px;
-    min-width: 200px;
+	min-width: 400px;
+   
     background: #fff;
     justify-content: space-between;
 	box-shadow: 3px 3px 10px 6px rgba(0,0,0,0.06);
 	align-items: center;
     justify-content: center;
     transition: 1s;
+	
+		position: fixed;
+		overflow: hidden;
+		overflow-y: scroll;
+	
+}
+.emailV-container form{
+	
 }
 .emailV-container .send-btn{
 	width: 20%;
