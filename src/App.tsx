@@ -36,8 +36,6 @@ function App(): JSX.Element {
           <Route path="/ContactUs" element={<ContactUs />} />
           <Route path="/services" element={<Services />} />
           <Route path="*" element={<PageNotFound />} />
-    
-          
 
           <Route
             path="/home/*"

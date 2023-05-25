@@ -7,19 +7,21 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-
+import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 import "./home.css";
 
 import "./Charts";
-
+import {
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactFragment,
+  ReactPortal,
+  useEffect,
+  useState,
+} from "react";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
-<<<<<<< HEAD
-import { Navigate, useNavigate } from "react-router-dom";
-import ViewEmail from "./ViewEmail";
-=======
-import { Key, useEffect, useState } from "react";
->>>>>>> 08f40b579d003df89aee84c24c9b751f2563b4c6
 
 export function Emails() {
   const status = "emails";
@@ -27,101 +29,85 @@ export function Emails() {
   const storedData = localStorage.getItem("userDetails");
   const [data, setData] = useState<any>([]);
   const [viewEmail, setviewEmail] = useState(false);
-<<<<<<< HEAD
   const [mailData, setMailData] = useState<any>([]);
-  const navigate = useNavigate();
-=======
-  const [mailData,setMailData] = useState<any>([]);
->>>>>>> 08f40b579d003df89aee84c24c9b751f2563b4c6
 
   const toggleviewEmail = () => {
     setviewEmail(!viewEmail);
   };
-<<<<<<< HEAD
-  const toggleviewEmailRemove = () => {
-    if(viewEmail === true){
-      setviewEmail(false);
-    }
-       
-  };
- 
 
   function extractSentence(sentence: string) {
-=======
-  
-  function extractSentence(sentence : string) {
->>>>>>> 08f40b579d003df89aee84c24c9b751f2563b4c6
     const regex = /Re:(.*?)\(Trial Version\)/;
     const match = sentence.match(regex);
-  
+
     let extractedSentence = "";
     if (match && match.length > 1) {
       extractedSentence = match[1].trim();
     }
-  
+
     return extractedSentence;
   }
 
-  function Classifier(cat : number) {
-    if (cat === 0) {return "Negative";}
-
-    else if(cat === 1)  { return "Positive";}
-
-    else  {return "Neutral";}
-  }
-
-
-useEffect(()=>{
-  if (storedData) {
-    const parseddata = JSON.parse(storedData);
-    const id = parseddata.id;
-    fetch("http://localhost:53264/api/email/receive", {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain",
-        "Content-Type": "application/json;charset=UTF-8"
-      },
-      body: JSON.stringify(id),
-    })
-      .then((response) => response.json())
-  
-      .then((data) => {
-        console.log(typeof data);
-        setData(data);           
-      })
-      .catch((error) => {
-        console.error("Error: ", error);
-      });
-  } else {
-    console.error("No ID found in local storage");
-  }
-},[])
-
-function mailInfo(id : Key){
-  data.forEach((item: any) => {
-    if(item.id === id){
-      toggleviewEmail();
-      setMailData(item);
+  function Classifier(cat: number) {
+    if (cat === 0) {
+      return "Negative";
+    } else if (cat === 1) {
+      return "Positive";
+    } else {
+      return "Neutral";
     }
-   
-  });
-}
-function parseBody(body : string) {
-  const regex = /^(.*)(?= On || Le )/i;
-  const match = body.trim().match(regex);
-  let parsedData = "";
-  if (match && match.length > 0) {
-    parsedData = match[0].trim();
-    parsedData = parsedData.replace(/(\r\n|\n|\r)/gm, ' ');
   }
-  console.log(match);
-  return parsedData;
-}
+
+  useEffect(() => {
+    if (storedData) {
+      const parseddata = JSON.parse(storedData);
+      const id = parseddata.id;
+      fetch("http://localhost:53264/api/email/receive", {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain",
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+        body: JSON.stringify(id),
+      })
+        .then((response) => response.json())
+
+        .then((data) => {
+          console.log(typeof data);
+          setData(data);
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+        });
+    } else {
+      console.error("No ID found in local storage");
+    }
+  }, []);
+
+  function mailInfo(id: Key) {
+    data.forEach((item: any) => {
+      if (item.id === id) {
+        toggleviewEmail();
+        setMailData(item);
+      }
+    });
+  }
+  function parseBody(body: string) {
+    const regex = /^(.*)(?= On || Le )/i;
+    const match = body.match(regex);
+
+    let parsedData = "";
+    if (match && match.length > 0) {
+      parsedData = match[0].trim();
+      parsedData = parsedData.replace(/(\r\n|\n|\r)/gm, " ");
+    }
+
+    return parsedData;
+  }
 
   return (
     <div className="home">
       <SideBar status={status} />
-      <section id="content" onClick={() => toggleviewEmailRemove()} >
+      <section id="content">
         <TopBar />
         <main>
           <div className="head-title">
@@ -141,9 +127,8 @@ function parseBody(body : string) {
                 </li>
               </ul>
             </div>
-
           </div>
-          <div className="table-data" >
+          <div className="table-data">
             <div className="Emails-mang">
               <div className="head">
                 <h3>Recent Emails</h3>
@@ -172,27 +157,34 @@ function parseBody(body : string) {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((mail: { id: Key ; sendername: string ; senderemail: string ; subject: string; category: number; }) => (
-                    <tr key={mail.id} onClick={() => mailInfo(mail.id)}>
-                      <td>
-                        <p>{mail.sendername}</p>
-                      </td>
-                      <td>{mail.senderemail}</td>
-                      <td>{mail.subject}</td>
-                      <td>{Classifier(mail.category)}</td>
-                      <td>
-                        <a onClick={toggleviewEmail}>
-                          <span className="status completed">View</span>
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
+                  {data.map(
+                    (mail: {
+                      id: Key;
+                      sendername: string;
+                      senderemail: string;
+                      subject: string;
+                      category: number;
+                    }) => (
+                      <tr key={mail.id} onClick={() => mailInfo(mail.id)}>
+                        <td>
+                          <p>{mail.sendername}</p>
+                        </td>
+                        <td>{mail.senderemail}</td>
+                        <td>{extractSentence(mail.subject)}</td>
+                        <td>{Classifier(mail.category)}</td>
+                        <td>
+                          <a onClick={toggleviewEmail}>
+                            <span className="status completed">View</span>
+                          </a>
+                        </td>
+                      </tr>
+                    )
+                  )}
                 </tbody>
               </table>
-              {viewEmail &&  (
-                
+              {viewEmail && (
                 <div className="emailV-container">
-                  {/* <div id="overlay" onClick={() => toggleviewEmail()}></div> */}
+                  <div className="overlay" onClick={toggleviewEmail}></div>
                   <div className="head">
                     <h3>Email Received</h3>
                   </div>
@@ -207,22 +199,15 @@ function parseBody(body : string) {
                       <i>
                         <FontAwesomeIcon icon={faShare} className="icon" />
                       </i>
-                      <p>Subject: {mailData.subject}</p>
+                      <p>Subject: {extractSentence(mailData.subject)}</p>
                     </div>
                     <div id="input-feild">
                       <i>
-                        <FontAwesomeIcon
-                          icon={faMessage}
-                          className="icon"
-                        />
+                        <FontAwesomeIcon icon={faMessage} className="icon" />
                       </i>
-                      <p>{mailData.body}</p>
+                      <p>{parseBody(mailData.body)}</p>
                     </div>
-                    <button
-                      type="submit"
-                      value="Reply"
-                      className="send-btn"
-                    >
+                    <button type="submit" value="Reply" className="send-btn">
                       Reply
                     </button>
                   </form>
