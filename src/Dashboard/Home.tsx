@@ -77,7 +77,7 @@ export function Home() {
               </span>
             </li>
           </ul>
-          <div id="tableHome" className="table-data">
+          <div className="table-data">
             <div className="Emails-mang">
               <div className="head">
                 <h3>Recent Mails</h3>

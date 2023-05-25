@@ -8,30 +8,35 @@ from{
 }
 form input, textarea{
     /* margin-top: 10px; */
-    width: 70%;
+    width: 95%;
     border-top: none;
     border-left: none;
     border-right: none;
    background: none;
-    border-bottom: 1px solid #000;
+    border-bottom: 0.5px solid #786767;
     outline: none;
     
 }
 
 .costumefrom form input, textarea{
     /* margin-top: 10px; */
-    width: 70%;
+    width: 100%;
     border-top: none;
     border-left: none;
     border-right: none;
    
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #786767;
     outline: none;
 }
 #input-feild{
     padding-bottom: 20px ;
     display: flex;
     align-items: center;
+
+}
+#input-feild input{
+    padding: 10px;
+    padding-inline: 5px;
 
 }
 #input-feild i{
@@ -46,7 +51,5 @@ form input, textarea{
     color: #fff;
     font-size: 16px;
     padding: 6px 0;
-    border-radius: 50px;
-
-
+    border-radius: 10px;
 }

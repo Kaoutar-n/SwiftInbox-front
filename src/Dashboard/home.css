@@ -445,7 +445,7 @@ color: var(--orange);
 	color: var(--dark);
 
 }
-#content main .table-data > div{
+#content main .tableHome  > div{
 	border-radius: 20px;
 	background: var(--light);
 	padding: 24px;
@@ -459,7 +459,7 @@ color: var(--orange);
 	
 
 }
-#content main .table-data #tableHome >div{
+#content main .table-data  >div{
 	border-radius: 20px;
 	background: var(--light);
 	padding: 24px;
@@ -467,8 +467,6 @@ color: var(--orange);
 	width: 80%;
 	
 	overflow-x: auto;
-
-	
 }
 #content main .table-data .Emails-mang{
 	flex-grow: 1;
