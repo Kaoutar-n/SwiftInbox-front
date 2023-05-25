@@ -7,13 +7,14 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
+
 import "./home.css";
 
 import "./Charts";
-import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect, useState } from "react";
+
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
+import { Key, useEffect, useState } from "react";
 
 export function Emails() {
   const status = "emails";

@@ -87,7 +87,7 @@ export function EmailsContent() {
     } else {
       console.error("No ID found in local storage");
     }
-  }, []);
+  }, [storedData]);
 
   const handleImport = () => {
     if (storedData) {
@@ -210,8 +210,6 @@ export function EmailsContent() {
       });
   };
 
-
-  
   return (
     <div className="home">
       <SideBar status={status} />
