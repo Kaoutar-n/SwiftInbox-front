@@ -20,10 +20,12 @@ import { Profile } from "./Dashboard/Profile";
 import TableTemp from "./TableTemp";
 
 import PrivateRoute from "./PrivateRoute";
+import { ToastContainer } from "react-toastify";
 
 function App(): JSX.Element {
   return (
     <div>
+      <ToastContainer />
       <BrowserRouter>
         <Routes>
           <Route path="/MainHome" element={<MainHome />} />
@@ -34,6 +36,8 @@ function App(): JSX.Element {
           <Route path="/ContactUs" element={<ContactUs />} />
           <Route path="/services" element={<Services />} />
           <Route path="*" element={<PageNotFound />} />
+    
+          
 
           <Route
             path="/home/*"

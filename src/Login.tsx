@@ -1,7 +1,8 @@
 import React from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import "./Login.css";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
@@ -38,16 +39,17 @@ export function Login() {
         })
         .then((resp) => {
           console.log(resp);
-          toast.success("Success");
+          toast.success("You Logged in successfully");
           sessionStorage.setItem("username", username);
           localStorage.setItem("logged", "true");
           sessionStorage.setItem("jwttoken", resp.jwtToken);
           localStorage.setItem("userDetails", JSON.stringify(resp)); 
           navigate('/home');
+         
           
         })
         .catch((err) => {
-          toast.error("Login Failed due to: " + err.message);
+          toast.error("UserName or Password is incorrect");
           
         });
     }
@@ -74,6 +76,7 @@ export function Login() {
       
       <div className="wrapper">
         <div className="form-box login">
+   
           <h2>Login</h2>
           <form action="#" onSubmit={ProceedLoginusingAPI}>
             <div className="input-box">
@@ -89,7 +92,7 @@ export function Login() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
-              <label> Email</label>
+              <label> UserName</label>
             </div>
             <div className="input-box">
               <span className="icon">
@@ -133,6 +136,7 @@ export function Login() {
       </div>
     
     </div>
+    
 
   );
 }

@@ -7,6 +7,7 @@ import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 interface Props {
   onFormSwitch: (formName: string) => void;
@@ -37,10 +38,12 @@ export const Register = () => {
     axios
        .post(url, data)
        .then((result) => {
-        navigate("/Home");
+        toast.success("You are Registred Successfully!");
+        navigate("/");
        })
        .catch((err) => {
         alert(err.message);
+        toast.error("Registration Failed!");
        });
   };
 
