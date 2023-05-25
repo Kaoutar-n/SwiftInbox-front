@@ -16,11 +16,12 @@ import { Button } from "@mui/material";
 import { toast } from "react-toastify";
 // import './script'
 
-const storedData = localStorage.getItem("userDetails");
-const parseddata = JSON.parse(storedData!);
-const id = parseddata.id;
+
 
 export function EmailsContent() {
+  const storedData = localStorage.getItem("userDetails");
+  const parseddata = JSON.parse(storedData!);
+  const id = parseddata.id;
   const status = "contacts";
   const [query, setQuery] = useState("");
   const [name, setName] = useState("");

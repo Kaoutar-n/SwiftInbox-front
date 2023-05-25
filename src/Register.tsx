@@ -22,6 +22,14 @@ export const Register = () => {
   const [phone, setPhone] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const navigate = useNavigate();
+  function validateEmail(email: string){
+    const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(emailRegex.test(email)){
+      setEmail(email);
+    }else{
+      toast.error("Invalid email");
+    }
+  }
 
   const ProceedRegisterusingAPI = (e: { preventDefault: () => void }) => {
     e.preventDefault();
