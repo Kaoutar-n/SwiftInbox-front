@@ -34,6 +34,12 @@ export function Emails() {
   const toggleviewEmail = () => {
     setviewEmail(!viewEmail);
   };
+  const toggleviewEmailRemove = () => {
+    if (viewEmail === true){
+      setviewEmail(false);
+    }
+    
+  };
   
   function Classifier(cat: number) {
     if (cat === 0) {
@@ -84,7 +90,7 @@ export function Emails() {
   return (
     <div className="home">
       <SideBar status={status} />
-      <section id="content">
+      <section id="content" onClick={toggleviewEmailRemove}>
         <TopBar />
         <main>
           <div className="head-title">
@@ -161,7 +167,7 @@ export function Emails() {
               </table>
               {viewEmail && (
                 <div className="emailV-container">
-                  <div className="overlay" onClick={toggleviewEmail}></div>
+                  {/* <div className="overlay" onClick={toggleviewEmail}></div> */}
                   <div className="head">
                     <h3>Email Received</h3>
                   </div>
