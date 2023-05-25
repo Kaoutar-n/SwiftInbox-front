@@ -7,7 +7,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
+
 import "./home.css";
 
 import "./Charts";
@@ -31,6 +31,13 @@ export function Emails() {
     setviewEmail(!viewEmail);
   };
 
+  const toggleviewEmailRemove = () => {
+    if (viewEmail === true){
+      setviewEmail(false);
+    }
+    
+  };
+  
   function Classifier(cat: number) {
     if (cat === 0) {
       return "Negative";
@@ -80,7 +87,7 @@ export function Emails() {
   return (
     <div className="home">
       <SideBar status={status} />
-      <section id="content">
+      <section id="content" onClick={toggleviewEmailRemove}>
         <TopBar />
         <main>
           <div className="head-title">
@@ -157,7 +164,7 @@ export function Emails() {
               </table>
               {viewEmail && (
                 <div className="emailV-container">
-                  <div className="overlay" onClick={toggleviewEmail}></div>
+                  {/* <div className="overlay" onClick={toggleviewEmail}></div> */}
                   <div className="head">
                     <h3>Email Received</h3>
                   </div>
