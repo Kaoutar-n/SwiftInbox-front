@@ -11,7 +11,15 @@ import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 import "./home.css";
 
 import "./Charts";
-import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect, useState } from "react";
+import {
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactFragment,
+  ReactPortal,
+  useEffect,
+  useState,
+} from "react";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
 
@@ -21,82 +29,80 @@ export function Emails() {
   const storedData = localStorage.getItem("userDetails");
   const [data, setData] = useState<any>([]);
   const [viewEmail, setviewEmail] = useState(false);
-  const [mailData,setMailData] = useState<any>([]);
+  const [mailData, setMailData] = useState<any>([]);
 
   const toggleviewEmail = () => {
     setviewEmail(!viewEmail);
   };
-  
-  function extractSentence(sentence : string) {
+
+  function extractSentence(sentence: string) {
     const regex = /Re:(.*?)\(Trial Version\)/;
     const match = sentence.match(regex);
-  
+
     let extractedSentence = "";
     if (match && match.length > 1) {
       extractedSentence = match[1].trim();
     }
-  
+
     return extractedSentence;
   }
 
-  function Classifier(cat : number) {
-    if (cat === 0) {return "Negative";}
-
-    else if(cat === 1)  { return "Positive";}
-
-    else  {return "Neutral";}
-  }
-
-
-useEffect(()=>{
-  if (storedData) {
-    const parseddata = JSON.parse(storedData);
-    const id = parseddata.id;
-    fetch("http://localhost:53264/api/email/receive", {
-      method: "POST",
-      headers: {
-        Accept: "application/json, text/plain",
-        "Content-Type": "application/json;charset=UTF-8"
-      },
-      body: JSON.stringify(id),
-    })
-      .then((response) => response.json())
-  
-      .then((data) => {
-        console.log(typeof data);
-        setData(data);           
-      })
-      .catch((error) => {
-        console.error("Error: ", error);
-      });
-  } else {
-    console.error("No ID found in local storage");
-  }
-},[])
-
-function mailInfo(id : Key){
-  
-  data.forEach((item: any) => {
-    if(item.id === id){
-      toggleviewEmail();
-      setMailData(item);
+  function Classifier(cat: number) {
+    if (cat === 0) {
+      return "Negative";
+    } else if (cat === 1) {
+      return "Positive";
+    } else {
+      return "Neutral";
     }
-   
-  });
-    
-}
-function parseBody(body : string) {
-  const regex = /^(.*)(?= On || Le )/i;
-  const match = body.match(regex);
-
-  let parsedData = "";
-  if (match && match.length > 0) {
-    parsedData = match[0].trim();
-    parsedData = parsedData.replace(/(\r\n|\n|\r)/gm, ' ');
   }
 
-  return parsedData;
-}
+  useEffect(() => {
+    if (storedData) {
+      const parseddata = JSON.parse(storedData);
+      const id = parseddata.id;
+      fetch("http://localhost:53264/api/email/receive", {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain",
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+        body: JSON.stringify(id),
+      })
+        .then((response) => response.json())
+
+        .then((data) => {
+          console.log(typeof data);
+          setData(data);
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+        });
+    } else {
+      console.error("No ID found in local storage");
+    }
+  }, []);
+
+  function mailInfo(id: Key) {
+    data.forEach((item: any) => {
+      if (item.id === id) {
+        toggleviewEmail();
+        setMailData(item);
+      }
+    });
+  }
+  function parseBody(body: string) {
+    const regex = /^(.*)(?= On || Le )/i;
+    const match = body.match(regex);
+
+    let parsedData = "";
+    if (match && match.length > 0) {
+      parsedData = match[0].trim();
+      parsedData = parsedData.replace(/(\r\n|\n|\r)/gm, " ");
+    }
+
+    return parsedData;
+  }
 
   return (
     <div className="home">
@@ -121,7 +127,6 @@ function parseBody(body : string) {
                 </li>
               </ul>
             </div>
-
           </div>
           <div className="table-data">
             <div className="Emails-mang">
@@ -152,21 +157,29 @@ function parseBody(body : string) {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((mail: { id: Key ; sendername: string ; senderemail: string ; subject: string; category: number; }) => (
-                    <tr key={mail.id} onClick={() => mailInfo(mail.id)}>
-                      <td>
-                        <p>{mail.sendername}</p>
-                      </td>
-                      <td>{mail.senderemail}</td>
-                      <td>{extractSentence(mail.subject)}</td>
-                      <td>{Classifier(mail.category)}</td>
-                      <td>
-                        <a onClick={toggleviewEmail}>
-                          <span className="status completed">View</span>
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
+                  {data.map(
+                    (mail: {
+                      id: Key;
+                      sendername: string;
+                      senderemail: string;
+                      subject: string;
+                      category: number;
+                    }) => (
+                      <tr key={mail.id} onClick={() => mailInfo(mail.id)}>
+                        <td>
+                          <p>{mail.sendername}</p>
+                        </td>
+                        <td>{mail.senderemail}</td>
+                        <td>{extractSentence(mail.subject)}</td>
+                        <td>{Classifier(mail.category)}</td>
+                        <td>
+                          <a onClick={() => toggleviewEmail()}>
+                            <span className="status completed">View</span>
+                          </a>
+                        </td>
+                      </tr>
+                    )
+                  )}
                 </tbody>
               </table>
               {viewEmail && (
@@ -190,18 +203,11 @@ function parseBody(body : string) {
                     </div>
                     <div id="input-feild">
                       <i>
-                        <FontAwesomeIcon
-                          icon={faMessage}
-                          className="icon"
-                        />
+                        <FontAwesomeIcon icon={faMessage} className="icon" />
                       </i>
                       <p>{parseBody(mailData.body)}</p>
                     </div>
-                    <button
-                      type="submit"
-                      value="Reply"
-                      className="send-btn"
-                    >
+                    <button type="submit" value="Reply" className="send-btn">
                       Reply
                     </button>
                   </form>

@@ -87,7 +87,7 @@ export function EmailsContent() {
     } else {
       console.error("No ID found in local storage");
     }
-  }, []);
+  }, [storedData]);
 
   const handleImport = () => {
     if (storedData) {
