@@ -75,7 +75,6 @@ useEffect(()=>{
 },[])
 
 function mailInfo(id : Key){
-  
   data.forEach((item: any) => {
     if(item.id === id){
       toggleviewEmail();
@@ -83,18 +82,16 @@ function mailInfo(id : Key){
     }
    
   });
-    
 }
 function parseBody(body : string) {
   const regex = /^(.*)(?= On || Le )/i;
-  const match = body.match(regex);
-
+  const match = body.trim().match(regex);
   let parsedData = "";
   if (match && match.length > 0) {
     parsedData = match[0].trim();
     parsedData = parsedData.replace(/(\r\n|\n|\r)/gm, ' ');
   }
-
+  console.log(match);
   return parsedData;
 }
 
@@ -158,7 +155,7 @@ function parseBody(body : string) {
                         <p>{mail.sendername}</p>
                       </td>
                       <td>{mail.senderemail}</td>
-                      <td>{extractSentence(mail.subject)}</td>
+                      <td>{mail.subject}</td>
                       <td>{Classifier(mail.category)}</td>
                       <td>
                         <a onClick={toggleviewEmail}>
@@ -186,7 +183,7 @@ function parseBody(body : string) {
                       <i>
                         <FontAwesomeIcon icon={faShare} className="icon" />
                       </i>
-                      <p>Subject: {extractSentence(mailData.subject)}</p>
+                      <p>Subject: {mailData.subject}</p>
                     </div>
                     <div id="input-feild">
                       <i>
@@ -195,7 +192,7 @@ function parseBody(body : string) {
                           className="icon"
                         />
                       </i>
-                      <p>{parseBody(mailData.body)}</p>
+                      <p>{mailData.body}</p>
                     </div>
                     <button
                       type="submit"
