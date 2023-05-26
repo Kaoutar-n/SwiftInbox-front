@@ -21,6 +21,7 @@ import TableTemp from "./TableTemp";
 
 import PrivateRoute from "./PrivateRoute";
 import { ToastContainer } from "react-toastify";
+import ResetPassword from "./ResetPassword";
 
 function App(): JSX.Element {
   return (
@@ -36,6 +37,7 @@ function App(): JSX.Element {
           <Route path="/ContactUs" element={<ContactUs />} />
           <Route path="/services" element={<Services />} />
           <Route path="*" element={<PageNotFound />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
 
           <Route
             path="/home/*"

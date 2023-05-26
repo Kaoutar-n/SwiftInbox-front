@@ -117,21 +117,21 @@
 }
 .image-input {
   display: flex;
-  flex-direction: column;
+ 
   margin-bottom: 1rem;
 }
 
 .image-input label {
-  color: white;
-  height: 50px;
-  width: 200px;
-  background: #3c91e6;
-  font-size: 16px;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 36px;
+  background: var(--blue);
+  color: var(--light) ;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
-  margin-bottom: 0.5rem;
+  grid-gap: 10px;
+  font-weight: 500;
 }
 .faimage {
   padding: 10px;

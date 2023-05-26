@@ -33,6 +33,18 @@ export function EmailsContent() {
   const [data, setdata] = useState<any>([]);
   const [file, setFile] = useState();
 
+  const [addContact, setaddContact] = useState(false);
+  const toggleAddContact = () => {
+    setaddContact(!addContact);
+  };
+
+  const toggleAddContactRemove = () => {
+    if (addContact === true){
+      setaddContact(false);
+    }
+    
+  };
+
   const GetData  = () => {
     if (id) {
     
@@ -222,6 +234,7 @@ export function EmailsContent() {
         console.error("Error:", error);
       });
   };
+  
 
 
   function validateEmail(email: string){
@@ -249,7 +262,7 @@ export function EmailsContent() {
     <div className="home">
       <SideBar status={status} />
 
-      <section id="content">
+      <section id="content"  >
         <TopBar />
 
         <main>
@@ -271,15 +284,23 @@ export function EmailsContent() {
               </ul>
             </div>
             <div className="import-export">
-              <Button onClick={handleImport} className="btn-download">
-                <input type="file" onChange={handleFileChange} />
-                <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
-                Import Contacts
+              <div className="image-input">
+              
+              <Button onClick={handleImport} >
+              <label htmlFor="file">  <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
+                Import Contacts</label>
+                <input id="file" type="file" onChange={handleFileChange} />
+              
               </Button>
-              <Button onClick={handleExport} className="btn-download">
-                <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
-                Export Contacts
+              </div>
+            <div className="image-input">
+            <Button onClick={handleExport} className="btn-download">
+              <label htmlFor=""> <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
+                Export Contacts</label>
+                
               </Button>
+            </div>
+              
             </div>
           </div>
           <div className="table-data">
@@ -301,7 +322,12 @@ export function EmailsContent() {
                   <FontAwesomeIcon icon={faFilter} />
                 </i>
               </div>
-              <div className="form-div">
+              <button onClick={toggleAddContact}>Add</button>
+              {addContact && (
+                <>
+                <div className="overlay" onClick={toggleAddContactRemove}>
+              </div>
+                <div className="emailV-container">
                 <form action="" onSubmit={handleSubmit}>
                   <input
                     type="text"
@@ -328,9 +354,14 @@ export function EmailsContent() {
                     onChange={(e) => setPhone(e.target.value)}
                   />{" "}
                   <br />
-                  <button type="submit">Add</button>
+                  <button type="submit" >Add</button>
                 </form>
               </div>
+              </>
+              )
+
+              }
+              
               <table>
                 <thead>
                   <tr>

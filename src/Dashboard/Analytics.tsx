@@ -92,12 +92,17 @@ export function Analytics() {
               ],
             },
             options: {
+
+          
+
+
               responsive: true,
               plugins: {
                 legend: {
                     display: false
                 }
                },
+
               scales: {
                 y: {
                   beginAtZero: true,
