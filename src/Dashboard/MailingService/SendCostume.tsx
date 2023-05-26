@@ -131,7 +131,7 @@ export function SendCostume() {
               <div id="input-feild">
                 
               </div>
-              <Button  className="send-btn" onClick={()=>sendEmail(0)}  >Send</Button>
+              <Button   onClick={()=>sendEmail(0)}  >Send</Button>
             </div>
           )}
         </form>
