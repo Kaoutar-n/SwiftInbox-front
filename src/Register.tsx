@@ -2,16 +2,14 @@ import React from "react";
 import {  useNavigate } from "react-router-dom";
 import "./Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-interface Props {
-  onFormSwitch: (formName: string) => void;
-}
+
 
 export const Register = () => {
   const [username, setUsername] = React.useState("");
@@ -22,16 +20,27 @@ export const Register = () => {
   const [phone, setPhone] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const [isEmailValid, setIsEmailValid] = React.useState(true);
 
-  function validateEmail(email: string){
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  const validateEmail = (email: string): boolean => {
     const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(emailRegex.test(email)){
-      setEmail(email);
-      return true;
-    }else{
-      return false;
-    }
-  }
+    const isValid = emailRegex.test(email);
+    setIsEmailValid(isValid);
+    return isValid;
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+
 
   function validatePhoneNumber(phoneNumber: string): boolean {
     const phoneNumberRegex = /^06\d{8}$/;
@@ -50,6 +59,15 @@ export const Register = () => {
 
   const ProceedRegisterusingAPI = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    if(!validatePassword(password)){
+      alert("please enter a valid password(at least 8 characters)")
+    }
+    if (!validatePhoneNumber(phone)) {
+      alert("please enter a valid phone number")
+    }
+    if (!validateEmail(email)) {
+      alert("please enter a valid email address")
+    }
     const data = {
       UserName: username,
       Password: password,
@@ -150,7 +168,8 @@ export const Register = () => {
               <input
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => handleInputChange(e)}
+                className={!isEmailValid ? "invalid-input" : ""}
                 required
               />
               <label> Email</label>
@@ -158,11 +177,11 @@ export const Register = () => {
             <div className="input-box">
               <span className="icon">
                 <i>
-                  <FontAwesomeIcon icon={faLock} />
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="password-toggle-icon" onClick={togglePasswordVisibility} />
                 </i>
               </span>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -173,11 +192,11 @@ export const Register = () => {
             <div className="input-box">
               <span className="icon">
                 <i>
-                  <FontAwesomeIcon icon={faLock} />
+                   <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} className="password-toggle-icon" onClick={togglePasswordVisibility} />
                 </i>
               </span>
               <input
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required

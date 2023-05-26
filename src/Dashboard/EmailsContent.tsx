@@ -14,9 +14,6 @@ import { FormEvent } from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
 import { toast } from "react-toastify";
-// import './script'
-
-
 
 export function EmailsContent() {
   const storedData = localStorage.getItem("userDetails");
@@ -247,7 +244,7 @@ export function EmailsContent() {
     }
     
   }
-  
+
   return (
     <div className="home">
       <SideBar status={status} />

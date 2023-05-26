@@ -1,15 +1,11 @@
-import React from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { faLock } from "@fortawesome/free-solid-svg-icons";
-import dalogo from './img/dalogo.png'
-import NavBar from "./NavBar";
-import { MainHome } from "./MainHome";
-import ProtectedRoutes from "./ProtectedRoutes";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -19,6 +15,11 @@ export function Login() {
   const [password, setPassword] = React.useState("");
   const login = 'true';
   const notLogin = 'false';
+  
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   
   const navigate = useNavigate();
   const ProceedLoginusingAPI = (e : any) => {
@@ -97,11 +98,12 @@ export function Login() {
             <div className="input-box">
               <span className="icon">
                 <i>
-                  <FontAwesomeIcon icon={faLock} />
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="password-toggle-icon" onClick={togglePasswordVisibility} />
                 </i>
               </span>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
+                id="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

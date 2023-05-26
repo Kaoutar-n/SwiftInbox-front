@@ -35,7 +35,7 @@ export function SendCostume() {
     if (storedData) {
         const parsedData = JSON.parse(storedData);
         const id = parsedData.id;
-        if (emailtype == 0){
+        if (emailtype === 0){
           const data ={
             "userID" : id,
             "emailtype" : emailtype,
