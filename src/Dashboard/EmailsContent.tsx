@@ -137,6 +137,8 @@ export function EmailsContent() {
     toast.success("Users Exported Successfuly!")
   };
 
+  
+
   const convertArrayOfObjectsToCSV = (data: { [key: string]: string }[]) => {
     const csvArray = [];
     const header = Object.keys(data[0]);
@@ -224,6 +226,28 @@ export function EmailsContent() {
       });
   };
 
+
+  function validateEmail(email: string){
+    const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(emailRegex.test(email)){
+      setEmail(email);
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  function validatePhoneNumber(phoneNumber: string): boolean {
+    const phoneNumberRegex = /^06\d{8}$/;
+    if(phoneNumberRegex.test(email)){
+      setPhone(phone);
+      return true;
+    }else{
+      return false;
+    }
+    
+  }
+  
   return (
     <div className="home">
       <SideBar status={status} />

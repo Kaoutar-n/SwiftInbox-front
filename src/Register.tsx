@@ -22,13 +22,30 @@ export const Register = () => {
   const [phone, setPhone] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const navigate = useNavigate();
+
   function validateEmail(email: string){
     const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if(emailRegex.test(email)){
       setEmail(email);
+      return true;
     }else{
-      toast.error("Invalid email");
+      return false;
     }
+  }
+
+  function validatePhoneNumber(phoneNumber: string): boolean {
+    const phoneNumberRegex = /^06\d{8}$/;
+    if(phoneNumberRegex.test(email)){
+      setPhone(phone);
+      return true;
+    }else{
+      return false;
+    }
+    
+  }
+
+  function validatePassword(password: string): boolean {
+    return password.length >= 8;
   }
 
   const ProceedRegisterusingAPI = (e: { preventDefault: () => void }) => {
@@ -131,7 +148,7 @@ export const Register = () => {
                 </i>{" "}
               </span>
               <input
-                type="text"
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
