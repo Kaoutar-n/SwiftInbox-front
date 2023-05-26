@@ -44,7 +44,7 @@ export const Register = () => {
 
   function validatePhoneNumber(phoneNumber: string): boolean {
     const phoneNumberRegex = /^06\d{8}$/;
-    if(phoneNumberRegex.test(email)){
+    if(phoneNumberRegex.test(phone)){
       setPhone(phone);
       return true;
     }else{
