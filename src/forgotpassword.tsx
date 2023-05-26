@@ -6,6 +6,7 @@ import "./Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import { type } from "os";
 
 interface Props {
   onFormSwitch: (formName: string) => void;
@@ -17,13 +18,10 @@ export const Forgot = ({ onFormSwitch }: Props) => {
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [token, setToken] = useState("");
-
-  useEffect(() => {
-    setToken("1234");
-    setSubject("Reset Your Password - Swift Inbox");
-    setBody("Dear, \nWe received a request to reset your password for your Swift Inbox account. \nTo proceed with the password reset, please click on the link below:  \n<a href='http://localhost:3000/token='"+ token +">Reset Password</a>\nIf you did not request a password reset, please ignore this email. Your password will not be changed. Thank you, The Swift Inbox Team")
-
-  }, []);
+  const originalUrl = "http://localhost:3000/ResetPassword"
+  var url = new URL(originalUrl)
+  
+  
 
   const validateEmail = (email: string): boolean => {
     const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -59,8 +57,32 @@ export const Forgot = ({ onFormSwitch }: Props) => {
         console.error("Error:", error);
       });
   }
- 
-  const handleSubmit = () => {
+
+  useEffect(() => {
+    console.log('tokentokentoken',token)
+  },[token])
+
+  const GetToken = () => {
+    const data ={
+      email: email,
+    }
+    fetch("http://localhost:53264/api/User/Get-Password-Token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      setToken(data)      
+
+    })
+    .catch((error) => {
+      toast.error("Try again Later")
+    });
+  }
+    const handleSubmit = () => {
     if(!validateEmail(email)){
       alert("invalid email");
     }
@@ -75,8 +97,8 @@ export const Forgot = ({ onFormSwitch }: Props) => {
         body: JSON.stringify(_email_token),
       }).then((response) => {
         if (response.status === 200) {
+          GetToken();
           handle_send_email();
-          console.log(response.body)
         } else {
           toast.error("This user don't have account !")
         }
@@ -86,6 +108,15 @@ export const Forgot = ({ onFormSwitch }: Props) => {
       });
 
   };
+
+  useEffect(() => {
+    url.searchParams.set("token", token)
+    let modifiedUrl = url.href
+    setSubject("Reset Your Password - Swift Inbox");
+    setBody("Dear, \nWe received a request to reset your password for your Swift Inbox account. \nTo proceed with the password reset, please click on the link below:  \n<a href='"+ modifiedUrl +"'>Reset Password</a>\nIf you did not request a password reset, please ignore this email. Your password will not be changed. Thank you, The Swift Inbox Team")
+
+  }, [token]);
+
 
 
 
