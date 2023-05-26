@@ -64,7 +64,8 @@ export function Analytics() {
 
           // Create new bar chart
           new Chart(context, {
-            type: "bar",
+            
+            type: "line",
             data: {
               labels: [
                 "January",
@@ -72,12 +73,11 @@ export function Analytics() {
                 "March",
                 "April",
                 "May",
-                "June",
+                "Juin",
                 "July",
               ],
               datasets: [
                 {
-                  label: "My dataset",
                   data: [11200, 21900, 13000, 22500, 32000, 23000, 11500],
                   backgroundColor: [
                     "rgba(255, 99, 132, 1)",
@@ -92,6 +92,12 @@ export function Analytics() {
               ],
             },
             options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                    display: false
+                }
+               },
               scales: {
                 y: {
                   beginAtZero: true,
