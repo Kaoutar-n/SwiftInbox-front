@@ -92,6 +92,8 @@ export function Analytics() {
               ],
             },
             options: {
+          
+
               scales: {
                 y: {
                   beginAtZero: true,

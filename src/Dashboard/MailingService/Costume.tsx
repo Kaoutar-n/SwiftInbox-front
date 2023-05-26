@@ -90,7 +90,6 @@ export function Costume() {
   return (
     <div className="home">
       <SideBar status={status}/>
-
       <section id="content">
         <TopBar/>
 

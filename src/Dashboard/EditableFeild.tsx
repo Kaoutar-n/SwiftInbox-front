@@ -117,7 +117,7 @@ function EditableField({ fields, onSave }: Props) {
           accept="image/*"
         />
         <label htmlFor="file">
-          {" "}
+        
           <FontAwesomeIcon icon={faImage} className="faimage" /> Choose Image{" "}
         </label>
       </div>
