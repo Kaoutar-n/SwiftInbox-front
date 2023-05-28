@@ -24,9 +24,9 @@ export const ResetPassword = () => {
   const handleSubmit = () => {
     if (password === newPassword){
       const data ={
-        newPassword: password,
-        confirmNewPassword: newPassword,
-        token: token
+        newPassword: "root",
+        confirmNewPassword: "root",
+        token: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyJyZWRhMDExMTFAZ21haWwuY29tIiwicmVkYTAxMTExQGdtYWlsLmNvbSJdLCJqdGkiOiJhZjI5OTFjMTVmYzY0MjA3YTI2YWVlNWY4YjFkYTdmNiIsIm5iZiI6MTY4NTMxMTczMCwiZXhwIjoxNzE2ODQ3NzMwLCJpYXQiOjE2ODUzMTE3MzAsImlzcyI6InRlc3QiLCJhdWQiOiJ0ZXN0In0.ktti0_xl0Ac_1MHxJm5z5PILLO8vzNlKTgQQ45yxhPiPhd02nSEOmtFVT7I5BhUlYbnKSwgyP8ON2EPfTJx8SAW34bQhgQGCkia6bGL-eAu3dAFF41Ecp2lqLoBaEP2OHd32oGvOHfZKvlAkZSX-EL-r3eHexoRPg6NGXz98XvY"
       }
         fetch("http://localhost:53264/api/User/reset-password", {
           method: "POST",
@@ -35,7 +35,8 @@ export const ResetPassword = () => {
           },
           body: JSON.stringify(data),
         }).then((response) => {
-          if (response.status === 200) {
+          if (response.status === 200){
+
             navigate("/")
           } else {
             toast.error("This user don't have account !")

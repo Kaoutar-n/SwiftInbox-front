@@ -13,6 +13,7 @@ import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
 
 import React from "react";
+import { toast } from "react-toastify";
 // import './script'
 interface Field {
   name: string;
@@ -71,6 +72,54 @@ export function Profile() {
   useEffect(() => {
    GetData();
   }, []);
+
+  const changePassword = () => {
+
+    const storedData = localStorage.getItem("userDetails");
+    if (storedData) {
+
+      try {
+        const parsedData = JSON.parse(storedData);
+        const username = parsedData.login;
+        if(userNewPassword === userConfirmPassword){
+        const data = {
+          userName: username,
+          password: userPassword,
+          newPassword: userNewPassword ,
+          confirmNewPassword: userConfirmPassword
+        }
+
+        fetch(`http://localhost:53264/api/User/change-password`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if(response.status === 200){
+              toast.success("Password changed successfully")
+              setuserPassword("")
+              setuserNewPassword("")
+              setuserConfirmPassword("")
+            }else{
+              toast.error("current password incorrect ")
+            }
+          })
+          .catch((error) => {
+            console.error("Error: ", error);
+          });
+        }else{
+          toast.error("Passwords are not matching")
+        }
+      } catch (error) {
+        console.error("Error parsing storedData JSON: ", error);
+      }
+    } else {
+      console.error("No Login found in local storage");
+    }
+  }
+  
 
  
 
@@ -173,7 +222,7 @@ export function Profile() {
                   <div className="head">
                     <h3>Change Password</h3>
                   </div>
-                  <form className="profile-key" action="">
+                  <div className="profile-key" >
                     <div className="Labels">
                       <label> Current Password </label>
                       <input
@@ -196,9 +245,9 @@ export function Profile() {
                         value={userConfirmPassword}
                         onChange={(e) => setuserConfirmPassword(e.target.value)}
                       />
-                      <button className="profile-btn">Save</button>
+                      <button onClick={changePassword} className="profile-btn">Save</button>
                     </div>
-                  </form>
+                  </div>
                 </div>
               )}
             </div>
