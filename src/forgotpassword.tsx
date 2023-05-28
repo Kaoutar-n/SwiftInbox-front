@@ -89,7 +89,7 @@ export const Forgot = ({ onFormSwitch }: Props) => {
     const _email_token ={
       email: email,
     }
-      fetch("http://localhost:53264/api/User/Get-Password-Token", {
+      fetch("http://localhost:53264/api/User/reset-password-token", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
