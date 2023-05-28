@@ -168,11 +168,12 @@ export function EmailsContent() {
     const element = data.find((item: { id: any }) => item.id === id);
 
     if (element) {
-      const { fullName, email, industry } = element;
+      const { fullName, email, phone, industry } = element;
 
       setEdit(id);
       usetName(fullName);
       usetEmail(email);
+      usetPhone(phone);
       usetIndustry(industry);
     }
   };
