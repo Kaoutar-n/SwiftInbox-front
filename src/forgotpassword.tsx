@@ -6,7 +6,6 @@ import "./Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
-import { type } from "os";
 
 interface Props {
   onFormSwitch: (formName: string) => void;
@@ -126,18 +125,18 @@ export const Forgot = ({ onFormSwitch }: Props) => {
    <div className="wrapper">
     <div className="form-box login">
       <h2>Forgot Password</h2>
-      <form action="#" onSubmit={handleSubmit} >
+      <div   >
       <div className="input-box">
         <span className="icon"> <i><FontAwesomeIcon icon={faEnvelope} /></i> </span>
         <input type="text" required value={email}  onChange={(e) => setEmail(e.target.value)}/>
         <label> Email</label>
       </div>
 
-      <button type="submit" className="btn">Send</button>
+      <button  onClick={handleSubmit} className="btn">Send</button>
       <div className="login-register">
         <p><a href="/" className="register-link">Back to Login</a></p>
       </div>
-      </form>
+      </div>
     </div>
    </div>
   </div>
