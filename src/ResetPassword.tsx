@@ -14,19 +14,35 @@ export const ResetPassword = () => {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [token, setToken] = useState("");
   const navigate = useNavigate()
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const extractedtoken = urlParams.get('token');
-    setToken(extractedtoken || '');
-    console.log(token);
-  }, [token]);
+  
+  const getToken = () => {
+    const storedEmail = localStorage.getItem("email");
+    const _emailToJ = {
+      email: storedEmail
+    }
+    fetch('http://localhost:53264/api/User/Get-Password-Token',{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(_emailToJ),
+    }).then((response) => response.json())
+
+    .then((data) => {
+      setToken(data)
+    })
+    .catch((error) => {
+      toast.error("Please try again later!")
+    });
+  }
 
   const handleSubmit = () => {
     if (newPassword === confirmNewPassword){
       const data ={
+        token: token,
         newPassword: newPassword,
-        confirmNewPassword: confirmNewPassword,
-        token: token
+        confirmNewPassword: confirmNewPassword
+        
       }
         fetch("http://localhost:53264/api/User/reset-password", {
           method: "POST",
@@ -36,6 +52,8 @@ export const ResetPassword = () => {
           body: JSON.stringify(data),
         }).then((response) => {
           if (response.status === 200){
+            getToken()
+            toast.success("Password changed successfuly !")
             navigate("/")
           } else {
             toast.error("This user don't have account !")
