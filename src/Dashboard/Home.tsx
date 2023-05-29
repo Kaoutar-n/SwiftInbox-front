@@ -12,10 +12,49 @@ import {
 import "./home.css";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 // import './script'
 export function Home() {
   const status = "dashboard";
+  const storedData = localStorage.getItem("userDetails");
+  const parseddata = JSON.parse(storedData!);
+  const id = parseddata.id;
+  const [data, setData] = useState<any>([])
+
+  const GetData = () => {
+    if (id) {
+      const requestBody = id;
+      fetch("http://localhost:53264/api/Dashboard/GetDashboardData", {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain",
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+        body: JSON.stringify(requestBody),
+      })
+        .then((response) => response.json())
+
+        .then((data) => {
+          console.log(data);
+          setData(data);
+          
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+          toast.error("No Data Found!");
+        });
+    } else {
+      console.error("No ID found in local storage");
+    }
+  }
+
+  useEffect(() => {
+    GetData();
+  }, []);
+
+
   return (
     <div className="home">
       <SideBar status={status} />
@@ -52,7 +91,7 @@ export function Home() {
                 <FontAwesomeIcon icon={faEnvelopeCircleCheck} />
               </i>
               <span className="text">
-                <h3>20</h3>
+                <h3>{data.receivedMails }</h3>
                 <p>New Mails</p>
               </span>
             </li>
@@ -62,7 +101,7 @@ export function Home() {
               </i>
 
               <span className="text">
-                <h3>15</h3>
+                <h3>{ data.mailSent }</h3>
                 <p>Sent</p>
               </span>
             </li>
@@ -72,8 +111,8 @@ export function Home() {
                 <FontAwesomeIcon icon={faCalendarCheck} />
               </i>
               <span className="text">
-                <h3>35</h3>
-                <p>Total</p>
+                <h3> { data.totalCustomers } </h3>
+                <p>Total Customers</p>
               </span>
             </li>
           </ul>
