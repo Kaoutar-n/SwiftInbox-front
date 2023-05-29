@@ -135,7 +135,7 @@ export function Costume() {
                
                   {/* <textarea placeholder="Message" name="message" rows={15} ></textarea> */}
                 </div>
-                <Button style={{ color: "white", background: "#3c91e6", marginTop:"25px" }}  onClick={saveCostumEmail} className="send-btn">Save</Button>
+                <Button style={{ color: "white", background: "#3c91e6", marginTop:"25px", fontSize:'16px'  }}  onClick={saveCostumEmail} className="send-btn">Save</Button>
               </form>
             </div>
           </div>

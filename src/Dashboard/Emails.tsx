@@ -7,33 +7,46 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import Button from "@mui/material/Button";
 
 import "./home.css";
+import JoditEditor from 'jodit-react';
 
 import "./Charts";
 import {
   Key,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
 
 export function Emails() {
+  const editor = useRef(null);
+  const [body, setBody] = useState("");
   const status = "emails";
   const [query, setQuery] = useState("");
   const storedData = localStorage.getItem("userDetails");
   const [data, setData] = useState<any>([]);
   const [viewEmail, setviewEmail] = useState(false);
+  const [replyEmail, setReplyEmail] = useState(false);
   const [mailData, setMailData] = useState<any>([]);
 
   const toggleviewEmail = () => {
     setviewEmail(!viewEmail);
   };
 
+  const toggleReplyEmail = () => {
+    setReplyEmail(!replyEmail);
+    setviewEmail(!viewEmail);
+  };
   const toggleviewEmailRemove = () => {
     if (viewEmail === true){
       setviewEmail(false);
+    }
+    if (replyEmail === true){
+      setReplyEmail(false);
     }
     
   };
@@ -194,13 +207,51 @@ export function Emails() {
                       </i>
                       <p>{mailData.body}</p>
                     </div>
-                    <button type="submit" value="Reply" className="send-btn">
+                    <Button style={{ color: "white", background: "#3c91e6", marginTop:"25px", fontSize:'16px'  }}  onClick={toggleReplyEmail}value="Reply" className="send-btn">
                       Reply
-                    </button>
+                    </Button>
                   </form>
                 </div>
                 </>
               )}
+              {replyEmail && (
+                <>
+                    <div className="overlay"onClick={toggleviewEmailRemove}>
+                    </div>
+                <div className="emailV-container">
+                  {/* <div className="overlay" onClick={toggleviewEmail}></div> */}
+                  <div className="head">
+                    <h3>Reply</h3>
+                  </div>
+                  <form action="">
+                <div id="input-feild">
+                 
+                  <input type="text" value={'To'}name="subject" />
+                </div>
+                <br />
+        
+                <div id="input-feild">
+                 
+                  <input type="text"  placeholder="Subject" name="subject" />
+                </div>
+                <div className="JoditEditor">
+                 
+                  <JoditEditor
+                  
+                  ref={editor}
+                  value={data.body}
+                  onChange={(content: any) =>setBody(content)}
+              
+                  />
+               
+                  {/* <textarea placeholder="Message" name="message" rows={15} ></textarea> */}
+                </div>
+                <Button style={{ color: "white", background: "#3c91e6", marginTop:"25px", fontSize:'16px'  }}  className="send-btn">Save</Button>
+              </form>
+                </div>
+                </>
+              )}
+
             </div>
           </div>
         </main>

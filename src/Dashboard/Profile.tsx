@@ -202,7 +202,7 @@ export function Profile() {
                         value={userConfirmPassword}
                         onChange={(e) => setuserConfirmPassword(e.target.value)}
                       />
-                      <button onClick={changePassword} className="profile-btn">Save</button>
+                      <button  className="profile-btn">Save</button>
                     </div>
                   </form>
                 </div>

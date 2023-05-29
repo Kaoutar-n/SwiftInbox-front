@@ -93,12 +93,12 @@ export function SendCostume() {
         </div>
         <form className="costumefrom" action="">
           <div className="message-type">
-      
-            <input type="radio" id="type1" name="type" onClick={handleShow} />
+           <h2>New Message</h2>
+            {/* <input type="radio" id="type1" name="type" onClick={handleShow} />
             <label htmlFor="type1">Costume Message</label>
 
             <input type="radio" name="type" id="type2" onClick={handleShow2} />
-            <label htmlFor="type2">Auto Message</label>
+            <label htmlFor="type2">Auto Message</label> */}
           </div>
           {show && (
             <div>
@@ -118,21 +118,23 @@ export function SendCostume() {
                   onChange={(content: any) =>setBody(content)}
                 
                   />
+        
               </div>
               </div>
-              <Button  style={{ color: "white", background: "#3c91e6", marginTop:"25px" }}
+              <Button  style={{ color: "white", background: "#3c91e6", marginTop:"25px", marginBottom:'25px', fontSize:'16px'  }}
                   
                   className="send-btn"  onClick={()=>sendEmail(1)} >Send</Button>
             </div>
           )}
-          {show2 && (
+        
             <div>
+            <h2>Auto Message</h2>
               <div id="input-feild">
                 
               </div>
-              <Button   onClick={()=>sendEmail(0)}  >Send</Button>
+              <Button  style={{ color: "white", background: "#3c91e6", marginTop:"25px", marginBottom:'25px' , fontSize:'16px'  }}  onClick={()=>sendEmail(0)}  className="send-btn"   >Send</Button>
             </div>
-          )}
+        
         </form>
       </div>
     </div>
@@ -140,3 +142,9 @@ export function SendCostume() {
 }
 
 export default SendCostume;
+
+
+
+
+
+

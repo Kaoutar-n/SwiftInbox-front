@@ -451,6 +451,7 @@ a {
 }
 .gpt3__header {
   display: flex;
+  
 }
 .gpt3__header-content {
   flex: 1;
@@ -458,9 +459,13 @@ a {
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  margin-right: 6rem;
+  
+  margin-right: 4rem;
   margin-bottom: 4rem;
   margin-left: 4rem;
+  padding-top: 2rem;
+  padding-inline: 2rem;
+  background: #f3f7fc;
  
 }
 .gpt3__header-content h1 {
