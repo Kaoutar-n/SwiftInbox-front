@@ -386,7 +386,7 @@ pointer-events: unset;
 }
 #content main .head-title .btn-download{
 height: 36px;
-padding: 0 16px;
+
 border-radius: 36px;
 background: var(--blue);
 color: var(--light) ;
@@ -445,17 +445,21 @@ color: var(--orange);
 	color: var(--dark);
 
 }
-#content main .tableHome  > div{
+#content main .tableHome {
+	flex-grow: 1;
+    flex-basis: 500px;
+    height: 65%;
+
+}
+#content main .tableHome > div{
 	border-radius: 20px;
 	background: var(--light);
 	padding: 24px;
 	margin-bottom: 30px;
 	width: 80%;
-	
 	overflow-x: auto;
 	position: fixed;
-	overflow: hidden;
-	overflow-y: scroll;
+
 	
 
 }
@@ -465,7 +469,7 @@ color: var(--orange);
 	padding: 24px;
 	margin-bottom: 30px;
 	width: 80%;
-	
+
 	overflow-x: auto;
 }
 #content main .table-data .Emails-mang{
@@ -475,11 +479,13 @@ color: var(--orange);
 	
 }
 #content main .table-data .head{
+	
 	display: flex;
 	align-items: center;
 	grid-gap:16px;
 	margin-bottom: 24px;
 font-size: 24px;
+
 
 
 }
@@ -497,19 +503,27 @@ cursor: pointer;
 	border-collapse: collapse;
 	min-width: 420px;
 }
+
+
 #content main .table-data .Emails-mang table th{
+
 padding-bottom: 12px;
 font-size: 13px;
-text-align: left;
+text-align: center;
 border-bottom: solid 1px var(--grey);
 
 }
+
+
 #content main .table-data .Emails-mang table td{
 	padding: 16px 0;
+	text-align: center;
+
 }
 #content main .table-data .Emails-mang table tr td .status{
-font-size: 10px;
+font-size: 13px;
 padding: 6px 16px ;
+margin-inline: 5px;
 color: var(--light);
 border-radius: 20px;
 background: var(--grey);
@@ -519,6 +533,7 @@ cursor: pointer;
 #content main .table-data .Emails-mang table tr td button{
 	border: none;
 }
+
 #content main .table-data .Emails-mang table tr td .status.completed{
 	background: var(--blue);
 }
@@ -531,6 +546,39 @@ cursor: pointer;
 #content main .table-data .Emails-mang table tbody tr:hover{
 background: var(--grey);
 }
+#content main .table-data .Emails-mang table th{
+	position: sticky;
+	top: 0px;
+	background:  var(--grey);
+	color: var(--dark);
+	padding: 15px 10px ;
+	font-size: 16px;
+	
+}
+#content main .table-data .Emails-mang table th:first-child{
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+#content main .table-data .Emails-mang .table-wrapper{
+	max-height: 600px;
+	overflow-y: scroll;
+	margin-inline: 20px;
+	
+}
+::-webkit-scrollbar{
+	width: 5px;
+	border-radius: 5px;
+	
+}
+::-webkit-scrollbar-thumb{
+	
+	background-color: #3c91e6;
+}
+::-webkit-scrollbar-track{
+	background-color:#fff;
+	
+}
+
 #content main .table-data .todo{
 	flex-grow: 1;
 	flex-basis: 300px;
@@ -603,8 +651,8 @@ border-left: 10px solid var(--orange);
 
 .modal-content {
     position: absolute;
-    top: 18%;
-    left: 88%;
+    top:  110px;
+    left: 90%;
     transform: translate(-50%, -50%);
     line-height: 1.4;
 	border-radius: 15px;
@@ -646,9 +694,7 @@ border-left: 10px solid var(--orange);
   font-weight: 700;
   padding: 10px;
 }
-.profile-sidbar {
-	width: 50%;
-  }
+
 /*charts*/
 
 
@@ -688,12 +734,15 @@ border-left: 10px solid var(--orange);
 	align-items: center;
     justify-content: center;
     transition: 1s;
-	
+
 		position: fixed;
 		overflow: hidden;
 		overflow-y: scroll;
 	
 }
+
+
+
 .emailV-container form{
 	
 }

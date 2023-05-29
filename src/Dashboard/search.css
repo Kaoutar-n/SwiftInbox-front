@@ -3,7 +3,10 @@
 	display: flex;
 	align-items: center;
 	height: 36px;
-}.form-input input{
+	justify-content: center;
+}
+
+.form-input input{
 	flex-grow: 1;
 	padding: 0 16px;
 	height: 100%;
@@ -29,28 +32,114 @@
 	cursor: pointer;
 
 }
+
 .form-div{
-	padding-bottom: 10px;
+	position: fixed;
+    top: 60%;
+    left: 50%;
+	bottom: 2%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+	border-radius: 15px;
+    padding: 14px 28px;
+    border-radius: 3px;
+    max-width: 600px;
+
+    background: #fff;
+	box-shadow: 3px 3px 10px 6px rgba(0,0,0,0.06);
+
+    transition: 1s;
+
+	min-height: 300px;
+	
+
+}
+
+.form-div .form-title{
+font-size: 25px;
+font-weight: 500px;
+position: relative;
+}
+.form-div .form-title::before{
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 3px;
+	width: 30px;
+	background: #3c91e6;
+}
+.form-div form .add-contact-data{
+
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 20px 0px 12px 0px;
+}
+ form .add-contact-data .form-input-contact{
+	margin-bottom: 15px;
+	width: calc(100% / 2 - 10px);
 	
 }
-.form-div form input{
-	padding: 5px;
+
+.add-contact-data .form-input-contact .form-details{
+	display: block;
+font-weight: 500;
+margin-bottom: 5px;
+}
+.add-contact-data .form-input-contact input{
+	height: 45px;
+	width: 100%;
+	outline: none;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding-left: 15px;
+	font-size: 16px;
+	border-bottom-width: 2px ;
+	transition: all 0.3 ease;
+}
+
+.add-contact-data .form-input-contact input:focus{
+border-color: #3c91e6;
+}
+form .form-button{
+	height: 45px;
+	margin: 5px 0;
+}
+form .form-button input{
+	height: 100%;
+	width: 100%;
+	outline: none;
+	color: #fff;
+	background: #3c91e6;
+	border-radius: 5px;
+	font-size: 18px;
+	font-weight: 500;
+	letter-spacing: 1px;
+}
+form .form-button input:hover{
+	cursor: pointer;
+}
+/* .form-div form input{
+	padding: 10px;
 	margin: 5px;
 	margin-bottom: 10px;
-	width: 300px;
+	
 	border: 1px solid;
 	border-radius: 5px;
 }
 .form-div form button{
-	width: 10%;
+	width: 20%;
 	padding: 10px;
 	padding-inline: 5px;
 	cursor: pointer;
 	background-color: #3c91e6;
 	color: white;
 	border: none;
+	border-radius: 5px;
 	font-weight: 600;
-}
+	justify-content: center;
+} */
 .import-export{
 display: flex;
 }
