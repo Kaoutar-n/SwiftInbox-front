@@ -107,15 +107,11 @@ export function SendCostume() {
                 
               </div>
               <div id="input-feild">
-                <i>
-                  <FontAwesomeIcon icon={faShare} className="icon"/>
-                </i>
+               
                 <input type="text" onChange={(e) => setSubject(e.target.value)} placeholder="Subject" name="subject" />
               </div>
               <div id="input-feild">
-                <i>
-                  <FontAwesomeIcon icon={faMessage} className="icon" />
-                </i>
+              <div className="JoditEditor">
                 <JoditEditor
                   ref={editor}
                   value = ''
@@ -123,7 +119,10 @@ export function SendCostume() {
                 
                   />
               </div>
-              <Button  onClick={()=>sendEmail(1)} className="send-btn"  >Send</Button>
+              </div>
+              <Button  style={{ color: "white", background: "#3c91e6", marginTop:"25px" }}
+                  
+                  className="send-btn"  onClick={()=>sendEmail(1)} >Send</Button>
             </div>
           )}
           {show2 && (

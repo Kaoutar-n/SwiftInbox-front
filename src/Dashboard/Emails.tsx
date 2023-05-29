@@ -89,7 +89,7 @@ export function Emails() {
   return (
     <div className="home">
       <SideBar status={status} />
-      <section id="content" onClick={toggleviewEmailRemove}>
+      <section id="content" >
         <TopBar />
         <main>
           <div className="head-title">
@@ -110,8 +110,8 @@ export function Emails() {
               </ul>
             </div>
           </div>
-          <div className="table-data tableHome" >
-            <div className="Emails-mang " id="tableHome">
+          <div className="table-data" >
+            <div className="Emails-mang ">
               <div className="head">
                 <h3>Recent Emails</h3>
                 <div className="form-input">
@@ -128,6 +128,7 @@ export function Emails() {
                   <FontAwesomeIcon icon={faFilter} />
                 </i>
               </div>
+              <div className="table-wrapper">
               <table>
                 <thead>
                   <tr>
@@ -164,7 +165,11 @@ export function Emails() {
                   )}
                 </tbody>
               </table>
+              </div>
               {viewEmail && (
+                <>
+                    <div className="overlay"onClick={toggleviewEmailRemove}>
+                    </div>
                 <div className="emailV-container">
                   {/* <div className="overlay" onClick={toggleviewEmail}></div> */}
                   <div className="head">
@@ -194,6 +199,7 @@ export function Emails() {
                     </button>
                   </form>
                 </div>
+                </>
               )}
             </div>
           </div>

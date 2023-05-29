@@ -111,10 +111,7 @@ export function Login() {
               <label> Password</label>
             </div>
             <div className="remeber-forgot">
-              <label>
-                <input type="checkbox" />
-                Remember me
-              </label>
+             
               <a href="/forgotpassword">Forgot password?</a>
             </div>
             <button type="submit" className="btn">

@@ -48,6 +48,7 @@ export function Send() {
     };
     document.addEventListener("mousedown", handler);
   });
+  
   const status = 'send';
   return (
     <div className="home">

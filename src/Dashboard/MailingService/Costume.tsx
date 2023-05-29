@@ -123,18 +123,19 @@ export function Costume() {
                  
                   <input type="text"  defaultValue={data.subject} placeholder="Subject" onChange={(e) => setSubject(e.target.value)} name="subject" />
                 </div>
-                <div id="input-feild">
-                  
+                <div className="JoditEditor">
+                 
                   <JoditEditor
                   
                   ref={editor}
                   value={data.body}
                   onChange={(content: any) =>setBody(content)}
-                
+              
                   />
+               
                   {/* <textarea placeholder="Message" name="message" rows={15} ></textarea> */}
                 </div>
-                <Button  onClick={saveCostumEmail} className="send-btn">Save</Button>
+                <Button style={{ color: "white", background: "#3c91e6", marginTop:"25px" }}  onClick={saveCostumEmail} className="send-btn">Save</Button>
               </form>
             </div>
           </div>

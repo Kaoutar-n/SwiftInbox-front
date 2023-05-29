@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./profileSettings.css";
 
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 interface Props {
@@ -95,6 +96,7 @@ function EditableField({ fields, onSave }: Props) {
     <div className="profile-container">
       {values.map((field, index) => (
         <div className="profile-key" key={index}>
+          <div className="profile-feilds">
           <div className="Labels">
             <label>{field.name}: </label>
             <input
@@ -107,9 +109,10 @@ function EditableField({ fields, onSave }: Props) {
               }}
             />
           </div>
+          </div>
         </div>
       ))}
-      <div className="image-input">
+      {/* <div className="image-input">
         <input
           type="file"
           id="file"
@@ -120,7 +123,7 @@ function EditableField({ fields, onSave }: Props) {
         
           <FontAwesomeIcon icon={faImage} className="faimage" /> Choose Image{" "}
         </label>
-      </div>
+      </div> */}
       <button className="profile-btn" onClick={handleSave}>
         Save
       </button>

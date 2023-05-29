@@ -6,6 +6,7 @@ import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 import "./home.css";
+import "./profileSettings.css";
 import people from "./img/people.png";
 import { useEffect, useState } from "react";
 import EditableField from "./EditableFeild";
@@ -13,7 +14,6 @@ import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
 
 import React from "react";
-import { toast } from "react-toastify";
 // import './script'
 interface Field {
   name: string;
@@ -26,11 +26,10 @@ export function Profile() {
   const [username, setUsername] = React.useState("");
 
   const [selectedImage, setSelectedImage] = useState(people);
-  const [userPassword, setuserPassword] = useState('');
-  const [userNewPassword, setuserNewPassword] = useState('');
-  const [userConfirmPassword, setuserConfirmPassword] = useState('');
+  const [userPassword, setuserPassword] = useState("");
+  const [userNewPassword, setuserNewPassword] = useState("");
+  const [userConfirmPassword, setuserConfirmPassword] = useState("");
   const [showProfile, setShowProfile] = useState(true);
-
 
   const GetData = () => {
     const storedData = localStorage.getItem("userDetails");
@@ -68,58 +67,10 @@ export function Profile() {
     } else {
       console.error("No ID found in local storage");
     }
-  }
+  };
   useEffect(() => {
-   GetData();
+    GetData();
   }, []);
-
-  const changePassword = () => {
-
-    const storedData = localStorage.getItem("userDetails");
-    if (storedData) {
-
-      try {
-        const parsedData = JSON.parse(storedData);
-        const username = parsedData.login;
-        if(userNewPassword === userConfirmPassword){
-        const data = {
-          userName: username,
-          password: userPassword,
-          newPassword: userNewPassword ,
-          confirmNewPassword: userConfirmPassword
-        }
-
-        fetch(`http://localhost:53264/api/User/change-password`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        })
-          .then((response) => {
-            if(response.status === 200){
-              toast.success("Password changed successfully")
-              setuserPassword("")
-              setuserNewPassword("")
-              setuserConfirmPassword("")
-            }else{
-              toast.error("current password incorrect ")
-            }
-          })
-          .catch((error) => {
-            console.error("Error: ", error);
-          });
-        }else{
-          toast.error("Passwords are not matching")
-        }
-      } catch (error) {
-        console.error("Error parsing storedData JSON: ", error);
-      }
-    } else {
-      console.error("No Login found in local storage");
-    }
-  }
-  
 
  
 
@@ -138,11 +89,10 @@ export function Profile() {
   const [show2, setShow2] = useState(false);
   const link1 = document.getElementById("link1");
   const link2 = document.getElementById("link2");
-  
+
   const handleShow = () => {
     setShow(true);
     setShow2(false);
-    
 
     link2?.classList.remove("active");
     link1?.classList.add("active");
@@ -151,7 +101,7 @@ export function Profile() {
   const handleShow2 = () => {
     setShow2(true);
     setShow(false);
-    
+
     link1?.classList.remove("active");
     link2?.classList.add("active");
   };
@@ -182,14 +132,22 @@ export function Profile() {
             </div>
           </div>
           <div className="profile-side-main">
-            <div  className="table-data profile-sidbar">
+            <div className="table-data profile-sidbar">
               <div className="profile-mang ">
                 <div className="head">
-                  <h3>{data.firstName} {data.lastName}</h3>
+                  <h3>
+                    {data.firstName} {data.lastName}
+                  </h3>
                 </div>
+
                 <div className="profile-sidebar-container">
-                  <div className="profile-sidebar-item" >
-                    <a href="#" onClick={handleShow} id="link1" className="active">
+                  <div className="profile-sidebar-item">
+                    <a
+                      href="#"
+                      onClick={handleShow}
+                      id="link1"
+                      className="active"
+                    >
                       <span>
                         <FontAwesomeIcon icon={faUser} className="ico" />
                       </span>
@@ -197,7 +155,7 @@ export function Profile() {
                     </a>
                   </div>
                   <div className="profile-sidebar-item">
-                    <a href="#" id="link2"  onClick={handleShow2}>
+                    <a href="#" id="link2" onClick={handleShow2}>
                       <span>
                         <FontAwesomeIcon icon={faLock} className="ico" />
                       </span>
@@ -208,21 +166,20 @@ export function Profile() {
               </div>
             </div>
             <div className="table-data profile-inputs">
-              {show &&
-                fields.length > 0 && ( // Conditionally render when fields have data
-                  <div className="Emails-mang">
-                    <div className="head">
-                      <h3>Personal Account</h3>
-                    </div>
-                    <EditableField fields={fields} onSave={handleSave} />
+              {show && fields.length > 0 && (
+                <div className="Emails-mang">
+                  <div className="head">
+                    <h3>Personal Account</h3>
                   </div>
-                )}
+                  <EditableField fields={fields} onSave={handleSave} />
+                </div>
+              )}
               {show2 && (
                 <div className="Emails-mang ">
                   <div className="head">
                     <h3>Change Password</h3>
                   </div>
-                  <div className="profile-key" >
+                  <form className="profile-key" action="">
                     <div className="Labels">
                       <label> Current Password </label>
                       <input
@@ -247,7 +204,7 @@ export function Profile() {
                       />
                       <button onClick={changePassword} className="profile-btn">Save</button>
                     </div>
-                  </div>
+                  </form>
                 </div>
               )}
             </div>
