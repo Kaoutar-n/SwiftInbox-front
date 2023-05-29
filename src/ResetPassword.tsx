@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css"; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 
@@ -13,8 +13,15 @@ export const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [token, setToken] = useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const navigate = useNavigate()
   
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
   const getToken = () => {
     const storedEmail = localStorage.getItem("email");
     const _emailToJ = {
@@ -74,17 +81,17 @@ export const ResetPassword = () => {
       <h2>Reset Password</h2>
       <div >
       <div className="input-box">
-        <span className="icon"> <i><FontAwesomeIcon icon={faEnvelope} /></i> </span>
+        <span className="icon"> <i><FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="password-toggle-icon" onClick={togglePasswordVisibility} /></i> </span>
         <input type="password" required value={newPassword}  onChange={(e) => setNewPassword(e.target.value)}/>
         <label> New Password</label>
       </div>
       <div className="input-box">
-        <span className="icon"> <i><FontAwesomeIcon icon={faEnvelope} /></i> </span>
+        <span className="icon"> <i><FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="password-toggle-icon" onClick={togglePasswordVisibility} /></i> </span>
         <input type="password" required value={confirmNewPassword}  onChange={(e) => setConfirmNewPassword(e.target.value)}/>
         <label> Confirm Password</label>
       </div>
 
-      <Button onClick={() => handleSubmit()}>Save</Button>
+      <Button onClick={() => handleSubmit()}  style={{ color: "white", background: "#3c91e6", marginTop:"25px" }}>Save</Button>
     
       </div>
     </div>
