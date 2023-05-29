@@ -14,7 +14,6 @@ import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
 
 import React from "react";
-
 // import './script'
 interface Field {
   name: string;
@@ -72,6 +71,8 @@ export function Profile() {
   useEffect(() => {
     GetData();
   }, []);
+
+ 
 
   //console.log(fields);
 
@@ -178,9 +179,8 @@ export function Profile() {
                   <div className="head">
                     <h3>Change Password</h3>
                   </div>
-                  <div className="profile-key">
-                  <div className="profile-feilds">
-                    <div className="Labels labelspass">
+                  <form className="profile-key" action="">
+                    <div className="Labels">
                       <label> Current Password </label>
                       <input
                         type="password"
@@ -202,10 +202,9 @@ export function Profile() {
                         value={userConfirmPassword}
                         onChange={(e) => setuserConfirmPassword(e.target.value)}
                       />
-                      <button className="profile-btn">Save</button>
+                      <button onClick={changePassword} className="profile-btn">Save</button>
                     </div>
-                    </div>
-                    </div>
+                  </form>
                 </div>
               )}
             </div>
