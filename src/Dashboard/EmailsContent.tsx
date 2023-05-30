@@ -61,9 +61,9 @@ export function EmailsContent() {
           // Process the returned data
 
           console.log(data);
-          if(data.archived == false){
+          
             setdata(data);
-          }
+          
           
         })
         .catch((error) => {
