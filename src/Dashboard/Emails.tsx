@@ -21,10 +21,12 @@ import {
 } from "react";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
+import { toast } from "react-toastify";
 
 export function Emails() {
   const editor = useRef(null);
   const [body, setBody] = useState("");
+  const [replyBody, setReplyBody] = useState("");
   const status = "emails";
   const [query, setQuery] = useState("");
   const storedData = localStorage.getItem("userDetails");
@@ -46,6 +48,9 @@ export function Emails() {
       setviewEmail(false);
     }
     if (replyEmail === true){
+      setReplyEmail(false);
+    }
+    else{
       setReplyEmail(false);
     }
     
@@ -96,6 +101,34 @@ export function Emails() {
         setMailData(item);
       }
     });
+  }
+
+  const handleReply = (email: Text, subject: Text) => {
+    const data ={
+      reciever: email,
+      subject: subject,
+      body: replyBody
+    }
+    fetch("http://localhost:53264/api/email/sendcustomEmail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          toast.success("reply sent Successfuly!")
+          toggleReplyEmail();
+          setReplyBody("")
+        } else {
+          toast.error("Failed to send the reply !")
+
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
   
 
@@ -226,27 +259,26 @@ export function Emails() {
                   <form action="">
                 <div id="input-feild">
                  
-                  <input type="text" value={'To'}name="subject" />
+                  <input type="text" value={mailData.senderemail} name="subject" />
                 </div>
                 <br />
         
                 <div id="input-feild">
                  
-                  <input type="text"  placeholder="Subject" name="subject" />
+                  <input type="text" value={mailData.subject} placeholder="Subject" name="subject" />
                 </div>
                 <div className="JoditEditor">
                  
                   <JoditEditor
                   
                   ref={editor}
-                  value={data.body}
-                  onChange={(content: any) =>setBody(content)}
+                  value={replyBody}
+                  onChange={(content: any) =>setReplyBody(content)}
               
                   />
                
-                  {/* <textarea placeholder="Message" name="message" rows={15} ></textarea> */}
                 </div>
-                <Button style={{ color: "white", background: "#3c91e6", marginTop:"25px", fontSize:'16px'  }}  className="send-btn">Save</Button>
+                <Button onClick={() => handleReply(mailData.senderemail,mailData.subject)} style={{ color: "white", background: "#3c91e6", marginTop:"25px", fontSize:'16px'  }}  className="send-btn">Send</Button>
               </form>
                 </div>
                 </>

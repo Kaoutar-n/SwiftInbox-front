@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css"; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 
