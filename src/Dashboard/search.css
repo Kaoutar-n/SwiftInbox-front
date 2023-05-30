@@ -51,8 +51,9 @@
     transition: 1s;
 
 	min-height: 300px;
-	
-
+    margin-top: 40px;	
+    min-height: 350px;
+ 
 }
 
 .form-div .form-title{
