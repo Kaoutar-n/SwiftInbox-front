@@ -23,6 +23,42 @@ export function Home() {
   const chartRef1 = useRef<HTMLCanvasElement>(null);
   const chartRef2 = useRef<HTMLCanvasElement>(null);
 
+  const status = "dashboard";
+  const storedData = localStorage.getItem("userDetails");
+  const parseddata = JSON.parse(storedData!);
+  const id = parseddata.id;
+  const [data, setData] = useState<any>([]);
+  const GetData = () => {
+    if (id) {
+      const requestBody = id;
+      fetch("http://localhost:53264/api/Dashboard/GetDashboardData", {
+        method: "POST",
+        headers: {
+          Accept: "application/json, text/plain",
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+        body: JSON.stringify(requestBody),
+      })
+        .then((response) => response.json())
+
+        .then((data) => {
+          console.log(data);
+          setData(data)
+        })
+        .catch((error) => {
+          console.error("Error: ", error);
+          toast.error("No Data Found!");
+        });
+    } else {
+      console.error("No ID found in local storage");
+    }
+  };
+
+  useEffect(() => {
+    GetData();
+  }, []);
+  
+
   useEffect(() => {
     const initializeCharts = () => {
       const canvas1 = chartRef1.current;
@@ -46,7 +82,9 @@ export function Home() {
               datasets: [
                 {
                   label: "My dataset",
-                  data: [1200, 1900, 3000],
+                  data: data.categoriesCount
+                    ? [data.categoriesCount[0], data.categoriesCount[1], data.categoriesCount[-1]]
+                    : [] ,
                   backgroundColor: [
                     "rgba(255, 99, 132, 1)",
                     "rgba(54, 162, 235, 1)",
@@ -77,104 +115,84 @@ export function Home() {
           }
 
           // Create new bar chart
-          new Chart(context, {
-            type: "line",
-            data: {
-              labels: [
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "Juin",
-                "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "December"
-              ],
-              datasets: [
-                {
-                  data: [11200, 21900, 13000, 22500, 32000, 23000, 11500,10000,20000,35000,7000,8000],
-                  backgroundColor: [
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(54, 162, 235, 1)",
-                    "rgba(255, 206, 86, 1)",
-                    "rgba(75, 192, 192, 1)",
-                    "rgba(153, 102, 255, 1)",
-                    "rgba(255, 159, 64, 1)",
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(255, 0, 0, 1)",  
-                    "rgba(0, 255, 0, 1)"    
-                  ],
-                  
-                },
-              ],
-            },
-            options: {
-              responsive: true,
-              plugins: {
-                legend: {
-                  display: false,
-                },
+          const lineChartData = data.receivedByMonth
+          ? [
+              data.receivedByMonth[1],
+              data.receivedByMonth[2],
+              data.receivedByMonth[3],
+              data.receivedByMonth[4],
+              data.receivedByMonth[5],
+              data.receivedByMonth[6],
+              data.receivedByMonth[7],
+              data.receivedByMonth[8],
+              data.receivedByMonth[9],
+              data.receivedByMonth[10],
+              data.receivedByMonth[11],
+              data.receivedByMonth[12],
+            ]
+          : [];
+        new Chart(context, {
+          type: "line",
+          data: {
+            labels: [
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "Juin",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December",
+            ],
+            datasets: [
+              {
+                data: lineChartData,
+                backgroundColor: [
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(54, 162, 235, 1)",
+                  "rgba(255, 206, 86, 1)",
+                  "rgba(75, 192, 192, 1)",
+                  "rgba(153, 102, 255, 1)",
+                  "rgba(255, 159, 64, 1)",
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(255, 99, 132, 1)",
+                  "rgba(255, 0, 0, 1)",
+                  "rgba(0, 255, 0, 1)",
+                ],
               },
-
-              scales: {
-                y: {
-                  beginAtZero: true,
-                },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: false,
               },
             },
-          });
-        } else {
-          console.error("Failed to get 2D context from canvas element!");
-        }
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
       } else {
-        console.error("Canvas element not found!");
+        console.error("Failed to get 2D context from canvas element!");
       }
+    } else {
+      console.error("Canvas element not found!");
+    }
     };
 
     initializeCharts();
-  }, []);
-  const status = "dashboard";
-  const storedData = localStorage.getItem("userDetails");
-  const parseddata = JSON.parse(storedData!);
-  const id = parseddata.id;
-  const [data, setData] = useState<any>([]);
-
-  const GetData = () => {
-    if (id) {
-      const requestBody = id;
-      fetch("http://localhost:53264/api/Dashboard/GetDashboardData", {
-        method: "POST",
-        headers: {
-          Accept: "application/json, text/plain",
-          "Content-Type": "application/json;charset=UTF-8",
-        },
-        body: JSON.stringify(requestBody),
-      })
-        .then((response) => response.json())
-
-        .then((data) => {
-          console.log(data);
-          setData(data);
-        })
-        .catch((error) => {
-          console.error("Error: ", error);
-          toast.error("No Data Found!");
-        });
-    } else {
-      console.error("No ID found in local storage");
-    }
-  };
-
-  useEffect(() => {
-    GetData();
-  }, []);
+  }, [data.categoriesCount, data.receivedByMonth]);
+  
 
   return (
     <div className="home">
