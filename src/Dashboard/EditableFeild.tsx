@@ -4,6 +4,7 @@ import "./profileSettings.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 interface Props {
   fields: { name: string; value: string }[];
   onSave: (values: { name: string; value: string }[], image: string) => void;
@@ -19,6 +20,24 @@ function EditableField({ fields, onSave }: Props) {
   
   const parsedData = JSON.parse(storedData);
   const id = parsedData.id;
+
+  function validatePhoneNumber(phoneNumber: string): boolean {
+    const phoneNumberRegex = /^06\d{8}$/;
+    if(phoneNumberRegex.test(phoneNumber)){
+
+      return true;
+    }else{
+      return false;
+    }
+    
+  }
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValid = emailRegex.test(email);
+    return isValid;
+  };
+
   const postData = async () => {
     const data = {
       firstName: values.find((field) => field.name === "First Name")?.value || "",
@@ -26,24 +45,33 @@ function EditableField({ fields, onSave }: Props) {
       email: values.find((field) => field.name === "Email")?.value || "",
       phone: values.find((field) => field.name === "Phone")?.value || "",
     };
-  
-    try {
-      const response = await fetch(`http://localhost:53264/api/User/UpdateProfile?id=${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-  
-      if (response.ok) {
-        console.log("Data posted successfully");
-      } else {
-        console.error("Failed to post data");
+    if(validatePhoneNumber(data.phone) && validateEmail(data.email)){
+      try {
+        const response = await fetch(`http://localhost:53264/api/User/UpdateProfile?id=${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+    
+        if (response.ok) {
+          console.log("Data posted successfully");
+          toast.success("Profile Updated Successfully !")
+        } else {
+          console.error("Failed to post data");
+        }
+      } catch (error) {
+        console.error("An error occurred while posting data:", error);
+        toast.error("Please try again later !");
       }
-    } catch (error) {
-      console.error("An error occurred while posting data:", error);
+    }else if(validatePhoneNumber(data.phone) && !validateEmail(data.email)){
+      toast.error("Invalid Email !")
+    }else{
+      toast.error("Invalid Phone Number !")
     }
+  
+    
   };
   function handleSave() {
     if (selectedFile) {

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faEyeSlash, faUser } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
@@ -24,7 +24,8 @@ interface Field {
 export function Profile() {
   const [fields, setFields] = useState<any>([]);
   const [data, setdata] = useState<any>([]);
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
   const [username, setUsername] = React.useState("");
 
   const [selectedImage, setSelectedImage] = useState(people);
@@ -74,11 +75,15 @@ export function Profile() {
     GetData();
   }, []);
 
+  function validatePassword(password: string): boolean {
+    return password.length >= 8;
+  }
+
   const changePassword = () => {
     
       const storedData = localStorage.getItem("userDetails");
     if (storedData) {
-    if (userNewPassword === userConfirmPassword){
+    if (userNewPassword === userConfirmPassword && validatePassword(userPassword)){
       try {
         const parsedData = JSON.parse(storedData);
         const username = parsedData.login;
@@ -113,14 +118,25 @@ export function Profile() {
       } catch (error) {
         console.error("Error parsing storedData JSON: ", error);
       }
-    } else{
-      toast.error("Passwords are not matching")
+    } else if( !(userNewPassword === userConfirmPassword) && validatePassword(userPassword)){
+      toast.error("Passwords are not matching !")
+    }else{
+      toast.error("Passwords has to be at least 8 characters !")
     }
     }else {
       console.error("No ID found in local storage");
     }
   }
 
+
+  
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleNewPasswordVisibility = () => {
+    setShowNewPassword(!showNewPassword);
+  };
  
 
   //console.log(fields);
@@ -231,29 +247,45 @@ export function Profile() {
                   <form className="profile-key" >
                     <div className="Labels">
                       <label> Current Password </label>
+                      <span className="icon">
+                      
+                      <i>
+                        <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="password-toggle-icon" onClick={togglePasswordVisibility} />
+                      </i>
+                    </span>
                       <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         required
                         value={userPassword}
                         onChange={(e) => setuserPassword(e.target.value)}
                       />
                       <label> New Password </label>
+                      <span className="icon">
+                        <i>
+                          <FontAwesomeIcon icon={showNewPassword ? faEyeSlash : faEye} className="password-toggle-icon" onClick={toggleNewPasswordVisibility} />
+                        </i>
+                      </span>
                       <input
-                        type="password"
+                        type={showNewPassword ? "text" : "password"}
                         required
                         value={userNewPassword}
                         onChange={(e) => setuserNewPassword(e.target.value)}
                       />
                       <label> Confirm Password </label>
+                      <span className="icon">
+                      <i>
+                        <FontAwesomeIcon icon={showNewPassword ? faEyeSlash : faEye} className="password-toggle-icon" onClick={toggleNewPasswordVisibility} />
+                      </i>
+                    </span>
                       <input
-                        type="password"
+                        type={showNewPassword ? "text" : "password"}
                         required
                         value={userConfirmPassword}
                         onChange={(e) => setuserConfirmPassword(e.target.value)}
                       />
 
 
-                      <Button onClick={changePassword}  >Save</Button>
+                      <Button onClick={changePassword} style={{ color: "white", background: "#3c91e6", marginTop:"25px", marginBottom:'25px', fontSize:'16px'  }}  >Save</Button>
 
                     </div>
                   </form>

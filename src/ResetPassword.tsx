@@ -16,6 +16,9 @@ export const ResetPassword = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const navigate = useNavigate()
+  function validatePassword(password: string): boolean {
+    return password.length >= 8;
+  }
   
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -44,7 +47,7 @@ export const ResetPassword = () => {
   }
 
   const handleSubmit = () => {
-    if (newPassword === confirmNewPassword){
+    if ((newPassword === confirmNewPassword) && validatePassword(newPassword)){
       const data ={
         token: token,
         newPassword: newPassword,
@@ -69,8 +72,10 @@ export const ResetPassword = () => {
         .catch((error) => {
           toast.error("Failed to send the email !")
         });
-    }else{
+    }else if(!(newPassword === confirmNewPassword) && validatePassword(newPassword)){
       toast.error("Passwords do not match")
+    }else{
+      toast.error("Password has to be at least 8 characters !")
     }
   };
   return (

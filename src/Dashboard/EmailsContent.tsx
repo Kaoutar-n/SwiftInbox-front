@@ -38,11 +38,30 @@ export function EmailsContent() {
     setaddContact(!addContact);
   };
 
+  function validatePhoneNumber(phoneNumber: string): boolean {
+    const phoneNumberRegex = /^06\d{8}$/;
+    if(phoneNumberRegex.test(phoneNumber)){
+      setPhone(phone);
+      return true;
+    }else{
+      return false;
+    }
+    
+  }
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValid = emailRegex.test(email);
+    return isValid;
+  };
+
   const toggleAddContactRemove = () => {
     if (addContact === true) {
       setaddContact(false);
     }
   };
+
+  
 
   const GetData = () => {
     if (id) {
@@ -75,34 +94,40 @@ export function EmailsContent() {
     }
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    if (storedData) {
-      const parseddata = JSON.parse(storedData);
-      const data = {
-        userId: parseddata.id,
-        fullName: name,
-        email: email,
-        phone: phone,
-        industry: industry,
-      };
-      event.preventDefault();
-
-      const url = "http://localhost:53264/api/Contacts/insertcontact";
-      axios
-        .post(url, data)
-        .then((result) => {
-          setName("");
-          setEmail("");
-          setPhone("");
-          setIndustry("");
-          GetData();
-          toast.success("User Added Successfuly!");
-        })
-        .catch((err) => {
-          alert(err.message);
-          toast.error("Failed To Add The User!");
-        });
+  const handleSubmit = () => {
+    if(validateEmail(email) && validatePhoneNumber(phone)){
+      if (storedData) {
+        const parseddata = JSON.parse(storedData);
+        const data = {
+          userId: parseddata.id,
+          fullName: name,
+          email: email,
+          phone: phone,
+          industry: industry,
+        };
+        const url = "http://localhost:53264/api/Contacts/insertcontact";
+        axios
+          .post(url, data)
+          .then((result) => {
+            setName("");
+            setEmail("");
+            setPhone("");
+            setIndustry("");
+            GetData();
+            toast.success("User Added Successfuly!");
+            toggleAddContact();
+          })
+          .catch((err) => {
+            alert(err.message);
+            toast.error("Failed To Add The User!");
+          });
+      }
+    }else if(validateEmail(email) && !validatePhoneNumber(phone)){
+        toast.error("phone number invalid!")
+    }else{
+      toast.error("email  invalid!")
     }
+   
   };
 
   useEffect(() => {
@@ -176,41 +201,48 @@ export function EmailsContent() {
   };
 
   const handleUpdate = async (id: any) => {
-    try {
-      const updatedData = {
-        fullName: uname,
-        email: uemail,
-        phone: uphone,
-        industry: uindustry,
-      };
-      const response = await fetch(
-        `http://localhost:53264/api/Contacts/updatecontact/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedData),
+    if(validateEmail(uemail) && validatePhoneNumber(uphone)){
+      try {
+        const updatedData = {
+          fullName: uname,
+          email: uemail,
+          phone: uphone,
+          industry: uindustry,
+        };
+        const response = await fetch(
+          `http://localhost:53264/api/Contacts/updatecontact/${id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedData),
+          }
+        );
+    
+        if (response.ok) {
+          // Data updated successfully
+          console.log("Data updated successfully");
+          GetData();
+          toast.success("User Updated Succesfuly!");
+          setEdit(-1); // Reset the edit state to -1
+          usetName(""); // Reset the input states
+          usetEmail("");
+          usetPhone("");
+          usetIndustry("");
+        } else {
+          throw new Error("Data update failed");
         }
-      );
-  
-      if (response.ok) {
-        // Data updated successfully
-        console.log("Data updated successfully");
-        GetData();
-        toast.success("User Updated Succesfuly!");
-        setEdit(-1); // Reset the edit state to -1
-        usetName(""); // Reset the input states
-        usetEmail("");
-        usetPhone("");
-        usetIndustry("");
-      } else {
+      } catch (error) {
         throw new Error("Data update failed");
       }
-    } catch (error) {
-      throw new Error("Data update failed");
+      setEdit(-1);
+    }else if(validateEmail(uemail) && !validatePhoneNumber(uphone)){
+      toast.error("Please enter a valid Phone Number!");
+    }else{
+      toast.error("Please enter a valid Email!");
     }
-    setEdit(-1);
+    
   };
   //Delete
   const handleDelete = (id: Key) => {
@@ -237,25 +269,6 @@ export function EmailsContent() {
         console.error("Error:", error);
       });
   };
-  function validateEmail(email: string) {
-    const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailRegex.test(email)) {
-      setEmail(email);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function validatePhoneNumber(phoneNumber: string): boolean {
-    const phoneNumberRegex = /^06\d{8}$/;
-    if (phoneNumberRegex.test(email)) {
-      setPhone(phone);
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   return (
     <div className="home">
@@ -338,7 +351,7 @@ export function EmailsContent() {
                   ></div>
                   <div className="form-div">
                     <div className="form-title">Add Contact</div>
-                    <form action="" onSubmit={handleSubmit}>
+                    <form >
                       <div className="add-contact-data">
                       <div className="form-input-contact">
                       <span className="form-details">Full Name</span>
@@ -379,9 +392,7 @@ export function EmailsContent() {
                     
                      
                       </div>
-                      <div className="form-button">
-                      <input type="submit" value='Add'/>
-                      </div>
+                      <Button onClick={() => handleSubmit()} style={{ color: "white", background: "#3c91e6", marginTop:"25px", marginBottom:'25px', fontSize:'16px'  }} >ADD</Button>
                     </form>
                   </div>
                 </>
