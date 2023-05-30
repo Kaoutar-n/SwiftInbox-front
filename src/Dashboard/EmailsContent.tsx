@@ -448,7 +448,7 @@ export function EmailsContent() {
                         ) : (
                           <tr key={data.id}>
                             <td>
-                              <p> {data.fullName} </p>
+                               {data.fullName}
                             </td>
                             <td>{data.email}</td>
                             <td>{data.phone}</td>
