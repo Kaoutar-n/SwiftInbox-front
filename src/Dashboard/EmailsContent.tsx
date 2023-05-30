@@ -193,15 +193,19 @@ export function EmailsContent() {
           body: JSON.stringify(updatedData),
         }
       );
-
+  
       if (response.ok) {
         // Data updated successfully
         console.log("Data updated successfully");
         GetData();
         toast.success("User Updated Succesfuly!");
+        setEdit(-1); // Reset the edit state to -1
+        usetName(""); // Reset the input states
+        usetEmail("");
+        usetPhone("");
+        usetIndustry("");
       } else {
         throw new Error("Data update failed");
-        toast.error("Data update failed!");
       }
     } catch (error) {
       throw new Error("Data update failed");
