@@ -31,12 +31,7 @@ export function SideBar(props: NavbarProps) {
               <span className="text"> Dashboard</span>
             </NavLink>
           </li>
-          <li className={activeMenu === "analytics" ? "actived" : ""}>
-            <NavLink to="/Analytics" >
-              <FontAwesomeIcon icon={faChartLine} className="ico" />
-              <span className="text"> Analytics</span>
-            </NavLink>
-          </li>
+         
           <li className={activeMenu === "contacts" ? "actived" : ""}>
             <NavLink to="/EmailsContent">
               <FontAwesomeIcon icon={faUsers} className="ico" />
