@@ -210,6 +210,7 @@ export function EmailsContent() {
     } catch (error) {
       throw new Error("Data update failed");
     }
+    setEdit(-1);
   };
   //Delete
   const handleDelete = (id: Key) => {
