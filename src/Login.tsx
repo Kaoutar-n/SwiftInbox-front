@@ -93,7 +93,7 @@ export function Login() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
-              <label> UserName</label>
+              <label> User Name</label>
             </div>
             <div className="input-box">
               <span className="icon">

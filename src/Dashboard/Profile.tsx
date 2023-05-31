@@ -242,24 +242,28 @@ export function Profile() {
               {show2 && (
                 <div className="Emails-mang ">
                   <div className="head">
-                    <h3>Change Password</h3>
+                    <h3 >Change Password</h3>
                   </div>
                   <form className="profile-key" >
                     <div className="Labels">
-                      <label> Current Password </label>
+                      <label > Current Password </label>
+                      <div className="input-box" style={{ marginBottom: "20px"}}>
                       <span className="icon">
                       
                       <i>
                         <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} className="password-toggle-icon" onClick={togglePasswordVisibility} />
                       </i>
-                    </span>
+                     </span>
                       <input
+                     
                         type={showPassword ? "text" : "password"}
                         required
                         value={userPassword}
                         onChange={(e) => setuserPassword(e.target.value)}
                       />
-                      <label> New Password </label>
+                      </div>
+                      <label > New Password </label>
+                      <div className="input-box" style={{ marginBottom: "20px"}}>
                       <span className="icon">
                         <i>
                           <FontAwesomeIcon icon={showNewPassword ? faEyeSlash : faEye} className="password-toggle-icon" onClick={toggleNewPasswordVisibility} />
@@ -271,7 +275,9 @@ export function Profile() {
                         value={userNewPassword}
                         onChange={(e) => setuserNewPassword(e.target.value)}
                       />
+                      </div>
                       <label> Confirm Password </label>
+                      <div  className="input-box" >
                       <span className="icon">
                       <i>
                         <FontAwesomeIcon icon={showNewPassword ? faEyeSlash : faEye} className="password-toggle-icon" onClick={toggleNewPasswordVisibility} />
@@ -284,7 +290,7 @@ export function Profile() {
                         onChange={(e) => setuserConfirmPassword(e.target.value)}
                       />
 
-
+</div>
                       <Button onClick={changePassword} style={{ color: "white", background: "#3c91e6", marginTop:"25px", marginBottom:'25px', fontSize:'16px'  }}  >Save</Button>
 
                     </div>
