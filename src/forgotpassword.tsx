@@ -83,6 +83,7 @@ const handle_send_email = () => {
         if (response.status === 200) {
           handleSubmit()
           toast.success("Email sent Successfuly!")
+          navigate("/")
         } else {
           toast.error("Failed to send the email !")
 
