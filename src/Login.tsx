@@ -93,7 +93,9 @@ export function Login() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
+
               <label>Username/Email</label>
+
             </div>
             <div className="input-box">
               <span className="icon">
