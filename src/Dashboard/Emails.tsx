@@ -26,7 +26,6 @@ import  API  from "../API";
 
 export function Emails() {
   const editor = useRef(null);
-  const [body, setBody] = useState("");
   const [replyBody, setReplyBody] = useState("");
   const status = "emails";
   const [query, setQuery] = useState("");
