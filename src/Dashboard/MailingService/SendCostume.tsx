@@ -9,6 +9,7 @@ import "./sendcostume.css";
 import JoditEditor from "jodit-react";
 import Button from "@mui/material/Button";
 import { toast } from "react-toastify";
+import  API  from "../../API";
 
 
 // import './script'
@@ -42,7 +43,7 @@ export function SendCostume() {
             "subject" : "",
             "body" : "",
           }
-            const url = `http://localhost:53264/api/email/send`;
+            const url = `${API.Link}email/send`;
           fetch(url, {
           method: "POST",
           headers: {
@@ -64,7 +65,7 @@ export function SendCostume() {
               "subject" : subject,
               "body" : body,
           }
-          const url = `http://localhost:53264/api/email/send`;
+          const url = `${API.Link}email/send`;
           fetch(url, {
           method: "POST",
           headers: {

@@ -16,6 +16,7 @@ import { TopBar } from "./TopBar";
 import React from "react";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
+import  API  from "../API";
 // import './script'
 interface Field {
   name: string;
@@ -41,7 +42,7 @@ export function Profile() {
         const parsedData = JSON.parse(storedData);
         const id = parsedData.id;
 
-        fetch(`http://localhost:53264/api/User/GetProfile`, {
+        fetch(`${API.Link}User/GetProfile`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -83,7 +84,7 @@ export function Profile() {
     
       const storedData = localStorage.getItem("userDetails");
     if (storedData) {
-    if (userNewPassword === userConfirmPassword && validatePassword(userPassword)){
+    if (userNewPassword === userConfirmPassword && validatePassword(userNewPassword)){
       try {
         const parsedData = JSON.parse(storedData);
         const username = parsedData.login;
@@ -95,7 +96,7 @@ export function Profile() {
           confirmNewPassword: userConfirmPassword,
         }
 
-        fetch(`http://localhost:53264/api/User/change-password`, {
+        fetch(`${API.Link}User/change-password`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

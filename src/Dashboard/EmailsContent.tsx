@@ -14,6 +14,7 @@ import { FormEvent } from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
 import { toast } from "react-toastify";
+import  API  from "../API";
 
 export function EmailsContent() {
   const storedData = localStorage.getItem("userDetails");
@@ -32,6 +33,8 @@ export function EmailsContent() {
   const [edit, setEdit] = useState<Key>(-1);
   const [data, setdata] = useState<any>([]);
   const [file, setFile] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [dataExist, setDataExist] = useState(false)
 
   const [addContact, setaddContact] = useState(false);
   const toggleAddContact = () => {
@@ -66,7 +69,7 @@ export function EmailsContent() {
   const GetData = () => {
     if (id) {
       const requestBody = { id: id };
-      fetch("http://localhost:53264/api/Contacts/getcontact", {
+      fetch(`${API.Link}Contacts/getcontact`, {
         method: "POST",
         headers: {
           Accept: "application/json, text/plain",
@@ -77,13 +80,14 @@ export function EmailsContent() {
         .then((response) => response.json())
 
         .then((data) => {
-          // Process the returned data
 
-          console.log(data);
-          
+          if(data !== undefined) {
+            setIsLoading(false);
+          }else{
+            setDataExist(true);
+          }
             setdata(data);
-          
-          
+
         })
         .catch((error) => {
           console.error("Error: ", error);
@@ -105,7 +109,7 @@ export function EmailsContent() {
           phone: phone,
           industry: industry,
         };
-        const url = "http://localhost:53264/api/Contacts/insertcontact";
+        const url = `${API.Link}Contacts/insertcontact`;
         axios
           .post(url, data)
           .then((result) => {
@@ -141,7 +145,7 @@ export function EmailsContent() {
       formData.append("id", id);
 
       axios
-        .post("http://localhost:53264/api/Import_Export/Import", formData)
+        .post(`${API.Link}Import_Export/Import`, formData)
         .then((response) => {
           console.log("File uploaded successfully");
           setFile(response.data.file);
@@ -210,7 +214,7 @@ export function EmailsContent() {
           industry: uindustry,
         };
         const response = await fetch(
-          `http://localhost:53264/api/Contacts/updatecontact/${id}`,
+          `${API.Link}Contacts/updatecontact/${id}`,
           {
             method: "PUT",
             headers: {
@@ -246,7 +250,7 @@ export function EmailsContent() {
   };
   //Delete
   const handleDelete = (id: Key) => {
-    fetch("http://localhost:53264/api/Contacts/deletecontact", {
+    fetch(`${API.Link}Contacts/deletecontact`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -409,7 +413,15 @@ export function EmailsContent() {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map(
+                    {isLoading ? (
+                    <tr>
+                      <td colSpan={5}>Loading...</td>
+                    </tr>
+                  ) : dataExist ? (
+                    <tr>
+                      <td colSpan={5}>No data found</td>
+                    </tr>
+                  ) :data.map(
                       (data: {
                         phone: string;
                         email: string;

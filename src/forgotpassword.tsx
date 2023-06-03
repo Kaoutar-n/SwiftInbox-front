@@ -6,6 +6,7 @@ import "./Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import  API  from "./API";
 
 interface Props {
   onFormSwitch: (formName: string) => void;
@@ -39,7 +40,7 @@ const handleSubmit = () => {
     const _email_token ={
       email: email,
     }
-      fetch("http://localhost:53264/api/User/reset-password-token", {
+      fetch(`${API.Link}User/reset-password-token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +73,7 @@ const handle_send_email = () => {
       subject: subject,
       body: body,
     }
-    fetch("http://localhost:53264/api/email/sendcustomEmail", {
+    fetch(`${API.Link}email/sendcustomEmail`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

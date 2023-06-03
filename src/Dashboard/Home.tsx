@@ -1,13 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faSearch,
   faAngleRight,
   faEnvelopeCircleCheck,
   faCalendarCheck,
   faPaperPlane,
-  faFilter,
-  faPlus,
-  faEllipsisVertical,
 } from "@fortawesome/free-solid-svg-icons";
 import "./home.css";
 import { SideBar } from "./SideBar";
@@ -17,6 +13,7 @@ import { Chart, registerables } from "chart.js/auto";
 
 import { useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
+import  API  from "../API";
 
 // import './script'
 export function Home() {
@@ -31,7 +28,7 @@ export function Home() {
   const GetData = () => {
     if (id) {
       const requestBody = id;
-      fetch("http://localhost:53264/api/Dashboard/GetDashboardData", {
+      fetch(`${API.Link}Dashboard/GetDashboardData`, {
         method: "POST",
         headers: {
           Accept: "application/json, text/plain",

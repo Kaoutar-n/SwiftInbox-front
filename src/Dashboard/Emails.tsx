@@ -22,6 +22,7 @@ import {
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
 import { toast } from "react-toastify";
+import  API  from "../API";
 
 export function Emails() {
   const editor = useRef(null);
@@ -34,6 +35,8 @@ export function Emails() {
   const [viewEmail, setviewEmail] = useState(false);
   const [replyEmail, setReplyEmail] = useState(false);
   const [mailData, setMailData] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [dataExist, setDataExist] = useState(false)
 
   const toggleviewEmail = () => {
     setviewEmail(!viewEmail);
@@ -69,7 +72,7 @@ export function Emails() {
   if (storedData) {
     const parseddata = JSON.parse(storedData);
     const id = parseddata.id;
-    fetch("http://localhost:53264/api/email/receive", {
+    fetch(`${API.Link}email/receive`, {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain",
@@ -80,7 +83,11 @@ export function Emails() {
       .then((response) => response.json())
 
       .then((data) => {
-        console.log(typeof data);
+        if(data !== undefined) {
+          setIsLoading(false);
+        }else{
+          setDataExist(true);
+        }
         setData(data);
       })
       .catch((error) => {
@@ -109,7 +116,7 @@ export function Emails() {
       subject: subject,
       body: replyBody
     }
-    fetch("http://localhost:53264/api/email/sendcustomEmail", {
+    fetch(`${API.Link}email/sendcustomEmail`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -186,7 +193,16 @@ export function Emails() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map(
+                {isLoading ? (
+                    <tr>
+                      <td colSpan={5}>Loading...</td>
+                    </tr>
+                  ) : dataExist ? (
+                    <tr>
+                      <td colSpan={5}>No data found</td>
+                    </tr>
+                  ) :
+                  data.map(
                     (mail: {
                       id: Key;
                       sendername: string;

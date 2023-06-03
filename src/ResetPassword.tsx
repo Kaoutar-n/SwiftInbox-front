@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
+import  API  from "./API";
 
 
 
@@ -30,7 +31,7 @@ export const ResetPassword = () => {
     const _emailToJ = {
       email: storedEmail
     }
-    fetch('http://localhost:53264/api/User/Get-Password-Token',{
+    fetch(`${API.Link}User/Get-Password-Token`,{
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +55,7 @@ export const ResetPassword = () => {
         confirmNewPassword: confirmNewPassword
         
       }
-        fetch("http://localhost:53264/api/User/reset-password", {
+        fetch(`${API.Link}User/reset-password`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

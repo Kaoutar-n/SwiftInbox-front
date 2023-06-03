@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import  API  from "./API";
 
 
 
@@ -26,7 +27,7 @@ export function Login() {
     e.preventDefault();
     if (validate()) {
       let inputobj = { username: username, password: password };
-      fetch("http://localhost:53264/api/User", {
+      fetch(`${API.Link}User`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(inputobj),

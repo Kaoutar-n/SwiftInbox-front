@@ -5,6 +5,7 @@ import "./profileSettings.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import  API  from "../API";
 interface Props {
   fields: { name: string; value: string }[];
   onSave: (values: { name: string; value: string }[], image: string) => void;
@@ -47,7 +48,7 @@ function EditableField({ fields, onSave }: Props) {
     };
     if(validatePhoneNumber(data.phone) && validateEmail(data.email)){
       try {
-        const response = await fetch(`http://localhost:53264/api/User/UpdateProfile?id=${id}`, {
+        const response = await fetch(`${API.Link}User/UpdateProfile?id=${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

@@ -7,6 +7,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { toast } from "react-toastify";
+import  API  from "./API";
 
 
 
@@ -58,35 +59,36 @@ export const Register = () => {
 
   const ProceedRegisterusingAPI = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if(!validatePassword(password)){
-      alert("please enter a valid password(at least 8 characters)")
+    if(validatePassword(password) && validatePhoneNumber(phone) && validateEmail(email)){
+      const data = {
+        UserName: username,
+        Password: password,
+        ConfirmPassword: confirmPassword,
+        LastName: lastName,
+        FirstName: firstName,
+        Phone: phone,
+        Email: email,
+      };
+      const url = `${API.Link}User/create`;
+      axios
+         .post(url, data)
+         .then((result) => {
+          toast.success("You are Registred Successfully!");
+          navigate("/");
+         })
+         .catch((err) => {
+          alert(err.message);
+          toast.error("Registration Failed!");
+         });
+    }else if(!validatePassword(password) && validatePhoneNumber(phone) && validateEmail(email)){
+      toast.error("Please Enter A Valid Password ! (at least 8 characters)");
+    }else if((validatePassword(password) && !validatePhoneNumber(phone) && validateEmail(email))){
+      toast.error("Please Enter A Valid PhoneNumber !");
+    }else{
+      toast.error("Please Enter A Valid Email !");
     }
-    if (!validatePhoneNumber(phone)) {
-      alert("please enter a valid phone number")
-    }
-    if (!validateEmail(email)) {
-      alert("please enter a valid email address")
-    }
-    const data = {
-      UserName: username,
-      Password: password,
-      ConfirmPassword: confirmPassword,
-      LastName: lastName,
-      FirstName: firstName,
-      Phone: phone,
-      Email: email,
-    };
-    const url = "http://localhost:53264/api/User/create";
-    axios
-       .post(url, data)
-       .then((result) => {
-        toast.success("You are Registred Successfully!");
-        navigate("/");
-       })
-       .catch((err) => {
-        alert(err.message);
-        toast.error("Registration Failed!");
-       });
+    
+    
   };
 
   return (
