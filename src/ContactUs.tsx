@@ -44,7 +44,6 @@ export const ContactUs = () => {
       <div className="wrapper">
         <div className="form-box login">
           <h2>Contact Us</h2>
-          {/* <p>You have any questions? Don't hesitate and Contact Us!</p> */}
           <form >
             <div className="input-box">
               <span className="icon">
@@ -75,7 +74,7 @@ export const ContactUs = () => {
               <input  onChange={(e) => setMessage(e.target.value)} type="text" className="message" required/>
               <label> Message</label>
             </div>
-            <button type="submit" className="btn">
+            <button onClick={handleReply} type="submit" className="btn">
               Send
             </button>
             <div className="login-register">
