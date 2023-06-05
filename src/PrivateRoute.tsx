@@ -18,6 +18,7 @@ function PrivateRoute({ path, element }: PrivateRouteProps): JSX.Element {
       setLoading(false);
     }, 2000);
   }, []);
+
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -31,10 +32,9 @@ function PrivateRoute({ path, element }: PrivateRouteProps): JSX.Element {
     if (authenticated) {
       navigate(path);
     }
-  }, [authenticated, navigate]);
+  }, [authenticated, navigate, path]); 
 
   if (authenticated === null) {
-    
     return (
       <div className="snipper">
         {loading ? (
@@ -56,4 +56,5 @@ function PrivateRoute({ path, element }: PrivateRouteProps): JSX.Element {
   }
   return element;
 }
+
 export default PrivateRoute;
