@@ -15,21 +15,10 @@ import  API  from "../../API";
 // import './script'
 export function SendCostume() {
   const editor = useRef(null);
-  const [show, setShow] = useState(true);
-  const [show2, setShow2] = useState(false);
+  const show = useState(true);
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
   const storedData = localStorage.getItem("userDetails");
-
-  const handleShow = () => {
-    setShow(true);
-    setShow2(false);
-  };
-
-  const handleShow2 = () => {
-    setShow(false);
-    setShow2(true);
-  };
 
   const sendEmail = ( emailtype : number ) => {
 

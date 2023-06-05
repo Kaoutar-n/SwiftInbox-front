@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
@@ -8,9 +7,6 @@ import "./home.css";
 import { Key, useEffect, useState } from "react";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
-
-import { FormEvent } from "react";
-
 import axios from "axios";
 import { Button } from "@mui/material";
 import { toast } from "react-toastify";
@@ -81,7 +77,7 @@ export function EmailsContent() {
 
         .then((data) => {
 
-          if(data !== undefined) {
+          if(data !== undefined || data !== null) {
             setIsLoading(false);
           }else{
             setDataExist(true);
@@ -136,9 +132,9 @@ export function EmailsContent() {
 
   useEffect(() => {
     id && GetData();
-  }, []);
+  });
 
-  const handleImport = () => {
+  function handleImport() {
     if (file && id) {
       const formData = new FormData();
       formData.append("file", file);
@@ -159,7 +155,7 @@ export function EmailsContent() {
     } else {
       console.log("Please select a file");
     }
-  };
+  }
 
   const handleExport = () => {
     const csvString = convertArrayOfObjectsToCSV(data);
@@ -287,15 +283,15 @@ export function EmailsContent() {
               <h1>Contacts</h1>
               <ul className="breadcrumb">
                 <li>
-                  <a href="#">Dashboard</a>
+                  <a href="/Dashboard">Dashboard</a>
                 </li>
                 <li>
                   <FontAwesomeIcon icon={faAngleRight} className="ico" />
                 </li>
                 <li>
-                  <a className="active" href="#">
-                    Contacts
-                  </a>
+                <a className="active" href="/contacts">
+                  Contacts
+                </a>
                 </li>
               </ul>
             </div>
