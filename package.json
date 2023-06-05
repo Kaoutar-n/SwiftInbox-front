@@ -1,5 +1,5 @@
 {
-  "name": "email_classification",
+  "name": "swift-inbox",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -23,17 +23,15 @@
     "axios": "^1.4.0",
     "boxicons": "^2.1.4",
     "chart.js": "^4.3.0",
-    "jodit-react": "^1.3.39",
     "react": "^18.2.0",
+    "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
-    "react-redux": "^8.0.5",
-    "react-router-dom": "^6.11.2",
+    "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
-    "react-spinners": "^0.13.8",
-    "react-toastify": "^9.1.3",
-    "redux": "^4.2.1",
+    "react-toastify": "^9.1.2",
     "styled-components": "^5.3.10",
+    "swift-inbox": "github:Kaoutar-n/SwiftInbox-front",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -60,5 +58,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-csv": "^1.1.3",
+    "webpack": "^5.85.1",
+    "@babel/plugin-proposal-private-property-in-object": "^7.16.5"
   }
 }

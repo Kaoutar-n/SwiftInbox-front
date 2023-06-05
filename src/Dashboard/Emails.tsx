@@ -7,7 +7,6 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import Button from "@mui/material/Button";
 import "./home.css";
 import JoditEditor from "jodit-react";
-import "./Charts";
 import { Key, useEffect, useRef, useState } from "react";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
@@ -204,10 +203,10 @@ export function Emails() {
               <button onClick={toggleviewEmail}>
                 <span className="status completed">View</span>
               </button>
-            </td>
-          </tr>
-        ))}
-  </tbody>    
+                      </td>
+                    </tr>
+                  ))}
+            </tbody>    
               </table>
               </div>
               {viewEmail && (

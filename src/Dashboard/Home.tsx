@@ -8,9 +8,7 @@ import {
 import "./home.css";
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
-
 import { Chart, registerables } from "chart.js/auto";
-
 import { useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
 import  API  from "../API";
@@ -53,7 +51,7 @@ export function Home() {
 
   useEffect(() => {
     GetData();
-  });
+  },[]);
   
 
   useEffect(() => {

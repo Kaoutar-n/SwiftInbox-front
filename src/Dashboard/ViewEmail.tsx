@@ -6,8 +6,6 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 import "./home.css";
 import './MailingService/costume.css'
-import "./Charts";
-
 import { SideBar } from "./SideBar";
 import { TopBar } from "./TopBar";
 // import './script'

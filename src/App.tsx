@@ -19,6 +19,8 @@ import TableTemp from "./TableTemp";
 import PrivateRoute from "./PrivateRoute";
 import { ToastContainer } from "react-toastify";
 import ResetPassword from "./ResetPassword";
+import SendCostume from "./Dashboard/MailingService/SendCostume";
+import Send from "./Dashboard/MailingService/Send";
 
 function App(): JSX.Element {
   return (
@@ -55,6 +57,10 @@ function App(): JSX.Element {
             element={<PrivateRoute path="/Costume" element={<Costume />} />}
           />
           <Route
+            path="/SendCostume"
+            element={<PrivateRoute path="/SendCostume" element={<SendCostume />} />}
+          />
+          <Route
             path="/ViewEmail"
             element={<PrivateRoute path="/ViewEmail" element={<ViewEmail />} />}
           />
@@ -65,6 +71,10 @@ function App(): JSX.Element {
           <Route
             path="/TableTemp"
             element={<PrivateRoute path="/TableTemp" element={<TableTemp />} />}
+          />
+          <Route
+            path="/send"
+            element={<PrivateRoute path="/send" element={<Send />} />}
           />
 
           {/* <PrivateRoute path="/EmailsContent" element={<EmailsContent />} />

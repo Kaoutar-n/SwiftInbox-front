@@ -1,6 +1,5 @@
 import "./Login.css";
 import Feature from "./feature/Feature";
-import blueAbout from "./img/blueAbout.png";
 import './services.css'
 
 const featuresData=[

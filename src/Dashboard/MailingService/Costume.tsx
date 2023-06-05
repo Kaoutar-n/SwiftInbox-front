@@ -7,7 +7,6 @@ import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 import "../dropdown.css";
 import "../home.css";
-import "../Charts";
 import './costume.css';
 import React, { useState, useRef, useMemo, useEffect } from 'react';
 import JoditEditor from 'jodit-react';

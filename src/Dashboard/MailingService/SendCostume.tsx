@@ -4,7 +4,6 @@ import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import "../dropdown.css";
 import "../home.css";
-import "../Charts";
 import "./sendcostume.css";
 import JoditEditor from "jodit-react";
 import Button from "@mui/material/Button";
