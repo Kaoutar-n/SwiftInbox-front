@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 import "./profileSettings.css";
-
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import  API  from "../API";
 interface Props {
@@ -16,7 +12,6 @@ function EditableField({ fields, onSave }: Props) {
   const [editing, setEditing] = useState(false);
   const [values, setValues] =
     useState<{ name: string; value: string }[]>(fields);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const storedData = localStorage.getItem("userDetails")!;
   
   const parsedData = JSON.parse(storedData);
@@ -75,29 +70,16 @@ function EditableField({ fields, onSave }: Props) {
     
   };
   function handleSave() {
-    if (selectedFile) {
+  
       const reader = new FileReader();
       reader.onloadend = () => {
         onSave(values, reader.result as string);
-
         setEditing(false);
         postData();
       };
-      reader.readAsDataURL(selectedFile);
-    } else {
-      onSave(values, "");
-      setEditing(false);
-      postData();
-    }
   }
 
   
-
-
-  function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files && event.target.files[0];
-    setSelectedFile(file);
-  }
 
   if (!editing) {
     return (

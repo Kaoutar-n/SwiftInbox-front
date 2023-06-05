@@ -4,29 +4,48 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import {  NavLink } from "react-router-dom";
-import dalogo from './img/dalogo.png'
+import { toast } from "react-toastify";
+import { useState } from "react";
+import API from "./API";
 
 export const ContactUs = () => {
+
+  const [name, setName] = useState("")
+  const [message, setMessage] = useState("")
+  const [email, setEmail] = useState("")
+
+  const handleReply = () => {
+    const data = {
+      reciever: 'rbellati.reda16@gmail.com',
+      subject: 'Contacted by client : '+{name},
+      body:'Email :'+{email}+'\n'+{message},
+    };
+    fetch(`${API.Link}email/sendcustomEmail`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          toast.success("Thanks for contacting us ! you will receive an reply on your email");
+          ;
+        } else {
+          toast.error("Failed to send the reply!");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
   return (
     <div className="bod">
-      {/* <header>
-      <div className="logo">
-          <img src= {dalogo} />
-        </div>
-        <nav className="navigation">
-          <NavLink to="/">Login</NavLink>
-          <NavLink to="/About">About</NavLink>
-          <NavLink to="/services">Services</NavLink>
-          <NavLink to="/ContactUs">Contact</NavLink>
-        </nav>
-      </header> */}
-
       <div className="wrapper">
         <div className="form-box login">
           <h2>Contact Us</h2>
           {/* <p>You have any questions? Don't hesitate and Contact Us!</p> */}
-          <form action="#">
+          <form >
             <div className="input-box">
               <span className="icon">
                 {" "}
@@ -34,7 +53,7 @@ export const ContactUs = () => {
                 <FontAwesomeIcon icon={faUser} />
                 </i>{" "}
               </span>
-              <input type="text" required />
+              <input onChange={(e) => setName(e.target.value)} type="text" required />
               <label> Name</label>
             </div>
             <div className="input-box">
@@ -44,7 +63,7 @@ export const ContactUs = () => {
                   <FontAwesomeIcon icon={faEnvelope} />
                 </i>
               </span>
-              <input type="text" required />
+              <input onChange={(e) => setEmail(e.target.value)} type="text" required />
               <label> Email</label>
             </div>
             <div className="input-box">
@@ -53,7 +72,7 @@ export const ContactUs = () => {
                 <FontAwesomeIcon icon={faMessage} />
                 </i>
               </span>
-              <input type="text" className="message" required/>
+              <input  onChange={(e) => setMessage(e.target.value)} type="text" className="message" required/>
               <label> Message</label>
             </div>
             <button type="submit" className="btn">

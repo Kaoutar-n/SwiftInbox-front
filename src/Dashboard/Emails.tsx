@@ -86,7 +86,7 @@ export function Emails() {
 
   useEffect(() => {
     GetData();
-  }, []);
+  });
 
   function mailInfo(id: Key) {
     const selectedMail = data.find((item: any) => item.id === id);
@@ -202,9 +202,9 @@ export function Emails() {
                             <td>{mail.subject}</td>
                             <td>{Classifier(mail.category)}</td>
                             <td>
-                              <a onClick={toggleviewEmail}>
+                              <button onClick={toggleviewEmail}>
                                 <span className="status completed">View</span>
-                              </a>
+                              </button>
                             </td>
                           </tr>
                         )

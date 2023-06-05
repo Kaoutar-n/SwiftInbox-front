@@ -53,7 +53,7 @@ export function Home() {
 
   useEffect(() => {
     GetData();
-  }, []);
+  });
   
 
   useEffect(() => {
@@ -204,13 +204,13 @@ export function Home() {
               <h1>Dashboard</h1>
               <ul className="breadcrumb">
                 <li>
-                  <a href="#">Dashboard</a>
+                  <a href="/dashboard">Dashboard</a>
                 </li>
                 <li>
                   <FontAwesomeIcon icon={faAngleRight} className="ico" />
                 </li>
                 <li>
-                  <a className="active" href="#">
+                  <a className="active" href="/Home">
                     Home
                   </a>
                 </li>
