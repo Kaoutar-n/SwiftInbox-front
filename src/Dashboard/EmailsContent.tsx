@@ -421,78 +421,79 @@ export function EmailsContent() {
                     <tr>
                       <td colSpan={5}>No data found</td>
                     </tr>
-                  ) :data.map(
-                      (data: {
-                        phone: string;
-                        email: string;
-                        industry: string;
-                        id: Key;
-                        fullName: string;
-                      }) =>
-                        data.id === edit ? (
-                          <tr>
+                  ) : data
+                  .filter(
+                    (item: { fullName: string; phone: string; email: string; industry: string; }) =>
+                      item.fullName.toLowerCase().includes(query) || // Add your filter conditions here
+                      item.phone.toLowerCase().includes(query) ||
+                      item.email.toLowerCase().includes(query) ||
+                      item.industry.toLowerCase().includes(query)
+                  )
+                  .map((item: any) =>
+                    item.id === edit ? (
+                      <tr>
+                        <td>
+                          {" "}
+                          <input
+                            type="text"
+                            value={uname}
+                            onChange={(e) => usetName(e.target.value)}
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <input
+                            type="text"
+                            value={uemail}
+                            onChange={(e) => usetEmail(e.target.value)}
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <input
+                            type="text"
+                            value={uphone}
+                            onChange={(e) => usetPhone(e.target.value)}
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <input
+                            type="text"
+                            value={uindustry}
+                            onChange={(e) => usetIndustry(e.target.value)}
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <button
+                            className="status completed"
+                            onClick={() => handleUpdate(item.id)}
+                          >
+                            Update
+                          </button>
+                        </td>
+                      </tr>
+                    ) : (
+                          <tr key={item.id}>
                             <td>
-                              {" "}
-                              <input
-                                type="text"
-                                value={uname}
-                                onChange={(e) => usetName(e.target.value)}
-                              />
+                               {item.fullName}
                             </td>
-                            <td>
-                              {" "}
-                              <input
-                                type="text"
-                                value={uemail}
-                                onChange={(e) => usetEmail(e.target.value)}
-                              />
-                            </td>
-                            <td>
-                              {" "}
-                              <input
-                                type="text"
-                                value={uphone}
-                                onChange={(e) => usetPhone(e.target.value)}
-                              />
-                            </td>
-                            <td>
-                              {" "}
-                              <input
-                                type="text"
-                                value={uindustry}
-                                onChange={(e) => usetIndustry(e.target.value)}
-                              />
-                            </td>
-                            <td>
-                              {" "}
-                              <button
-                                className="status completed"
-                                onClick={() => handleUpdate(data.id)}
-                              >
-                                Update
-                              </button>
-                            </td>
-                          </tr>
-                        ) : (
-                          <tr key={data.id}>
-                            <td>
-                               {data.fullName}
-                            </td>
-                            <td>{data.email}</td>
-                            <td>{data.phone}</td>
-                            <td>{data.industry}</td>
+                            <td>{item.email}</td>
+                            <td>{item.phone}</td>
+                            <td>{item.industry}</td>
                             <td>
                               <button>
                                 <span
                                   className="status completed"
-                                  onClick={() => handleEdit(data.id)}
+                                  onClick={() => handleEdit(item.id)}
                                 >
                                   Edit
                                 </span>
                               </button>
                               <button>
                                 <span
-                                  onClick={() => handleDelete(data.id)}
+                                  onClick={() => handleDelete(item.id)}
                                   className="status pending"
                                 >
                                   Delete
