@@ -13,10 +13,7 @@ import  API  from "./API";
 
 export function Login() {
   const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const login = 'true';
-  const notLogin = 'false';
-  
+  const [password, setPassword] = React.useState("");  
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

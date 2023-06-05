@@ -520,9 +520,9 @@ border-bottom: solid 1px var(--grey);
 	text-align: center;
 
 } 
-#content main .table-data .Emails-mang table td:empty::before {
+/* #content main .table-data .Emails-mang table td:empty::before {
     content: 'No Data Found';
-}
+} */
 #content main .table-data .Emails-mang table tr td .status{
 font-size: 13px;
 padding: 6px 16px ;
