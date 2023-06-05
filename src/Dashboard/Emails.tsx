@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -162,56 +161,54 @@ export function Emails() {
                   </button>
                 </div>
                 <i className="ico">
-                  <FontAwesomeIcon icon={faFilter} />
+                 
                 </i>
               </div>
               <div className="table-wrapper">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Client Name</th>
-                      <th>Email</th>
-                      <th>Subject</th>
-                      <th>Classification</th>
-                      <th>View</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {isLoading ? (
-                      <tr>
-                        <td colSpan={7}>Loading...</td>
-                      </tr>
-                    ) : dataExist ? (
-                      <tr>
-                        <td colSpan={7}>No data found</td>
-                      </tr>
-                    ) : (
-                      data.map(
-                        (mail: {
-                          id: Key;
-                          sendername: string;
-                          senderemail: string;
-                          subject: string;
-                          category: number;
-                        }) => (
-                          <tr key={mail.id} onClick={() => mailInfo(mail.id)}>
-                            <td>
-                              <p>{mail.sendername}</p>
-                            </td>
-                            <td>{mail.senderemail}</td>
-                            <td>{mail.subject}</td>
-                            <td>{Classifier(mail.category)}</td>
-                            <td>
-                              <button onClick={toggleviewEmail}>
-                                <span className="status completed">View</span>
-                              </button>
-                            </td>
-                          </tr>
-                        )
-                      )
-                    )}
-                  </tbody>
-                </table>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Client Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Classification</th>
+                    <th>View</th>
+                  </tr>
+                </thead>
+                <tbody>
+    {isLoading ? (
+      <tr>
+        <td colSpan={5}>Loading...</td>
+      </tr>
+    ) : dataExist ? (
+      <tr>
+        <td colSpan={5}>No data found</td>
+      </tr>
+    ) : data
+        .filter(
+          (mail: any) =>
+            mail.sendername.toLowerCase().includes(query) || // Add your filter conditions here
+            mail.senderemail.toLowerCase().includes(query) ||
+            mail.subject.toLowerCase().includes(query) ||
+            Classifier(mail.category).toLowerCase().includes(query)
+        )
+        .map((mail: any) => (
+          <tr key={mail.id} onClick={() => mailInfo(mail.id)}>
+            <td>
+              <p>{mail.sendername}</p>
+            </td>
+            <td>{mail.senderemail}</td>
+            <td>{mail.subject}</td>
+            <td>{Classifier(mail.category)}</td>
+            <td>
+              <a onClick={toggleviewEmail}>
+                <span className="status completed">View</span>
+              </a>
+            </td>
+          </tr>
+        ))}
+  </tbody>    
+              </table>
               </div>
               {viewEmail && (
                 <>
