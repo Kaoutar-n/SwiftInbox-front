@@ -102,14 +102,12 @@ export function Home() {
       if (canvas2) {
         const context = canvas2.getContext("2d");
         if (context) {
-          // Destroy existing chart with ID '0'
+
           Chart.register(...registerables);
           const existingChart = Chart.getChart(canvas2);
           if (existingChart) {
             existingChart.destroy();
           }
-
-          // Create new bar chart
           const lineChartData = data.receivedByMonth
           ? [
               data.receivedByMonth[1],
