@@ -40,7 +40,7 @@ const handleSubmit = () => {
     const _email_token ={
       email: email,
     }
-      fetch(`${API.Link}User/reset-password-token`, {
+      fetch(`${API.Link}api/User/reset-password-token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +73,7 @@ const handle_send_email = () => {
       subject: subject,
       body: body,
     }
-    fetch(`${API.Link}email/sendcustomEmail`, {
+    fetch(`${API.Link}api/email/sendcustomEmail`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

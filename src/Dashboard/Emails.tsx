@@ -60,7 +60,7 @@ export function Emails() {
     if (storedData) {
       const parseddata = JSON.parse(storedData);
       const id = parseddata.id;
-      fetch(`${API.Link}email/receive`, {
+      fetch(`${API.Link}api/email/receive`, {
         method: "POST",
         headers: {
           Accept: "application/json, text/plain",
@@ -100,7 +100,7 @@ export function Emails() {
       subject: subject,
       body: replyBody,
     };
-    fetch(`${API.Link}email/sendcustomEmail`, {
+    fetch(`${API.Link}api/email/sendcustomEmail`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

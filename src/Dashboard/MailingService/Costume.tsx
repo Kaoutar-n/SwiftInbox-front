@@ -14,6 +14,7 @@ import { SideBar } from "../SideBar";
 import { TopBar } from "../TopBar";
 import { Button } from "@mui/material";
 import { toast } from "react-toastify";
+import API from "../../API";
 
 export function Costume() {
   const editor = useRef(null);
@@ -27,7 +28,7 @@ export function Costume() {
     if (storedData) {
       const parseddata = JSON.parse(storedData);
       const id = parseddata.id;
-      fetch("http://localhost:53264/GetTemplate", {
+      fetch(`${API.Link}GetTemplate`, {
         method: "POST",
         headers: {
           Accept: "application/json, text/plain",
@@ -65,7 +66,7 @@ export function Costume() {
 
         const parsedData = JSON.parse(storedData);
         const id = parsedData.id;
-        const url = `http://localhost:53264/UpdateTemplate/${id}`;
+        const url = `${API.Link}UpdateTemplate/${id}`;
         fetch(url, {
         method: "PUT",
         headers: {

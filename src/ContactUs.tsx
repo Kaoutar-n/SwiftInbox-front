@@ -20,7 +20,7 @@ export const ContactUs = () => {
       subject: 'Contacted by client : '+{name},
       body:'Email :'+{email}+'\n'+{message},
     };
-    fetch(`${API.Link}email/sendcustomEmail`, {
+    fetch(`${API.Link}api/email/sendcustomEmail`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

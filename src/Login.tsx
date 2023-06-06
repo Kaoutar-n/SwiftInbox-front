@@ -24,7 +24,7 @@ export function Login() {
     e.preventDefault();
     if (validate()) {
       let inputobj = { username: username, password: password };
-      fetch(`${API.Link}User`, {
+      fetch(`${API.Link}api/User`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(inputobj),

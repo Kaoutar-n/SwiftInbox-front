@@ -65,7 +65,7 @@ export function EmailsContent() {
   const GetData = () => {
     if (id) {
       const requestBody = { id: id };
-      fetch(`${API.Link}Contacts/getcontact`, {
+      fetch(`${API.Link}api/Contacts/getcontact`, {
         method: "POST",
         headers: {
           Accept: "application/json, text/plain",
@@ -105,7 +105,7 @@ export function EmailsContent() {
           phone: phone,
           industry: industry,
         };
-        const url = `${API.Link}Contacts/insertcontact`;
+        const url = `${API.Link}api/Contacts/insertcontact`;
         axios
           .post(url, data)
           .then((result) => {
@@ -141,7 +141,7 @@ export function EmailsContent() {
       formData.append("id", id);
 
       axios
-        .post(`${API.Link}Import_Export/Import`, formData)
+        .post(`${API.Link}api/Import_Export/Import`, formData)
         .then((response) => {
           console.log("File uploaded successfully");
           setFile(response.data.file);
@@ -210,7 +210,7 @@ export function EmailsContent() {
           industry: uindustry,
         };
         const response = await fetch(
-          `${API.Link}Contacts/updatecontact/${id}`,
+          `${API.Link}api/Contacts/updatecontact/${id}`,
           {
             method: "PUT",
             headers: {
@@ -246,7 +246,7 @@ export function EmailsContent() {
   };
   //Delete
   const handleDelete = (id: Key) => {
-    fetch(`${API.Link}Contacts/deletecontact`, {
+    fetch(`${API.Link}api/Contacts/deletecontact`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

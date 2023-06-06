@@ -31,7 +31,7 @@ export const ResetPassword = () => {
     const _emailToJ = {
       email: storedEmail
     }
-    fetch(`${API.Link}User/Get-Password-Token`,{
+    fetch(`${API.Link}api/User/Get-Password-Token`,{
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export const ResetPassword = () => {
         confirmNewPassword: confirmNewPassword
         
       }
-        fetch(`${API.Link}User/reset-password`, {
+        fetch(`${API.Link}api/User/reset-password`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

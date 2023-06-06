@@ -69,7 +69,7 @@ export const Register = () => {
         Phone: phone,
         Email: email,
       };
-      const url = `${API.Link}User/create`;
+      const url = `${API.Link}api/User/create`;
       axios
          .post(url, data)
          .then((result) => {

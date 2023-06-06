@@ -31,7 +31,7 @@ export function SendCostume() {
             "subject" : "",
             "body" : "",
           }
-            const url = `${API.Link}email/send`;
+            const url = `${API.Link}api/email/send`;
           fetch(url, {
           method: "POST",
           headers: {
@@ -53,7 +53,7 @@ export function SendCostume() {
               "subject" : subject,
               "body" : body,
           }
-          const url = `${API.Link}email/send`;
+          const url = `${API.Link}api/email/send`;
           fetch(url, {
           method: "POST",
           headers: {

@@ -43,7 +43,7 @@ function EditableField({ fields, onSave }: Props) {
     };
     if(validatePhoneNumber(data.phone) && validateEmail(data.email)){
       try {
-        const response = await fetch(`${API.Link}User/UpdateProfile?id=${id}`, {
+        const response = await fetch(`${API.Link}api/User/UpdateProfile?id=${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

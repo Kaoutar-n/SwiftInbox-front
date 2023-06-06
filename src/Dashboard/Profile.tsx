@@ -42,7 +42,7 @@ export function Profile() {
         const parsedData = JSON.parse(storedData);
         const id = parsedData.id;
 
-        fetch(`${API.Link}User/GetProfile`, {
+        fetch(`${API.Link}api/User/GetProfile`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -96,7 +96,7 @@ export function Profile() {
           confirmNewPassword: userConfirmPassword,
         }
 
-        fetch(`${API.Link}User/change-password`, {
+        fetch(`${API.Link}api/User/change-password`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

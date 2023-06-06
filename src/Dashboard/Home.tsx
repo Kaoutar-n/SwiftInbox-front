@@ -26,7 +26,7 @@ export function Home() {
   const GetData = () => {
     if (id) {
       const requestBody = id;
-      fetch(`${API.Link}Dashboard/GetDashboardData`, {
+      fetch(`${API.Link}api/Dashboard/GetDashboardData`, {
         method: "POST",
         headers: {
           Accept: "application/json, text/plain",
