@@ -68,10 +68,6 @@ export function Send() {
                 </li>
               </ul>
             </div>
-            <a href="" className="btn-download">
-              <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
-              <span className="text">Download PDF</span>
-            </a>
           </div>
            
          
