@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { toast } from 'react-toastify';
@@ -18,6 +18,12 @@ export function Login() {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('userDetails') !== null) {
+      localStorage.clear();
+    } 
+  },[]);
   
   const navigate = useNavigate();
   const ProceedLoginusingAPI = (e : any) => {
