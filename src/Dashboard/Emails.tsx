@@ -55,6 +55,12 @@ export function Emails() {
       return "Neutral";
     }
   }
+  const parseSentenceToHTML = (sentence: string): React.ReactNode => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(sentence, 'text/html');
+    return <>{doc.body.innerHTML}</>;
+  };
+  
 
   const GetData = () => {
     if (storedData) {
@@ -73,6 +79,7 @@ export function Emails() {
           setIsLoading(false);
           setDataExist(data.length === 0 || data === undefined || data === null);
           setData(data);
+          
         })
         .catch((error) => {
           console.error("Error: ", error);
@@ -236,7 +243,7 @@ export function Emails() {
                             className="icon"
                           />
                         </i>
-                        <p>{mailData.body}</p>
+                        <p>{parseSentenceToHTML(mailData.body)}</p>
                       </div>
                       <Button
                         style={{

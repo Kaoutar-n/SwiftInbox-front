@@ -38,10 +38,7 @@ export function TopBar() {
          
         </div>
       </form>
-      <a href="#" className="notification">
-        <FontAwesomeIcon icon={faBell} className="ico" />
-        <span className="num">8</span>
-      </a>
+
       <a href="#" className="profile">
         <img onClick={toggleProfile} src={people} alt="profile-img" />
       </a>
