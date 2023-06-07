@@ -37,7 +37,7 @@ export function TopBar() {
         </div>
       </form>
 
-      <a href="#" className="profile">
+      <a href="/profile" className="profile">
         <img onClick={toggleProfile} src={people} alt="profile-img" />
       </a>
       {profile && (
