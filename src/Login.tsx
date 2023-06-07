@@ -21,7 +21,7 @@ export function Login() {
 
   useEffect(() => {
     if (localStorage.getItem('userDetails') !== null) {
-      localStorage.clear();
+      navigate('/home')
     } 
   },[]);
   

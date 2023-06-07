@@ -34,7 +34,7 @@ function EditableField({ fields, onSave }: Props) {
     return isValid;
   };
 
-  const postData = async () => {
+  const postData = () => {
     const data = {
       firstName: values.find((field) => field.name === "First Name")?.value || "",
       lastName: values.find((field) => field.name === "Last Name")?.value || "",
@@ -43,24 +43,30 @@ function EditableField({ fields, onSave }: Props) {
     };
     if(validatePhoneNumber(data.phone) && validateEmail(data.email)){
       try {
-        const response = await fetch(`${API.Link}api/User/UpdateProfile?id=${id}`, {
+          fetch(`${API.Link}api/User/UpdateProfile?id=${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
+        }).then((res) => {
+          if (res.status === 200) {
+            return;
+          } else {
+            throw new Error("Update Failed, invalid credentials");
+          }
+        })
+        .then((resp) => {
+          toast.success("Profile updated successfully !")
+        })
+        .catch((err) => {
+          toast.error("Update Failed, invalid credentials !");
+          
         });
-    
-        if (response.ok) {
-          console.log("Data posted successfully");
-          toast.success("Profile Updated Successfully !")
-        } else {
-          console.error("Failed to post data");
-        }
-      } catch (error) {
-        console.error("An error occurred while posting data:", error);
-        toast.error("Please try again later !");
-      }
+       
+      }catch(err) {
+        toast.error("Try Again Later !");
+      };
     }else if(validatePhoneNumber(data.phone) && !validateEmail(data.email)){
       toast.error("Invalid Email !")
     }else{
@@ -71,13 +77,10 @@ function EditableField({ fields, onSave }: Props) {
   };
   function handleSave() {
   
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        onSave(values, reader.result as string);
         setEditing(false);
         postData();
-      };
-  }
+    
+      }
 
   
 
