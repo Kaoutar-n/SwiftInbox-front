@@ -41,7 +41,6 @@ export function Costume() {
         .then((data) => {
           console.log(data.subject);
           setData(data);
-
                    
         })
         .catch((error) => {
