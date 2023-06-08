@@ -15,7 +15,7 @@
 }
 #content main .profile-sidbar  {
   margin-left: 50px;
-  width: 30%;
+  width: 40%;
 
  
  
@@ -231,18 +231,3 @@
   line-height: 1.35;
   border-radius: 0.28rem;
 } */
-@media screen and (max-width:1000px) {
-
-  .profile-sidebar-item {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
-    
-    font-size: 16px;
-    font-weight: 600;
-  }
-  .profile-mang{
-    width:max-content;
-  }
-}

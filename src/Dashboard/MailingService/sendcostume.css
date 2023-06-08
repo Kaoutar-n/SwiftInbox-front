@@ -14,9 +14,7 @@ input[type='radio']{
     padding-right: 10px;
 
 }
-label:hover{
-    color: #0198da;
-}
+
 .icon{
    color: #3c91e6;
 }

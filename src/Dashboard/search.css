@@ -35,7 +35,7 @@
 
 .form-div{
 	position: fixed;
-    top: 60%;
+    top: auto;
     left: 50%;
 	bottom: 2%;
     transform: translate(-50%, -50%);
@@ -53,8 +53,11 @@
 	min-height: 300px;
     margin-top: 40px;	
     min-height: 350px;
+	transform: translate(-50%, -50%);
+	z-index: 9999;
  
 }
+
 
 .form-div .form-title{
 font-size: 25px;

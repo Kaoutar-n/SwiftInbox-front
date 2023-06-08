@@ -301,7 +301,7 @@ export function EmailsContent() {
                   style={{ color: "white", background: "none" }}
                   onClick={handleImport}  className="btn-download"
                 >
-                  <label htmlFor="file">
+                  <label htmlFor="file" style={{fontSize: "16px"}}>
                     {" "}
                     <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
                     Import Contacts
@@ -311,7 +311,7 @@ export function EmailsContent() {
               </div>
               <div className="image-input">
                 <Button onClick={handleExport} className="btn-download">
-                  <label htmlFor="">
+                  <label htmlFor=""  style={{fontSize: "16px"}}>
                     {" "}
                     <FontAwesomeIcon icon={faCloudArrowDown} className="ico" />
                     Export Contacts
