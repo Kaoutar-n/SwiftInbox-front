@@ -27,9 +27,7 @@ export function Profile() {
   const [data, setdata] = useState<any>([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
-  const [username, setUsername] = React.useState("");
 
-  const [selectedImage, setSelectedImage] = useState(people);
   const [userPassword, setuserPassword] = useState("");
   const [userNewPassword, setuserNewPassword] = useState("");
   const [userConfirmPassword, setuserConfirmPassword] = useState("");
@@ -61,6 +59,7 @@ export function Profile() {
               { name: "Phone", value: data.phone },
             ];
             setFields(mappedFields);
+
           })
           .catch((error) => {
             console.error("Error: ", error);
@@ -74,7 +73,7 @@ export function Profile() {
   };
   useEffect(() => {
     GetData();
-  }, []);
+  }, [data.firstName, data.lastName]);
 
   function validatePassword(password: string): boolean {
     return password.length >= 8;
@@ -147,7 +146,6 @@ export function Profile() {
     image: string
   ) {
     setFields(newValues);
-    setSelectedImage(image);
     setShowProfile(true);
   }
 
