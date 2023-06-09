@@ -1,27 +1,18 @@
 .profile-side-main {
   display: flex;
-  
 }
-#content main .profile-inputs .table-data{
+#content main .profile-inputs .table-data {
   width: 50%;
   align-items: center;
   justify-content: center;
-  
-
 }
 #content main .profile-inputs {
   width: 60%;
   margin-right: 100px;
 }
-#content main .profile-sidbar  {
-  margin-left: 50px;
+#content main .profile-sidbar {
   width: 40%;
-
- 
- 
 }
-
-
 
 .profile-sidebar-item {
   padding: 20px;
@@ -60,44 +51,42 @@
   padding: 5px;
 } */
 
-.profile-container-feilds, .profile-container{
-
-	justify-content: space-between;
-	margin: 20px 0px 12px 0px;
+.profile-container-feilds,
+.profile-container {
+  justify-content: space-between;
+  margin: 20px 0px 12px 0px;
 }
-.profile-feilds .Labels{
+.profile-feilds .Labels {
   margin-bottom: 15px;
-	width: 100% ;
+  width: 100%;
 }
-.profile-feilds .Labels label{
+.profile-feilds .Labels label {
   display: block;
   font-weight: 500;
   font-size: 20px;
   margin-bottom: 5px;
-
 }
-.profile-feilds .labelspass label{
+.profile-feilds .labelspass label {
   display: block;
   font-weight: 500;
   font-size: 20px;
   margin-bottom: 5px;
   padding-top: 10px;
   padding-bottom: 10px;
-
 }
 
-.profile-feilds .Labels input{
-	height: 45px;
-	width: 100%;
-	outline: none;
-	border-radius: 5px;
-	border: 1px solid #ccc;
-	padding-left: 15px;
-	font-size: 16px;
-	border-bottom-width: 2px ;
-	transition: all 0.3 ease;
+.profile-feilds .Labels input {
+  height: 45px;
+  width: 100%;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding-left: 15px;
+  font-size: 16px;
+  border-bottom-width: 2px;
+  transition: all 0.3 ease;
 }
-.profile-feilds .Labels input:focus{
+.profile-feilds .Labels input:focus {
   border-color: #3c91e6;
 }
 
@@ -169,9 +158,8 @@
 } */
 .image-input {
   display: flex;
- 
+
   margin-bottom: 1rem;
-  
 }
 
 .image-input label {
@@ -179,7 +167,7 @@
   padding: 0 16px;
   border-radius: 36px;
   background: var(--blue);
-  color: var(--light) ;
+  color: var(--light);
   display: flex;
   justify-content: center;
   align-items: center;

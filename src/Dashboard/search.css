@@ -44,18 +44,14 @@
     padding: 14px 28px;
     border-radius: 3px;
     max-width: 600px;
-
     background: #fff;
 	box-shadow: 3px 3px 10px 6px rgba(0,0,0,0.06);
-
     transition: 1s;
-
 	min-height: 300px;
     margin-top: 40px;	
     min-height: 350px;
 	transform: translate(-50%, -50%);
 	z-index: 9999;
- 
 }
 
 
